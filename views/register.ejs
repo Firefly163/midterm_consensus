@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+    <% include partials/_header.ejs %>
+      <h1>REGISTER</h1>
+        <form class="login-form" action="/register" method="POST">
+          name: <input type ="text" name="name">
+          email: <input type ="email" name="email">
+          <br>
+          password: <input type ="password" name="password">
+          <br>
+          <button type="submit">Login</button>
+        </form>
+        <p>Already a user? <a href="/root">LOG IN HERE</a>.</p>
+    <% include partials/_footer.ejs %>
+  </body>
+</html>

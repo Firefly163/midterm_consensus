@@ -40,7 +40,7 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.redirect("/login");
+  res.render("root");
 });
 
 // Registration page
@@ -50,12 +50,12 @@ app.get("/register", (req, res) => {
 
 // Login page
 app.get("/login", (req, res) => {
-  res.render("/login");
+  res.render("root");
 });
 
 // User home page
-app.get("/home", (req, res) => {
-  res.render("/home");
+app.get("/poll", (req, res) => {
+  res.render("/poll");
 });
 
 // Create Poll page
@@ -64,9 +64,36 @@ app.get("/create", (req, res) => {
 });
 
 // Take Poll page
+app.get("/p/poll/:id", (req, res) => {
+  res.render("/p/pollid");
+});
+
+// Admin Poll page
 app.get("/poll/:id", (req, res) => {
+  res.render("/pollid");
+});
+
+// Login page
+app.post("/login", (req, res) => {
+  res.render("/poll");
+});
+
+// Registration page
+app.post("/register", (req, res) => {
+  res.render("/poll");
+});
+
+// Take Poll page
+app.post("/poll/:id", (req, res) => {
+  res.redirect("/login");
+});
+
+// Admin Poll page
+app.post("/poll/:id", (req, res) => {
   res.render("/poll_id");
 });
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
