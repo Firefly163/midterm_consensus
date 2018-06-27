@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Consensus</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+    <% include _header.ejs %>
+      <button class="nav-button">Login</button>
+      <a href="/register" class="nav-button">Register</a>
+
+      <!-- TOGGLE THIS IN AND OUT WITH THE LOGIN BUTTON -->
+        <form class="login-form" action="/login" method="POST">
+          email: <input type ="email" name="email">
+          <br>
+          password: <input type ="password" name="password">
+          <br>
+          <button type="submit">Login</button>
+        </form>
+
+      <img src="./images/pie-charts.png">
+
+      <h1>Welcom to Consensus </h1>
+      <p>
+        Making decisions is hard. Why not step back and let someone else do it? Consensus lets you create polls on any subject, and send links to whoever you want. Friends anonymously rank their choices, and you get to see the aggregate results. Easy as pie!
+      </p>
+    <% include _footer.ejs %>
+  </body>
+</html>
