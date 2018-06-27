@@ -24,13 +24,32 @@ Extensions:
 
 
 Pages:
-login
-home
-register
-create poll
-poll for users
-poll for admin
-poll:id/admin?
+root: https://wireframe.cc/XzsEd9
+  /
+  NAV BAR: login, register
+
+register: https://wireframe.cc/5i9viH
+  /register
+  NAV BAR: login
+
+create poll: https://wireframe.cc/ffbEVq
+  /poll/new
+  NAV BAR: home, logout
+
+home: https://wireframe.cc/CNDfbm
+  /poll
+  NAV BAR: create, logout
+
+poll for friends: https://wireframe.cc/wjzCFl
+  /p/:pollid
+  NAV BAR: login, register
+
+poll for admin: https://wireframe.cc/Qsb1Ob
+  /poll/:pollid
+  NAV BAR: home, create, logout
 
 Partials:
 nav bar
+
+
+
