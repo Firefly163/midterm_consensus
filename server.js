@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 
 // Registration page
 app.get("/register", (req, res) => {
-  res.render("/register");
+  res.render("register");
 });
 
 // Login page
@@ -55,27 +55,27 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", (req, res) => {
-  res.render("/poll");
+  res.render("poll");
 });
 
 // Create Poll page
-app.get("/create", (req, res) => {
-  res.render("/create");
+app.get("/poll/new", (req, res) => {
+  res.render("poll-new");
 });
 
 // Take Poll page
 app.get("/p/poll/:id", (req, res) => {
-  res.render("/p/pollid");
+  res.render("poll-pollid");
 });
 
 // Admin Poll page
 app.get("/poll/:id", (req, res) => {
-  res.render("/pollid");
+  res.render("p-pollid");
 });
 
 // Login page
 app.post("/login", (req, res) => {
-  res.render("/poll");
+  res.render("poll");
 });
 
 // Registration page
