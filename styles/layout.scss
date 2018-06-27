@@ -1,7 +1,14 @@
-body {
-  background-color: #EEE;
+@import 'navbar';
+@import 'login-form';
+@import 'footer';
 
-  h1 {
-    color: #244751;
+body {
+  background-color: white;
+  main {
+    padding: 4rem;
+    padding-top: 8rem;
+
+
   }
+
 }

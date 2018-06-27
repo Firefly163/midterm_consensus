@@ -1,0 +1,31 @@
+header {
+  background-color: #EEEEEE;
+  height: 5rem;
+  position: fixed;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .logo-and-header {
+    h1 {
+      line-height: 5rem;
+    }
+  }
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 5rem;
+    button {
+      height: 4rem;
+      margin: 0.5rem;
+      width: 6rem;
+      &:hover {
+        background-color: lightblue;
+      }
+    }
+
+  }
+
+}
