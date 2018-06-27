@@ -65,12 +65,12 @@ app.get("/create", (req, res) => {
 
 // Take Poll page
 app.get("/p/poll/:id", (req, res) => {
-  res.render("/p/poll_id");
+  res.render("/p/pollid");
 });
 
 // Admin Poll page
 app.get("/poll/:id", (req, res) => {
-  res.render("/poll_id");
+  res.render("/pollid");
 });
 
 // Login page

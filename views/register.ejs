@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <% include _header.ejs %>
+    <% include partials/_header.ejs %>
       <h1>REGISTER</h1>
         <form class="login-form" action="/register" method="POST">
           name: <input type ="text" name="name">
@@ -23,6 +23,6 @@
           <button type="submit">Login</button>
         </form>
         <p>Already a user? <a href="/root">LOG IN HERE</a>.</p>
-    <% include _footer.ejs %>
+    <% include partials/_footer.ejs %>
   </body>
 </html>
