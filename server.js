@@ -21,6 +21,12 @@ const dbfunctions = require('./library/db-functions.js')(knex);
 const currentUserID = "";
 const userAuthenticated = false;
 
+function authenticateUser(callback) {
+  if (currentUserID === dbfunctions.getUserId(email)) {
+    userAuthenticated = true;
+  }
+}
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -89,12 +95,16 @@ app.get("/poll/:id", (req, res) => {
 });
 
 // Login page
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   if (req.body.email === "" || req.body.password === "") {
-      res.status(400);
-      return
-  } else if (bcrypt.compareSync(req.body.password, user.password)) {
-    res.redirect("poll");
+    res.status(400);
+    return
+  }
+  if (bcrypt.compareSync(req.body.password, await dbfunctions.getUserPassword(req.body.email))) {
+    res.status(200);
+    console.log("logged in")
+  } else {
+    res.status(400);
   }
 });
 
@@ -102,22 +112,22 @@ app.post("/login", (req, res) => {
 app.post("/register", (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   if (req.body.email === "" || req.body.password === "") {
-    res.status(400);
+    res.redirect("/poll");
     return
   } else {
-//check if user already exists
+//check if user already exists  -----------------------------async/await
   dbfunctions.insertNewUser(req.body.name, req.body.email, hashedPassword, function()
     {dbfunctions.getUserId(req.body.email).then(userid => {
       req.session.user_id = userid;
       console.log("session.userid", req.session.user_id)
     })});
-  res.redirect("poll");
+  res.redirect("/poll");
   }
 });
 
 // Take Poll page
 app.post("/poll/:id", (req, res) => {
-  res.redirect("login");
+  res.redirect("/login");
 });
 
 // Admin Poll page
@@ -136,8 +146,4 @@ app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
 
-function authenticateUser(callback) {
-  if (currentUserID === dbfunctions.getUserId(email)) {
-    userAuthenticated = true;
-  }
-}
+
