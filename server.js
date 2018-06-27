@@ -40,7 +40,32 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("/login");
+});
+
+// Registration page
+app.get("/register", (req, res) => {
+  res.render("/register");
+});
+
+// Login page
+app.get("/login", (req, res) => {
+  res.render("/login");
+});
+
+// User home page
+app.get("/home", (req, res) => {
+  res.render("/home");
+});
+
+// Create Poll page
+app.get("/create", (req, res) => {
+  res.render("/create");
+});
+
+// Take Poll page
+app.get("/poll/:id", (req, res) => {
+  res.render("/poll_id");
 });
 
 app.listen(PORT, () => {
