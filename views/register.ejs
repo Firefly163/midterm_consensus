@@ -9,17 +9,19 @@
   <header>
     <% include partials/_header.ejs %>
   </header>
-  <% include partials/_header.ejs %>
-  <h1>REGISTER</h1>
-  <form class="login-form" action="/register" method="POST">
-    name: <input type ="text" name="name">
-    email: <input type ="email" name="email">
-    <br>
-    password: <input type ="password" name="password">
-    <br>
-    <button type="submit">Login</button>
-  </form>
-  <p>Already a user? <a href="/root">LOG IN HERE</a>.</p>
+  <main>
+    <% include partials/_login-form.ejs %>
+    <h1>REGISTER</h1>
+    <form class="register-form" action="/register" method="POST">
+      name: <input type ="text" name="name">
+      email: <input type ="email" name="email">
+      <br>
+      password: <input type ="password" name="password">
+      <br>
+      <button type="submit">Login</button>
+    </form>
+    <p>Already a user? <a href="/">LOG IN HERE</a>.</p>
+  </main>
   <footer>
     <% include partials/_footer.ejs %>
   </footer>

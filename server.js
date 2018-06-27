@@ -80,7 +80,7 @@ app.post("/login", (req, res) => {
 
 // Registration page
 app.post("/register", (req, res) => {
-  res.render("/poll");
+  res.render("poll");
 });
 
 // Take Poll page
@@ -90,7 +90,7 @@ app.post("/poll/:id", (req, res) => {
 
 // Admin Poll page
 app.post("/poll/:id", (req, res) => {
-  res.render("/poll_id");
+  res.render("poll_id");
 });
 
 
