@@ -1,0 +1,15 @@
+footer {
+  position: fixed;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 100%;
+  background-color: #EEEEEE;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  left: 0;
+  bottom: 0;
+  h5 {
+    line-height: 2rem;
+  }
+}
