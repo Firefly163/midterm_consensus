@@ -9,36 +9,37 @@
   <header>
     <% include partials/_header.ejs %>
   </header>
-  <button class="nav-button">Login</button>
-  <a href="/register" class="nav-button">Register</a>
+  <main>
+    <button class="nav-button">Login</button>
+    <a href="/register" class="nav-button">Register</a>
 
-  <!-- TOGGLE THIS IN AND OUT WITH THE LOGIN BUTTON -->
-  <form class="login-form" action="/login" method="POST">
-    email: <input type ="email" name="email">
-    <br>
-    password: <input type ="password" name="password">
-    <br>
-    <button type="submit">Login</button>
-  </form>
+    <!-- TOGGLE THIS IN AND OUT WITH THE LOGIN BUTTON -->
+    <form class="login-form" action="/login" method="POST">
+      email: <input type ="email" name="email">
+      <br>
+      password: <input type ="password" name="password">
+      <br>
+      <button type="submit">Login</button>
+    </form>
 
-  <h1 class="poll-title"></h1>
-  <p class="poll-description"></p>
-  <p class="num-responses"></p>
+    <h1 class="poll-title"></h1>
+    <p class="poll-description"></p>
+    <p class="num-responses"></p>
 
 
 
-  <!-- Replace this with the actual results  -->
-  <img src="pie-chart">
-<!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
-  <section class="choice-ranking">
-    <p class="choice1"></p>
-    <p class="choice2"></p>
-    <p class="choice3"></p>
-    <p class="choice4"></p>
-    <p class="choice5"></p>
-    <p class="choice6"></p>
-  </section>
-
+    <!-- Replace this with the actual results  -->
+    <img src="pie-chart">
+  <!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
+    <section class="choice-ranking">
+      <p class="choice1"></p>
+      <p class="choice2"></p>
+      <p class="choice3"></p>
+      <p class="choice4"></p>
+      <p class="choice5"></p>
+      <p class="choice6"></p>
+    </section>
+  </main>
   <footer>
     <% include partials/_footer.ejs %>
   </footer>

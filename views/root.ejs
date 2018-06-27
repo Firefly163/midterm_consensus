@@ -11,15 +11,7 @@
   </header>
 
   <main>
-    <form class="login-form" method="POST" action="/login">
-      <div class="login-form-container">
-        <label for="email">Email:</label>
-        <input id="email" type="email" name="email">
-        <label for="password">Password:</label>
-        <input id="password" type="password" name="password">
-        <input type="submit" value="Login" class="btn btn-primary btn-sm">
-      </div>
-    </form>
+    <% include partials/_login-form.ejs %>
     <div class="container row">
       <div class="about-text col-md-6">
         <h1>Welcome to Consensus </h1>
