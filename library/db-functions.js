@@ -47,6 +47,12 @@ module.exports = knex => ({
       .then(result => result.poll_name);
   },
 
+  getPollId: (friend_link) => {
+    return knex.first("id")
+    .from("polls")
+    .where('friend_link', '=', friend_link)
+      .then(result => result.id);
+  },
   getPollDescription: (pollid) => {
     return knex.first("description")
     .from("polls")

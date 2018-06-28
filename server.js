@@ -100,16 +100,16 @@ app.get("/poll/new", (req, res) => {
 });
 
 // Take Poll page
-app.get("/p/:poll_id", async (req, res) => {
-  // let poll_id = req.params.poll_id;
-  let poll_id = 17;
+app.get("/p/:friend_link", async (req, res) => {
+  let friend_link = req.params.friend_link;
+  let poll_id = await dbfunctions.getPollId(friend_link);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id);
 
   console.log(poll_description);
 
-  let templateVars = {poll_name, poll_description, choicesArr}
+  let templateVars = {poll_id, poll_name, poll_description, choicesArr}
 
   res.render("p-pollid", templateVars);
 });
@@ -194,6 +194,12 @@ app.post("/poll/new", async (req, res) => {
       console.error(err)
       res.status(404);
     }
+
+// Take Poll page
+app.post("/poll/:poll_id/answers", (req, res) => {
+  let choicesPoints = req.body;
+
+  //res.redirect("/login");
 });
 
 

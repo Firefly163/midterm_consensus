@@ -1,19 +1,41 @@
-.choice-container {
-  border: 1px solid gray;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: #EEEEEE;
-  .choice {
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    padding: 1rem;
+.friend-poll-page {
+  .text-container {
+    .poll-description {
+      font-style: italic;
+    }
+    .errors {
+      color: red;
+    }
   }
-  .submit-ranks-btn {
-    width: 100%;
-    background-color: lightblue;
-    border-color: gray;
+  .choices-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    .choice-container {
+      border: 1px solid gray;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background-color: #EEEEEE;
+      width: 45%;
+      margin: 1rem;
+      .choice {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+      }
+    }
+  }
+  .btn-and-errors {
+    display: flex;
+    justify-content: center;
+    .submit-ranks-btn {
+      margin: 1rem;
+      width: 20%;
+      background-color: lightblue;
+      border-color: gray;
+    }
   }
 }

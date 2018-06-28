@@ -37,15 +37,20 @@ create poll: https://wireframe.cc/ffbEVq
   NAV BAR: home, logout
 
 home: https://wireframe.cc/CNDfbm
-  /poll
+  GET /polls
   NAV BAR: create, logout
 
 poll for friends: https://wireframe.cc/wjzCFl
-  /p/:pollid
+  GET /polls/:friend_link
   NAV BAR: login, register
 
+  POST /polls/poll_id/answers - Create answer
+
+
 poll for admin: https://wireframe.cc/Qsb1Ob
-  /poll/:pollid
+  GET /polls/:admin_link/
+    POST /polls/:id - UPDATE poll
+
   NAV BAR: home, create, logout
 
 Partials:
