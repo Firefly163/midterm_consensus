@@ -178,7 +178,6 @@ app.post("/poll/new", async (req, res) => {
       }
         return Promise.resolve()
     }));
-
     res.render("poll-new");
     } catch (err) {
       console.error(err)
