@@ -132,11 +132,6 @@ app.post("/register", (req, res) => {
       console.log("session.userid", req.session.user_id);
       res.redirect("poll");
     })});
-<<<<<<< HEAD
-  res.redirect("/poll");
-=======
-
->>>>>>> feature/takepoll
   }
 });
 
