@@ -29,6 +29,17 @@ function authenticateUser(callback) {
   }
 }
 
+ function makeRandomString() {
+  let randomArray = []
+  let choices ="qwertyuioplkjhgfdsazxcvbnm1234567890"
+  for (let i = 0; i < 6; i ++) {
+    let randomchoice = Math.floor(Math.random() * 37);
+    randomArray.push(choices[randomchoice]);
+  }
+  let randomString = randomArray.join("");
+  return randomString;
+}
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -84,8 +95,6 @@ app.get("/poll", async (req, res) => {
   res.render("poll", {polls: userPolls});
 });
 
-// Create Poll page
-
 app.get("/poll/new", (req, res) => {
   res.render("poll-new");
 });
@@ -117,7 +126,8 @@ app.post("/login", async (req, res) => {
     res.status(400);
     return
   }
-  if (bcrypt.compareSync(req.body.password, await dbfunctions.getUserPassword(req.body.email))) {
+  if (bcrypt.compareSync(req.body.password,
+    await dbfunctions.getUserPassword(req.body.email))) {
     res.status(200);
     console.log("logged in")
   } else {
@@ -140,13 +150,48 @@ app.post("/register", (req, res) => {
       res.redirect("poll");
     })});
 }
-
 });
+
+// Create Poll page ------------------------------------------------
+app.post("/poll/new", async (req, res) => {
+  let choiceNum = "";
+  const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
+    try {
+    const adminLink = makeRandomString();
+    const friendLink =  makeRandomString();
+    const pollInsertResult = await knex("polls").insert({
+      user_id: req.session.user_id,
+      poll_name: req.body.title,
+      description: req.body.description,
+      admin_link: adminLink,
+      friend_link: friendLink
+    });
+    const pollId = await dbfunctions.getPollId(req.body.title);
+    await Promise.all(choiceArray.map( currentChoice => {
+      if (currentChoice) {
+        const choiceData = {
+          poll_id: pollId,
+          choice: currentChoice,
+          points: 0
+        }
+        return knex("choices").insert(choiceData);
+      }
+        return Promise.resolve()
+    }));
+
+    res.render("poll-new");
+    } catch (err) {
+      console.error(err)
+      res.status(404);
+    }
+});
+
 
 // Take Poll page
 app.post("/poll/:id", (req, res) => {
   res.redirect("/login");
 });
+
 
 // Admin Poll page ------------------this path will come from the friend_link in db
 app.post("/poll/:id", (req, res) => {

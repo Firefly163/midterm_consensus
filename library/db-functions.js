@@ -7,6 +7,13 @@ module.exports = knex => ({
       .then(result => result.id);
   },
 
+  getPollId: (pollName) => {
+    return knex.first("id")
+    .from("polls")
+    .where("poll_name", "=", pollName)
+      .then(result => result.id);
+  },
+
   getUserPassword: (email) => {
     return knex.first("password")
     .from("users")
