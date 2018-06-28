@@ -143,7 +143,7 @@ app.post("/register", (req, res) => {
     return
   } else {
 //check if user already exists  -----------------------------async/await
-  dbfunctions.insertNewUser(req.body.name, req.body.email, hashedPassword, function()
+  dbfunctions.insertNewUser (req.body.name, req.body.email, hashedPassword, function()
     {dbfunctions.getUserId(req.body.email).then(userid => {
       req.session.user_id = userid;
       console.log("session.userid", req.session.user_id);
@@ -152,7 +152,7 @@ app.post("/register", (req, res) => {
 }
 });
 
-// Create Poll page ------------------------------------------------
+// Create Poll page
 app.post("/poll/new", async (req, res) => {
   let choiceNum = "";
   const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
@@ -172,7 +172,7 @@ app.post("/poll/new", async (req, res) => {
         const choiceData = {
           poll_id: pollId,
           choice: currentChoice,
-          points: 0
+          rank: 0
         }
         return knex("choices").insert(choiceData);
       }
