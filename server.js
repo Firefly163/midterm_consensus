@@ -157,6 +157,10 @@ app.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
+console.log(`HASHED PWDS
+  hi: ${bcrypt.hashSync('hi', 10)}
+  hello: ${bcrypt.hashSync('hello', 10)}
+  hey: ${bcrypt.hashSync('hey', 10)}`);
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

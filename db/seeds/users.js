@@ -12,9 +12,9 @@ exports.seed = function(knex, Promise) {
 
   function insertUsers() {
     return knex('users').insert([
-      {name: 'Alice', email: 'alice@example.com', password: 'hi'},
-      {name: 'Bob', email: 'bob@example.com', password: 'hello'},
-      {name: 'Charlie', email: 'charlie@example.com', password: 'hey'}
+      {name: 'Alice', email: 'alice@example.com', password: '$2b$10$kxSisiBbg/KQ0gj6QtNvPe1WCqUI8yrvGoM4qqiPsvnYmwWMJGIIe'},
+      {name: 'Bob', email: 'bob@example.com', password: '$2b$10$NeKOe4I3njdtXfZ6WpDmkOQl6NPGMMYm/AydxEp0tioemnqJD.uSi'},
+      {name: 'Charlie', email: 'charlie@example.com', password: '$2b$10$z4YHPcaJDVHfatvX1IWAMeyS1nY/DQpKkujd9mvwhwgG6oAbAhzUO'}
     ]).returning('*');
   }
 
