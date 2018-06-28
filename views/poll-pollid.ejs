@@ -10,8 +10,6 @@
     <% include partials/_header.ejs %>
   </header>
   <main>
-    <button class="nav-button">Login</button>
-    <a href="/register" class="nav-button">Register</a>
 
     <!-- TOGGLE THIS IN AND OUT WITH THE LOGIN BUTTON -->
     <form class="login-form" action="/login" method="POST">
@@ -22,23 +20,24 @@
       <button type="submit">Login</button>
     </form>
 
-    <h1 class="poll-title"></h1>
-    <p class="poll-description"></p>
-    <p class="num-responses"></p>
-
+    <h1 class="poll-title"><%=poll.poll_name%></h1>
+    <p class="poll-description"><%=poll.description%></p>
+    <p class="num-responses">Responses: <%=poll.responses%></p>
+    <section class="choice-ranking">
+      <%for (let elm of choices) { %>
+        <p class="choice1"><%= elm.choice %></p>
+      <% } %>
+    </section>
+    <form method="POST" action="/poll/<%= poll.admin_link%>">
+      <input id="delete_poll" type="submit" name="" value="Delete">
+    </form>
 
 
     <!-- Replace this with the actual results  -->
-    <img src="pie-chart">
+
+    <img src="/images/logo.png">
   <!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
-    <section class="choice-ranking">
-      <p class="choice1"></p>
-      <p class="choice2"></p>
-      <p class="choice3"></p>
-      <p class="choice4"></p>
-      <p class="choice5"></p>
-      <p class="choice6"></p>
-    </section>
+
   </main>
   <footer>
     <% include partials/_footer.ejs %>
