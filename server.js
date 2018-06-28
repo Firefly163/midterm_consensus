@@ -15,14 +15,24 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
+const secrets     = require("./secrets.js");
+const gmail       = require("./library/gmail.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
+const nodemailer  = require('nodemailer');
 
 
+const transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'consensus.poll.app@gmail.com',
+        pass: secrets.emailPassword
+    }
+});
 
 const currentUserID = "";
 const userAuthenticated = false;
 
-function authenticateUser(callback) {
+function authenticateUser() { //--------------------on all logged in pgs---------------
   if (currentUserID === dbfunctions.getUserId(email)) {
     userAuthenticated = true;
   }
@@ -71,7 +81,12 @@ app.use(cookieSession({
 
 // Home page
 app.get("/", (req, res) => {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
   res.render("root");
+  } else {
+    res.status(400);
+  }
 });
 
 // Registration page
@@ -86,7 +101,8 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  if (!req.session.user_id) {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
     res.redirect('/register');
     return;
   }
@@ -128,6 +144,17 @@ app.post("/poll/:adminLink", async (req, res) => {
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
   await dbfunctions.deletePoll(poll.id);
   res.redirect('/poll');
+};
+
+app.get("/poll/:adminLink", (req, res) => {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
+  res.render("poll-pollid");
+  } else {
+    res.status(400);
+    return
+  }
+
 });
 
 // Login page
@@ -193,7 +220,7 @@ app.post("/poll/new", async (req, res) => {
       console.error(err)
       res.status(404);
     }
-  })
+});
 
 // Take Poll page
 app.post("/poll/:poll_id/answers", async (req, res) => {
@@ -208,7 +235,6 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
-
 });
 
 
@@ -218,8 +244,13 @@ app.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-
-
+//---------------------------------------Send email when someone answers the poll
+transporter.sendMail(gmail.gmailData, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+});
 
 
 app.listen(PORT, () => {
