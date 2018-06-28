@@ -82,8 +82,34 @@ module.exports = knex => ({
                     .where('id', '=', pollId)
                     .del()
             )
+  },
 
+  getCurrentPoints: (poll_id) => {
+    return knex.select("id","points")
+    .from("choices")
+    .where('poll_id', '=', poll_id)
+    .then(result => result);
+  },
 
+  updatePoints: (choice_id, newPoints) => {
+    knex("choices")
+    .where('id', '=', choice_id)
+    .update({points: newPoints})
+    .then();
+  },
+
+  getCurrentResponses: (poll_id) => {
+    return knex.first("responses")
+    .from("polls")
+    .where("id", "=", poll_id)
+    .then(result => result.responses)
+  },
+
+  updateResponses: (poll_id, newRes) => {
+    knex("polls")
+    .where('id', '=', poll_id)
+    .update({responses: newRes})
+    .then();
   },
 
 });

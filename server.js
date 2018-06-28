@@ -196,12 +196,22 @@ app.post("/poll/new", async (req, res) => {
       console.error(err)
       res.status(404);
     }
+  })
 
 // Take Poll page
-app.post("/poll/:poll_id/answers", (req, res) => {
-  let choicesPoints = req.body;
+app.post("/poll/:poll_id/answers", async (req, res) => {
+  let newPointsObj = req.body;
+  let poll_id = req.params.poll_id;
+  let previousPointsObj = await dbfunctions.getCurrentPoints(poll_id);
+  for(let i = 0; i < previousPointsObj.length; i ++) {
+    let choice_id = previousPointsObj[i].id;
+    let updatedPoints = previousPointsObj[i].points + Number(newPointsObj[choice_id]);
+    await dbfunctions.updatePoints(choice_id, updatedPoints);
+  }
+  let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
+  let newResponses = previousResponses + 1;
+  await dbfunctions.updateResponses(poll_id, newResponses);
 
-  //res.redirect("/login");
 });
 
 
