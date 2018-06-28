@@ -78,14 +78,24 @@ app.get("/poll/new", (req, res) => {
 });
 
 // Take Poll page
-app.get("/p/poll/:id", (req, res) => {
-  res.render("poll-pollid");
+app.get("/p/:poll_id", async (req, res) => {
+  // let poll_id = req.params.poll_id;
+  let poll_id = 17;
+  let poll_name = await dbfunctions.getPollName(poll_id);
+  let poll_description = await dbfunctions.getPollDescription(poll_id);
+  let choicesArr = await dbfunctions.getChoicesArr(poll_id);
+
+  console.log(poll_description);
+
+  let templateVars = {poll_name, poll_description, choicesArr}
+
+  res.render("p-pollid", templateVars);
 });
 
 
 // Admin Poll page
 app.get("/poll/:id", (req, res) => {
-  res.render("p-pollid");
+  res.render("poll-pollid");
 });
 
 // Login page
@@ -109,9 +119,10 @@ app.post("/register", (req, res) => {
   dbfunctions.insertNewUser(req.body.name, req.body.email, hashedPassword, function()
     {dbfunctions.getUserId(req.body.email).then(userid => {
       req.session.user_id = userid;
-      console.log("session.userid", req.session.user_id)
+      console.log("session.userid", req.session.user_id);
+      res.redirect("poll");
     })});
-  res.redirect("poll");
+
   }
 });
 
@@ -122,7 +133,7 @@ app.post("/poll/:id", (req, res) => {
 
 // Admin Poll page
 app.post("/poll/:id", (req, res) => {
-  res.render("poll_id");
+  res.render("p-poll");
 });
 
 //logout
