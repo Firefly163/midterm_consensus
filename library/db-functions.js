@@ -1,23 +1,28 @@
 module.exports = knex => ({
 
   getUserId: (email) => {
-    return knex.first("id").from("users").where("email", "=", email)
-  .then(result => result.id);
+    return knex.first("id")
+    .from("users")
+    .where("email", "=", email)
+      .then(result => result.id);
   },
   getUserPassword: (email) => {
-    return knex.first("password").from("users").where("email", "=", email)
-  .then(result => result.password);
+    return knex.first("password")
+    .from("users")
+    .where("email", "=", email)
+      .then(result => result.password);
   },
 
   insertNewUser: (userName, userEmail, userPassword, callback) => {
-    return knex("users").insert({
-    name: userName,
-    email: userEmail,
-    password: userPassword
-    })
-  .then(rows => {
-      callback();
-    })
+    return knex("users")
+    .insert({
+      name: userName,
+      email: userEmail,
+      password: userPassword
+      })
+      .then(rows => {
+          callback();
+      })
   },
 
   getChoicesArr: (pollid) => {
@@ -28,13 +33,17 @@ module.exports = knex => ({
   },
 
   getPollName: (pollid) => {
-    return knex.first("poll_name").from("polls").where('id', '=', pollid)
-    .then(result => result.poll_name);
+    return knex.first("poll_name")
+    .from("polls")
+    .where('id', '=', pollid)
+      .then(result => result.poll_name);
   },
 
   getPollDescription: (pollid) => {
-    return knex.first("description").from("polls").where('id', '=', pollid)
-    .then(result => result.description);
+    return knex.first("description")
+    .from("polls")
+    .where('id', '=', pollid)
+      .then(result => result.description);
   },
 
 });
