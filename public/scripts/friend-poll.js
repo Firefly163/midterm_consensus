@@ -55,7 +55,7 @@ $(document).ready(function() {
       $(".choice-container.empty").children(".choice").each(function () {
         let id = $(this).attr("choice_id");
         let ranking = $(this).attr("ranking");
-        let points = (numberOfChoices - (ranking - 1))/numberOfChoices;
+        let points = (numberOfChoices - (ranking - 1));
         choicePointsObj[id] = points;
       })
       $.ajax({
