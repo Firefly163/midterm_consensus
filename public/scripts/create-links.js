@@ -7,7 +7,7 @@ $(document).ready(function() {
       method: 'POST',
       data: $(this).serialize(),
       success: response => {
-      $(this).trigger("reset")
+      $(this).trigger("reset");
       }
    })
 });
