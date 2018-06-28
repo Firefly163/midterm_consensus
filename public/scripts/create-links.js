@@ -1,12 +1,13 @@
 $(document).ready(function() {
 
-  $(".create-button").on("click", function() {
+  $(".create-form").on("submit", function(event) {
+    event.preventDefault();
     $.ajax({
       url: 'http://localhost:8080/poll/new',
       method: 'POST',
-      data: $(".create-form").serialize(),
-      success: function(response) {
-        console.log("success!");
+      data: $(this).serialize(),
+      success: response => {
+      $(this).trigger("reset")
       }
    })
 });
