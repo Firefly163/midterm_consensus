@@ -14,9 +14,11 @@ const app         = express();
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
-const dbfunctions = require('./library/db-functions.js')(knex);
+const morgan      = require("morgan");
+const knexLogger  = require("knex-logger");
+const dbfunctions = require("./library/db-functions.js")(knex);
+
+
 
 const currentUserID = "";
 const userAuthenticated = false;
@@ -130,9 +132,14 @@ app.post("/poll/:id", (req, res) => {
   res.redirect("/login");
 });
 
-// Admin Poll page
+// Admin Poll page ------------------this path will come from the friend_link in db
 app.post("/poll/:id", (req, res) => {
   res.render("poll_id");
+});
+
+// Admin Poll page
+app.post("/poll-new", (req, res) => {
+  res.render("poll-new");
 });
 
 //logout
