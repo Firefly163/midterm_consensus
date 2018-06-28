@@ -20,10 +20,10 @@ exports.seed = function(knex, Promise) {
 
   function insertPolls(users) {
     return knex('polls').insert([
-      {user_id: users[0].id, poll_name: 'To Eat?', description: 'choose what to eat', admin_link: '111111', friend_link:'222222'},
-      {user_id: users[0].id, poll_name: 'To Drink?', description: 'choose what to drink', admin_link: '333333', friend_link:'444444'},
-      {user_id: users[1].id, poll_name: 'To Play?', description: 'choose what to play', admin_link: '555555', friend_link:'666666'},
-      {user_id: users[2].id, poll_name: 'To See?', description: 'choose what to see', admin_link: '777777', friend_link:'888888'},
+      {user_id: users[0].id, poll_name: 'To Eat?', description: 'choose what to eat', admin_link: '111111', friend_link:'222222', responses: 0},
+      {user_id: users[0].id, poll_name: 'To Drink?', description: 'choose what to drink', admin_link: '333333', friend_link:'444444', responses: 0},
+      {user_id: users[1].id, poll_name: 'To Play?', description: 'choose what to play', admin_link: '555555', friend_link:'666666', responses: 0},
+      {user_id: users[2].id, poll_name: 'To See?', description: 'choose what to see', admin_link: '777777', friend_link:'888888', responses: 0},
     ]).returning('*');
   }
 
