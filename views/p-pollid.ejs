@@ -12,25 +12,23 @@
 
   <main>
     <% include partials/_login-form.ejs %>
+    <div class="container row">
+      <div class="title-and-description col-md-6">
+        <h1 class="poll-title"><%= poll_name %></h1>
+        <p class="poll-description"><%= poll_description%></p>
+        <p class="instructions">
+          Rank your choices in order of preference. When you're finished, click the SUBMIT button.
+        </p>
+      </div>
 
-    <h1 class="poll-title"></h1>
-    <p class="poll-description"></p>
-    <p class="instructions">
-      Rank your choices in order of preference. When you're finished, click the SUBMIT button.
-    </p>
-
-    <!-- Replace this with the actual results  -->
-    <img src="pie-chart">
-  <!-- Only show as many as we need  -->
-    <section class="choice-ranking">
-      <p class="choice1"></p>
-      <p class="choice2"></p>
-      <p class="choice3"></p>
-      <p class="choice4"></p>
-      <p class="choice5"></p>
-      <p class="choice6"></p>
-    </section>
-    <button type="submit">SUBMIT</button>
+    <!-- Only show as many as we need  -->
+      <section class="choice-container col-md-6">
+        <% for(let i = 0; i < choicesArr.length; i++) { %>
+        <div class="choice"> <%= choicesArr[i].choice %> </div>
+        <%}%>
+        <button class="btn submit-ranks-btn" type="submit">SUBMIT</button>
+      </section>
+    </div>
   </main>
 
   <footer>
