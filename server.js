@@ -203,22 +203,13 @@ app.post("/poll/:poll_id/answers", (req, res) => {
 });
 
 
-
-
-// Admin Poll page ------------------this path will come from the friend_link in db
-
-
-
 //logout
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
 
-console.log(`HASHED PWDS
-  hi: ${bcrypt.hashSync('hi', 10)}
-  hello: ${bcrypt.hashSync('hello', 10)}
-  hey: ${bcrypt.hashSync('hey', 10)}`);
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
