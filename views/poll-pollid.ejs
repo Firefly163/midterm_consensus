@@ -22,28 +22,22 @@
 
     <h1 class="poll-title"><%=poll.poll_name%></h1>
     <p class="poll-description"><%=poll.description%></p>
-    <p class="num-responses"><%=poll.responses%></p>
+    <p class="num-responses">Responses: <%=poll.responses%></p>
+    <section class="choice-ranking">
+      <%for (let elm of choices) { %>
+        <p class="choice1"><%= elm.choice %></p>
+      <% } %>
+    </section>
     <form method="POST" action="/poll/<%= poll.admin_link%>">
       <input id="delete_poll" type="submit" name="" value="Delete">
-    </form>
-    <form method="POST" action="">
-      <input id="edit_poll" type="submit" name="" value="Edit">
     </form>
 
 
     <!-- Replace this with the actual results  -->
-    <!-- <img src="pie-chart"> -->
 
     <img src="/images/logo.png">
   <!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
-    <section class="choice-ranking">
-      <p class="choice1"></p>
-      <p class="choice2"></p>
-      <p class="choice3"></p>
-      <p class="choice4"></p>
-      <p class="choice5"></p>
-      <p class="choice6"></p>
-    </section>
+
   </main>
   <footer>
     <% include partials/_footer.ejs %>

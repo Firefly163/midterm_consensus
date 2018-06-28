@@ -112,8 +112,10 @@ app.get("/poll/:adminLink", async (req, res) => {
   let adminLink = req.params.adminLink;
   console.log('QQQQQQQQQQQQQQ', adminLink);
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  let choices = await dbfunctions.getChoicesArr(poll.id);
   console.log(poll);
-  res.render('poll-pollid', {poll: poll});
+  console.log(choices);
+  res.render('poll-pollid', {poll: poll, choices: choices});
 });
 
 //Delete Poll
