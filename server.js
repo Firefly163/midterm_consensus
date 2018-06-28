@@ -107,8 +107,25 @@ app.get("/p/:poll_id", async (req, res) => {
 
 
 // Admin Poll page
-app.get("/poll/:adminLink", (req, res) => {
-  res.render("poll-pollid");
+app.get("/poll/:adminLink", async (req, res) => {
+  console.log(req.params);
+  let adminLink = req.params.adminLink;
+  console.log('QQQQQQQQQQQQQQ', adminLink);
+  let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  console.log(poll);
+  res.render('poll-pollid', {poll: poll});
+});
+
+//Delete Poll
+app.post("/poll/:adminLink", async (req, res) => {
+  console.log('Deleting poll...');
+  let adminLink = req.params.adminLink;
+  console.log(adminLink);
+  let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  console.log(poll);
+  await dbfunctions.deletePoll(poll.id);
+  console.log('done deleting, about to redirect');
+  res.redirect('/poll');
 });
 
 // Login page
@@ -143,15 +160,10 @@ app.post("/register", (req, res) => {
 
 });
 
-// Take Poll page
-app.post("/poll/:id", (req, res) => {
-  res.redirect("/login");
-});
+
 
 // Admin Poll page ------------------this path will come from the friend_link in db
-app.post("/poll/:id", (req, res) => {
-  res.render("p-poll");
-});
+
 
 
 //logout

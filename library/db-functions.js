@@ -54,6 +54,24 @@ module.exports = knex => ({
       .where('user_id','=', userId)
       .then(result => result)
   },
+  getPollByAdmLink: (adminLink) => {
+    return knex()
+      .select('*')
+      .from('polls')
+      .where('admin_link', '=', adminLink)
+      .then(result => result[0])
+  },
+  deletePoll: (pollId) => {
+    knex('choices')
+      .where('poll_id','=', pollId)
+      .del()
+      .then(() => knex('polls')
+                    .where('id', '=', pollId)
+                    .del()
+            )
+
+
+  },
 
 });
 
