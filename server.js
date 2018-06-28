@@ -15,17 +15,23 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
+const secrets     = require("./secrets.js");
+const gmail       = require("./library/gmail.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
-const mailgunData = require("./library/mailgun.js")
-var api_key       = 'e7ed6624e722cbcaa6ab25d9521ed0d0-e44cc7c1-fc9f2c72';
-var DOMAIN        = 'sandbox515189107de443848456b7c953829456.none';
-const mailgun     = require("mailgun-js")({apiKey: api_key, domain: DOMAIN});
+const nodemailer  = require('nodemailer');
 
+const transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'consensus.poll.app@gmail.com',
+        pass: secrets.emailPassword
+    }
+});
 
 const currentUserID = "";
 const userAuthenticated = false;
 
-function authenticateUser(callback) {
+function authenticateUser() { //--------------------on all logged in pgs---------------
   if (currentUserID === dbfunctions.getUserId(email)) {
     userAuthenticated = true;
   }
@@ -74,7 +80,12 @@ app.use(cookieSession({
 
 // Home page
 app.get("/", (req, res) => {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
   res.render("root");
+  } else {
+    res.status(400);
+  }
 });
 
 // Registration page
@@ -89,7 +100,8 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  if (!req.session.user_id) {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
     res.redirect('/register');
     return;
   }
@@ -119,7 +131,13 @@ app.get("/p/:poll_id", async (req, res) => {
 
 // Admin Poll page
 app.get("/poll/:adminLink", (req, res) => {
+  let currentUserID = req.session.user_id;
+  if (authenticateUser()) {
   res.render("poll-pollid");
+  } else {
+    res.status(400);
+    return
+  }
 });
 
 // Login page
@@ -207,8 +225,11 @@ app.post("/logout", (req, res) => {
 });
 
 //---------------------------------------Send email when someone answers the poll
-mailgun.messages().send(mailgunData.mailgunData, function (error, body) {
-  console.log("-----------mailgun email", body);
+transporter.sendMail(gmail.gmailData, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
 });
 
 app.listen(PORT, () => {
