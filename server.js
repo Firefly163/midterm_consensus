@@ -73,8 +73,13 @@ app.get("/login", (req, res) => {
 });
 
 // User home page
-app.get("/poll", (req, res) => {
-  res.render("poll");
+app.get("/poll", async (req, res) => {
+  if (!req.session.user_id) {
+    res.redirect('/register');
+    return;
+  }
+  let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
+  res.render("poll", {polls: userPolls});
 });
 
 // Create Poll page

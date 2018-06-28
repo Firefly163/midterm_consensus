@@ -11,41 +11,17 @@
   </header>
   <main>
     <h1>Your Polls</h1>
-    <h3>Create a new poll</h3>
+    <article>
+      <ul class="container">
+        <% for(let poll of polls) { %>
+          <a href=<%="http://localhost:8080/poll/" + poll.id%> >
+            <li class="item"><%= poll.poll_name%></li>
+          </a>
+          <% } %>
+      </ul>
 
-  <!-- Use ejs to add the poll id here and add as many sections as necessary -->
-    <div>
-      <a href="/poll/:pollid" <section class="poll-preview"><section></section></a>
-    </div>
+    </article>
 
-    <form action="/logout" method="POST">
-      <a href="/" class="nav-button">Home</a>
-      <a href="/logout" class="nav-button">Logout</a>
-    </form>
-
-    <h1>CREATE A POLL</h1>
-    <form class="create-form" action="/poll/:id" method="POST">
-      <label for="title">Title:</label><input type="text" name="title">
-      <label for="description">Description:</label><input type="text" name="title" placeholder="Write a brief explanation of what this poll is about.">
-    </form>
-
-      <!-- MAKE CHOICES 4-6 HIDDEN UNLESS THE ADD BUTTON IS PRESSED -->
-    <form class="choioces-form" action="/poll/:id" method="POST">
-      <label for="choice1">Choice 1:</label><input type="text" name="choice1">
-      <label for="choice1">Choice 2:</label><input type="text" name="choice2">
-      <label for="choice1">Choice 3:</label><input type="text" name="choice3">
-      <label for="choice1">Choice 4:</label><input type="text" name="choice4">
-      <label for="choice1">Choice 5:</label><input type="text" name="choice5">
-      <label for="choice1">Choice 6:</label><input type="text" name="choice6">
-      <button>Add another choice</button>
-    </form>
-
-    <div>
-      <h3>Your admin link: </h3>
-      <p id="admin-link"></p>
-      <h3>Your shareable link: </h3>
-      <p id="friend-link"></p>
-    </div>
   </main>
   <footer>
     <% include partials/_footer.ejs %>
