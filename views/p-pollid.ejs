@@ -10,24 +10,33 @@
     <% include partials/_header.ejs %>
   </header>
 
-  <main>
+  <main class="friend-poll-page">
     <% include partials/_login-form.ejs %>
-    <div class="container row">
-      <div class="title-and-description col-md-6">
-        <h1 class="poll-title"><%= poll_name %></h1>
+    <div class="text-container">
+      <div class="title-and-description ">
+        <h1 class="poll-title" poll_id=<%= poll_id %>><%= poll_name %></h1>
         <p class="poll-description"><%= poll_description%></p>
         <p class="instructions">
-          Rank your choices in order of preference. When you're finished, click the SUBMIT button.
+          Drag your choices into the box in the order of your preference. Then, click the SUBMIT button.
         </p>
+        <div class="errors"></div>
       </div>
-
-    <!-- Only show as many as we need  -->
-      <section class="choice-container col-md-6">
+    </div>
+    <div class="choices-container row">
+      <section class="choice-container full">
+        <p class="full-title">Choices</p>
         <% for(let i = 0; i < choicesArr.length; i++) { %>
-        <div class="choice"> <%= choicesArr[i].choice %> </div>
+        <div class="choice" draggable="true" choice_id=<%= choicesArr[i].id %>>
+          <%= choicesArr[i].choice %>
+        </div>
         <%}%>
-        <button class="btn submit-ranks-btn" type="submit">SUBMIT</button>
       </section>
+      <section class="choice-container empty">
+        <p class="empty-title">My ranking</p>
+      </section>
+    </div>
+    <div class="btn-and-errors">
+      <button class="btn submit-ranks-btn" type="submit">SUBMIT</button>
     </div>
   </main>
 
