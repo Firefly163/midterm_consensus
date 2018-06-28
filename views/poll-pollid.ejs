@@ -34,9 +34,16 @@
 
 
     <!-- Replace this with the actual results  -->
-
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
     <img src="/images/logo.png">
   <!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
+    <!-- <% var data = choices %> -->
+  <script>
+    var data = <%- JSON.stringify(choices) %>
+    console.log(data);
+    // alert('hello!')
+    // drawChart(data);
+  </script>
 
   </main>
   <footer>

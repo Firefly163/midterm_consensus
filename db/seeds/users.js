@@ -29,8 +29,8 @@ exports.seed = function(knex, Promise) {
 
   function insertChoices(polls) {
     return knex('choices').insert([
-      {poll_id: polls[0].id, choice: 'Sushi', points: 0},
-      {poll_id: polls[0].id, choice: 'Pizza', points: 0},
+      {poll_id: polls[0].id, choice: 'Sushi', points: 10},
+      {poll_id: polls[0].id, choice: 'Pizza', points: 5},
       {poll_id: polls[1].id, choice: 'Water', points: 0},
       {poll_id: polls[1].id, choice: 'Juice', points: 0},
       {poll_id: polls[2].id, choice: 'Tag', points: 0},
