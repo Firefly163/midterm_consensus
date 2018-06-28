@@ -194,6 +194,7 @@ app.post("/poll/new", async (req, res) => {
       console.error(err)
       res.status(404);
     }
+  });
 
 // Take Poll page
 app.post("/poll/:poll_id/answers", (req, res) => {
