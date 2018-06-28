@@ -71,17 +71,32 @@ app.use(cookieSession({
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("root");
+  let navButtons;
+  if (!req.session.user_id) {
+    navButtons = ["login", "register"];
+    console.log("logged out")
+  } else {
+    navButtons = ["myPolls", "create", "logout"];
+    console.log("logged in")
+  }
+  let templateVars = {navButtons};
+  res.render("root", templateVars);
 });
 
 // Registration page
 app.get("/register", (req, res) => {
-  res.render("register");
+  if (req.session.user_id) {
+    res.redirect("/");
+    return;
+  }
+  let navButtons = ["login"];
+  let templateVars = {navButtons};
+  res.render("register", templateVars);
 });
 
 // Login page
 app.get("/login", (req, res) => {
-  res.render("root");
+  res.redirect("/");
 });
 
 // User home page
@@ -91,24 +106,33 @@ app.get("/poll", async (req, res) => {
     return;
   }
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
-  res.render("poll", {polls: userPolls});
+  let navButtons = ["create", "logout"];
+  res.render("poll", {polls: userPolls, navButtons: navButtons});
 });
 
 app.get("/poll/new", (req, res) => {
-  res.render("poll-new");
+  if (!req.session.userid) {
+    res.redirect("/")
+  }
+  let navButtons = ["myPolls", "logout"];
+  res.render("poll-new", {navButtons});
 });
 
 // Take Poll page
 app.get("/p/:friend_link", async (req, res) => {
+  let navButtons;
+  if (!req.session.user_id) {
+    navButtons = ["login", "register"];
+  } else {
+    navButtons = ["myPolls", "create", "logout"]
+  }
   let friend_link = req.params.friend_link;
   let poll_id = await dbfunctions.getPollId(friend_link);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id);
 
-  console.log(poll_description);
-
-  let templateVars = {poll_id, poll_name, poll_description, choicesArr}
+  let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons}
 
   res.render("p-pollid", templateVars);
 });
@@ -116,10 +140,11 @@ app.get("/p/:friend_link", async (req, res) => {
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
+  let navButtons = ["home", "create", "logout"];
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
   let choices = await dbfunctions.getChoicesArr(poll.id);
-  res.render('poll-pollid', {poll: poll, choices: choices});
+  res.render('poll-pollid', {poll, choices, navButtons});
 });
 
 //Delete Poll
@@ -213,11 +238,10 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
 
 
 //logout
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
-
 
 
 

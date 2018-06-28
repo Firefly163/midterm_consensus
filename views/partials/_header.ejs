@@ -4,7 +4,20 @@
     <h1> Consensus </h1>
   </div>
   <div class = "buttons col-md-4">
-    <button class="login-btn btn">Login</button>
-    <button class="register-btn btn">Register</button>
+    <% if (navButtons.includes("myPolls")) {%>
+      <button class="myPolls-btn btn">My Polls</button>
+    <%}%>
+    <% if (navButtons.includes("create")) {%>
+      <button class="create-btn btn">Create</button>
+    <%}%>
+    <% if (navButtons.includes("login")) {%>
+      <button class="login-btn btn">Login</button>
+    <%}%>
+    <% if (navButtons.includes("register")) {%>
+      <button class="register-btn btn">Register</button>
+    <%}%>
+    <% if (navButtons.includes("logout")) {%>
+      <button class="logout-btn btn">Logout</button>
+    <%}%>
   </div>
 </div>

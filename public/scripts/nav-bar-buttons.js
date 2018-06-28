@@ -6,4 +6,13 @@ $(document).ready(function() {
   $("header .register-btn").on("click", function(event) {
     window.location.href = "http://localhost:8080/register";
   })
+  $("header .create-btn").on("click", function(event) {
+    window.location.href = "http://localhost:8080/poll/new";
+  })
+  $("header .logout-btn").on("click", function(event) {
+    window.location.href = "http://localhost:8080/logout";
+  })
+  $("header .myPolls-btn").on("click", function(event) {
+    window.location.href = "http://localhost:8080/poll";
+  })
 });
