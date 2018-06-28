@@ -107,7 +107,7 @@ app.get("/p/:poll_id", async (req, res) => {
 
 
 // Admin Poll page
-app.get("/poll/:id", (req, res) => {
+app.get("/poll/:adminLink", (req, res) => {
   res.render("poll-pollid");
 });
 

@@ -49,7 +49,7 @@ module.exports = knex => ({
 
   getUserPolls: (userId) => {
     return knex()
-      .select('poll_name','id')
+      .select('poll_name','id', 'admin_link')
       .from('polls')
       .where('user_id','=', userId)
       .then(result => result)

@@ -14,7 +14,7 @@
     <article>
       <ul class="container">
         <% for(let poll of polls) { %>
-          <a href=<%="http://localhost:8080/poll/" + poll.id%> >
+          <a href=<%="http://localhost:8080/poll/" + poll.admin_link%> >
             <li class="item"><%= poll.poll_name%></li>
           </a>
           <% } %>
