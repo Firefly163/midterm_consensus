@@ -16,10 +16,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
 const dbfunctions = require("./library/db-functions.js")(knex);
-const mailgunData = require("./library/mailgun.js")
-var api_key       = 'e7ed6624e722cbcaa6ab25d9521ed0d0-e44cc7c1-fc9f2c72';
-var DOMAIN        = 'sandbox515189107de443848456b7c953829456.none';
-const mailgun     = require("mailgun-js")({apiKey: api_key, domain: DOMAIN});
+
 
 
 const currentUserID = "";
@@ -222,10 +219,7 @@ app.post("/logout", (req, res) => {
 });
 
 
-//---------------------------------------Send email when someone answers the poll
-mailgun.messages().send(mailgunData.mailgunData, function (error, body) {
-  console.log("-----------mailgun email", body);
-});
+
 
 
 app.listen(PORT, () => {
