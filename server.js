@@ -16,18 +16,18 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
 const secrets     = require("./secrets.js");
-const gmail       = require("./library/gmail.js");
+//const gmail       = require("./library/gmail.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
-const nodemailer  = require('nodemailer');
+// const nodemailer  = require('nodemailer');
 
 
-const transporter = nodemailer.createTransport({
- service: 'gmail',
- auth: {
-        user: 'consensus.poll.app@gmail.com',
-        pass: secrets.emailPassword
-    }
-});
+// const transporter = nodemailer.createTransport({
+//  service: 'gmail',
+//  auth: {
+//         user: 'consensus.poll.app@gmail.com',
+//         pass: secrets.emailPassword
+//     }
+// });
 
 const currentUserID = "";
 const userAuthenticated = false;
@@ -85,10 +85,8 @@ app.get("/", (req, res) => {
   let navButtons;
   if (!req.session.user_id) {
     navButtons = ["login", "register"];
-    console.log("logged out")
   } else {
     navButtons = ["myPolls", "create", "logout"];
-    console.log("logged in")
   }
   let templateVars = {navButtons};
   res.render("root", templateVars);
@@ -112,10 +110,9 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  let currentUserID = req.session.user_id;
-  if (authenticateUser()) {
-    res.redirect('/register');
-    return;
+  if (!req.session.user_id) {
+    res.redirect('/');
+    return
   }
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
   let navButtons = ["create", "logout"];
@@ -165,7 +162,7 @@ app.post("/poll/:adminLink", async (req, res) => {
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
   await dbfunctions.deletePoll(poll.id);
   res.redirect('/poll');
-};
+});
 
 app.get("/poll/:adminLink", (req, res) => {
   let currentUserID = req.session.user_id;
@@ -184,10 +181,14 @@ app.post("/login", async (req, res) => {
     res.status(400);
     return
   }
-  if (bcrypt.compareSync(req.body.password,
-    await dbfunctions.getUserPassword(req.body.email))) {
+  let hashedPassword = await dbfunctions.getUserPassword(req.body.email);
+  if (bcrypt.compareSync(req.body.password, hashedPassword)) {
     res.status(200);
-    console.log("logged in")
+    let user_id = await dbfunctions.getUserId(req.body.email);
+    req.session.user_id = user_id;
+
+    console.log("logged in");
+    res.redirect("/poll")
   } else {
     res.status(400);
   }
@@ -264,6 +265,7 @@ app.get("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
+
 
 
 app.listen(PORT, () => {
