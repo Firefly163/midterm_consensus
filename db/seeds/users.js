@@ -20,23 +20,23 @@ exports.seed = function(knex, Promise) {
 
   function insertPolls(users) {
     return knex('polls').insert([
-      {user_id: users[0].id, poll_name: 'To Eat?', description: 'choose what to eat', admin_link: '111111', friend_link:'222222', responses: 0},
-      {user_id: users[0].id, poll_name: 'To Drink?', description: 'choose what to drink', admin_link: '333333', friend_link:'444444', responses: 0},
-      {user_id: users[1].id, poll_name: 'To Play?', description: 'choose what to play', admin_link: '555555', friend_link:'666666', responses: 0},
-      {user_id: users[2].id, poll_name: 'To See?', description: 'choose what to see', admin_link: '777777', friend_link:'888888', responses: 0},
+      {user_id: users[0].id, poll_name: 'To Eat?', description: 'choose what to eat', admin_link: '111111', friend_link:'222222', responses: 4},
+      {user_id: users[0].id, poll_name: 'To Drink?', description: 'choose what to drink', admin_link: '333333', friend_link:'444444', responses: 2},
+      {user_id: users[1].id, poll_name: 'To Play?', description: 'choose what to play', admin_link: '555555', friend_link:'666666', responses: 4},
+      {user_id: users[2].id, poll_name: 'To See?', description: 'choose what to see', admin_link: '777777', friend_link:'888888', responses: 5},
     ]).returning('*');
   }
 
   function insertChoices(polls) {
     return knex('choices').insert([
       {poll_id: polls[0].id, choice: 'Sushi', points: 10},
-      {poll_id: polls[0].id, choice: 'Pizza', points: 5},
-      {poll_id: polls[1].id, choice: 'Water', points: 0},
-      {poll_id: polls[1].id, choice: 'Juice', points: 0},
-      {poll_id: polls[2].id, choice: 'Tag', points: 0},
-      {poll_id: polls[2].id, choice: 'Board games', points: 0},
-      {poll_id: polls[3].id, choice: 'Movie', points: 0},
-      {poll_id: polls[3].id, choice: 'Musical', points: 0},
+      {poll_id: polls[0].id, choice: 'Pizza', points: 8},
+      {poll_id: polls[1].id, choice: 'Water', points: 4},
+      {poll_id: polls[1].id, choice: 'Juice', points: 3},
+      {poll_id: polls[2].id, choice: 'Tag', points: 12},
+      {poll_id: polls[2].id, choice: 'Board games', points: 5},
+      {poll_id: polls[3].id, choice: 'Movie', points: 7},
+      {poll_id: polls[3].id, choice: 'Musical', points: 10},
     ]);
   }
 

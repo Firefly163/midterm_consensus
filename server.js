@@ -87,12 +87,11 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  // if (!req.session.user_id) {
-  //   res.redirect('/register');
-  //   return;
-  // }
-  let userPolls = await dbfunctions.getUserPolls(29);
-  console.log("QQQQQQQQQQ",userPolls);
+  if (!req.session.user_id) {
+    res.redirect('/register');
+    return;
+  }
+  let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
   let data = await dbfunctions.getChoicesArrS(userPolls.map(elm => elm.id));
   res.render("poll", {polls: userPolls, data: data});
 });
@@ -119,29 +118,11 @@ app.get("/p/:friend_link", async (req, res) => {
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
-  console.log('HEllo!!!!!!!!');
   console.log(req.session.user_id);
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
   let choices = await dbfunctions.getChoicesArr(poll.id);
   res.render('poll-pollid', {poll: poll, choices: choices});
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
-      ]);
-      var options = {
-        title: 'My Daily Activities'
-      };
-      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-      chart.draw(data, options);
-    }
 });
 
 //Delete Poll
