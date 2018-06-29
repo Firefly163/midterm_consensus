@@ -31,6 +31,13 @@ module.exports = knex => ({
       .then(result => result.admin_link);
   },
 
+  getFriendLink: (adminLink) => {
+    return knex.first("friend_link")
+    .from("polls")
+    .where("admin_link", "=", adminLink)
+      .then(result => result.friend_link);
+  },
+
   getUserPassword: (email) => {
     return knex.first("password")
     .from("users")

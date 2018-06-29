@@ -170,25 +170,19 @@ app.get("/p/:friend_link", async (req, res) => {
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
   if (await authenticate(req.session.user_id) !== "logged-in") {
-    let navButtons = ["login", "register"];
+    let navButtons = ["login", "register",];
     res.render('not-logged-in', {navButtons});
   }
-  let navButtons = ["home", "create", "logout"];
+  let navButtons = ["myPolls", "create", "logout"];
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  let friendLink = await dbfunctions.getFriendLink(adminLink)
   if (req.session.user_id !== poll.user_id) {
     res.render('not-yours', {navButtons});
   }
   let choices = await dbfunctions.getChoicesArr(poll.id);
-  res.render('poll-pollid', {poll, choices, navButtons});
-});
-
-// Delete Poll
-app.post("/poll/:adminLink/delete", async (req, res) => {
-  let adminLink = req.params.adminLink;
-  let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  await dbfunctions.deletePoll(poll.id);
-  res.json({});
+  let links = {friendLink: `http://localhost:8080/poll/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
+  res.render('poll-pollid', {poll, choices, navButtons, links});
 });
 
 
@@ -315,8 +309,6 @@ app.post("/poll/:adminLink", async (req, res) => {
   await dbfunctions.deletePoll(poll.id);
   res.redirect('/poll');
 });
-
-
 
 //logout
 app.get("/logout", (req, res) => {

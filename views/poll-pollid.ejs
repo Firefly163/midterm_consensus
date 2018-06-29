@@ -11,7 +11,6 @@
   </header>
   <main>
 
-    <!-- TOGGLE THIS IN AND OUT WITH THE LOGIN BUTTON -->
     <form class="login-form" action="/login" method="POST">
       email: <input type ="email" name="email">
       <br>
@@ -33,11 +32,16 @@
       <input id="delete_poll" type="submit" name="" value="Delete">
     </form> -->
 
+    <section class="link-section">
+      <h3>Your admin link: </h3>
+      <p id="admin-link"><%= links.adminLink %></p>
+      <h3>Your shareable link: </h3>
+      <p id="friend-link"><%= links.friendLink %></p>
+    </section>
 
     <!-- Replace this with the actual results  -->
     <div id="piechart" style="width: 900px; height: 500px;"></div>
     <!-- <img src="/images/logo.png"> -->
-  <!-- Only show as many as we need OR MAYBE THEY ARE INCLUDED IN THE CHART??? -->
   <script>
     var data = <%- JSON.stringify(choices) %>
     renderChart(data, 'piechart');
