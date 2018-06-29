@@ -2,6 +2,9 @@
   <div class="logo-and-header col-md-8">
     <div class="logo"></div>
     <h1> Consensus </h1>
+    <% if (user !== "") {%>
+      <p> Welcome, <%= user%>
+    <%}%>
   </div>
   <div class = "buttons col-md-4">
     <% if (navButtons.includes("myPolls")) {%>
