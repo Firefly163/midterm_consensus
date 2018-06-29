@@ -7,6 +7,16 @@ module.exports = knex => ({
       .then(result => result.id);
   },
 
+  getAllUserIds: () => {
+    return knex.select("id")
+    .from("users")
+    .then(result => {
+      let ids = [];
+      result.forEach(el => ids.push(el.id));
+      return ids;
+    });
+  },
+
   getPollId: (pollName) => {
     return knex.first("id")
     .from("polls")
