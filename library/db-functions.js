@@ -7,6 +7,13 @@ module.exports = knex => ({
       .then(result => result.id);
   },
 
+  getUserName: (userId) => {
+    return knex.first("name")
+    .from("users")
+    .where("id", "=", userId)
+      .then(result => result.name);
+  },
+
   getAllUserIds: () => {
     return knex.select("id")
     .from("users")

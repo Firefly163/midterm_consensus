@@ -91,9 +91,12 @@ app.get("/", async (req, res) => {
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"];
-  }
-  let templateVars = {navButtons};
+
+  let user = await dbfunctions.getUserName(req.session.user_id)
+  console.log("user", user)
+  let templateVars = {navButtons, user};
   res.render("root", templateVars);
+}
 });
 
 // Registration page
@@ -262,7 +265,7 @@ app.post("/poll/create", async (req, res) => {
       }
         return Promise.resolve()
     }));
-    // Send email to creator with admin and friend links --------------------------------------------
+    // Send email to creator with admin and friend links
    const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
    console.log("about to send email", pollId)
    const mailOptions = {
