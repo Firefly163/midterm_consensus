@@ -231,7 +231,17 @@ app.post("/register", (req, res) => {
 // Create Poll page
 app.post("/poll/create", async (req, res) => {
   let choiceNum = "";
-  const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
+  console.log(req.body);
+  const choiceArray = req.body.choice.map(elm => [elm]);
+  console.log(choiceArray);
+  for(let i = 0; i < choiceArray.length; i++) {
+    choiceArray[i].push(req.body.desc[i])
+  }
+  console.log(choiceArray);
+
+  // const choiceArray = req.body.map(elm => [req.body.choice, req.body.desc]);
+  // console.log(choiceArray);
+  // const choiceArray = [[req.body.choice1, req.body.desc1], [req.body.choice2, req.body.desc2], [req.body.choice3, req.body.desc3], [req.body.choice4, req.body.desc4], [req.body.choice5, req.body.desc5], [req.body.choice6, req.body.desc6]];
     try {
     const adminLink = makeRandomString();
     const adminLinkFull = `http://localhost:8080/poll/${adminLink}`
@@ -249,7 +259,8 @@ app.post("/poll/create", async (req, res) => {
       if (currentChoice) {
         const choiceData = {
           poll_id: pollId,
-          choice: currentChoice,
+          choice: currentChoice[0],
+          description: currentChoice[1],
           points: 0
         }
         return knex("choices").insert(choiceData);
