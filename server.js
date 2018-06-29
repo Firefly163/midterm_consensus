@@ -293,11 +293,8 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
-<<<<<<< HEAD
 });
-=======
-})
->>>>>>> 48daf03ed30a40d56a8e17b6f66fef06e152031f
+
 
 
 //logout
