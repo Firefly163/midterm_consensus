@@ -118,7 +118,14 @@ module.exports = knex => ({
     .first("email")
     .where("polls.id", "=", poll_id)
     .then(result => result.email)
-  }
+  },
+
+  getChoicesArrS: (pollsIds) => {
+    return knex.select("*")
+      .from("choices")
+      .whereIn('poll_id', pollsIds)
+      .then(result => result);
+  },
 
 });
 

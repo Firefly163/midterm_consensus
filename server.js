@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 
+
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
@@ -18,6 +19,7 @@ const knexLogger  = require("knex-logger");
 const secrets     = require("./secrets.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
 const nodemailer  = require('nodemailer');
+
 
 const transporter = nodemailer.createTransport({
  service: 'gmail',
@@ -114,7 +116,8 @@ app.get("/poll", async (req, res) => {
   }
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
   let navButtons = ["create", "logout"];
-  res.render("poll", {polls: userPolls, navButtons: navButtons});
+  let data = await dbfunctions.getChoicesArrS(userPolls.map(elm => elm.id));
+  res.render("poll", {polls: userPolls, data: data, navButtons: navButtons});
 });
 
 app.get("/poll/new", (req, res) => {
