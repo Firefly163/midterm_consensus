@@ -163,10 +163,17 @@ app.get("/p/:friend_link", async (req, res) => {
   } else {
     navButtons = ["myPolls", "create", "logout"]
   }
+  let allFriendLinks = await dbfunctions.getAllFriendLinks();
   let friendLink = req.params.friend_link;
+
+  if (!allFriendLinks.includes(friendLink)) {
+    res.render("does-not-exist", {navButtons})
+  }
+
   let friendLinkFull = `http://localhost:8080/${friendLink}`
   let adminLink = await dbfunctions.getAdminLink(friendLink);
   let adminLinkFull = `http://localhost:8080/poll/${adminLink}`
+
   let poll_id = await dbfunctions.getPollId(friendLink);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
@@ -201,11 +208,19 @@ app.get("/poll/:adminLink", async (req, res) => {
   }
   let navButtons = ["myPolls", "create", "logout"];
   let adminLink = req.params.adminLink;
+  let allAdminLinks = await dbfunctions.getAllAdminLinks();
+
+
+  if (!allAdminLinks.includes(adminLink)) {
+    res.render('does-not-exist', {navButtons});
+  }
+
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  let friendLink = await dbfunctions.getFriendLink(adminLink)
+  let friendLink = await dbfunctions.getFriendLink(adminLink);
   if (req.session.user_id !== poll.user_id) {
     res.render('not-yours', {navButtons});
   }
+
   let choices = await dbfunctions.getChoicesArr(poll.id);
   let links = {friendLink: `http://localhost:8080/poll/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
   res.render('poll-pollid', {poll, choices, navButtons, links});

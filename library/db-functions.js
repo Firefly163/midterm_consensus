@@ -165,6 +165,26 @@ module.exports = knex => ({
     .then(result => result)
   },
 
+  getAllFriendLinks: () => {
+    return knex.select("friend_link")
+    .from("polls")
+    .then(result => {
+      let friendLinks = [];
+      result.forEach(el => friendLinks.push(el.friend_link));
+      return friendLinks;
+    });
+  },
+
+  getAllAdminLinks: () => {
+    return knex.select("admin_link")
+    .from("polls")
+    .then(result => {
+      let adminLinks = [];
+      result.forEach(el => adminLinks.push(el.admin_link));
+      return adminLinks;
+    });
+  },
+
 
 });
 
