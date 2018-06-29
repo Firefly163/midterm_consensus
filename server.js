@@ -85,22 +85,30 @@ app.use(cookieSession({
 
 // Home page
 app.get("/", async (req, res) => {
+
   let navButtons;
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let auth = await authenticate(req.session.user_id);
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"];
+  }
 
-  let user = await dbfunctions.getUserName(req.session.user_id)
-  console.log("user", user)
-  let templateVars = {navButtons, user};
+  let templateVars = {navButtons};
   res.render("root", templateVars);
-}
+
 });
 
 // Registration page
 app.get("/register", async (req, res) => {
-  if (await authenticate(req.session.user_id) === "logged-in") {
+  let auth = await authenticate(req.session.user_id)
+  if (auth === "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     res.redirect("/");
     return;
   }
@@ -116,7 +124,11 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let auth = await authenticate(req.session.user_id)
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     let navButtons = ["login", "register"];
     res.render('not-logged-in', {navButtons});
   }
@@ -127,7 +139,11 @@ app.get("/poll", async (req, res) => {
 });
 
 app.get("/poll/create", async (req, res) => {
+  let auth = await authenticate(req.session.user_id)
   if (await authenticate(req.session.user_id) !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     let navButtons = ["login", "register"];
     res.render('not-logged-in', {navButtons});
   }
@@ -138,7 +154,11 @@ app.get("/poll/create", async (req, res) => {
 // Take Poll page
 app.get("/p/:friend_link", async (req, res) => {
   let navButtons;
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let auth = await authenticate(req.session.user_id);
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"]
@@ -171,7 +191,11 @@ app.get("/p/:friend_link", async (req, res) => {
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
+  let auth = await authenticate(req.session.user_id);
   if (await authenticate(req.session.user_id) !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     let navButtons = ["login", "register",];
     res.render('not-logged-in', {navButtons});
   }
