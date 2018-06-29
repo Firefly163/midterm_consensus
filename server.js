@@ -172,13 +172,9 @@ app.get("/poll/:adminLink", async (req, res) => {
 // Delete Poll
 app.post("/poll/:adminLink/delete", async (req, res) => {
   let adminLink = req.params.adminLink;
-  console.log("QQQQQQQAAAAA", adminLink);
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  console.log("AAAAQQQAAAAAA", poll);
   await dbfunctions.deletePoll(poll.id);
-  console.log("Hellooooooo!!!!!!")
-  // res.redirect("/poll");
-  res.send('AAAAAAA');
+  res.json({});
 });
 
 app.get("/poll/:adminLink", (req, res) => {

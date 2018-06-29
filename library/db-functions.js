@@ -75,7 +75,7 @@ module.exports = knex => ({
       .then(result => result[0])
   },
   deletePoll: (pollId) => {
-     knex('choices')
+    knex('choices')
       .where('poll_id','=', pollId)
       .del()
       .then(() => knex('polls')
