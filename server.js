@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 
+
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
@@ -19,6 +20,7 @@ const secrets     = require("./secrets.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
 const nodemailer  = require('nodemailer');
 
+
 const transporter = nodemailer.createTransport({
  service: 'gmail',
  auth: {
@@ -27,16 +29,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const currentUserID = "";
-const userAuthenticated = false;
-
-function authenticateUser() { //--------------------on all logged in pgs---------------
-  if (currentUserID === dbfunctions.getUserId(email)) {
-    userAuthenticated = true;
-  }
-}
-
- function makeRandomString() {
+function makeRandomString() {
   let randomArray = []
   let choices ="qwertyuioplkjhgfdsazxcvbnm1234567890"
   for (let i = 0; i < 6; i ++) {
@@ -46,6 +39,21 @@ function authenticateUser() { //--------------------on all logged in pgs--------
   let randomString = randomArray.join("");
   return randomString;
 }
+
+async function authenticate (useridCookie) {
+  if (!useridCookie) {
+    return "not-logged-in";
+  }
+  let userIdArr = await dbfunctions.getAllUserIds();
+  if (!userIdArr.includes(useridCookie)) {
+    return "user-doesnt-exist"
+  }
+  else {
+    return "logged-in"
+  }
+}
+
+
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -78,10 +86,9 @@ app.use(cookieSession({
 }))
 
 // Home page
-app.get("/", (req, res) => {
-
+app.get("/", async (req, res) => {
   let navButtons;
-  if (!req.session.user_id) {
+  if (await authenticate(req.session.user_id) !== "logged-in") {
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"];
@@ -91,8 +98,8 @@ app.get("/", (req, res) => {
 });
 
 // Registration page
-app.get("/register", (req, res) => {
-  if (req.session.user_id) {
+app.get("/register", async (req, res) => {
+  if (await authenticate(req.session.user_id) === "logged-in") {
     res.redirect("/");
     return;
   }
@@ -108,18 +115,20 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  if (!req.session.user_id) {
-    res.redirect('/');
-    return
+  if (await authenticate(req.session.user_id) !== "logged-in") {
+    let navButtons = ["login", "register"];
+    res.render('not-logged-in', {navButtons});
   }
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
   let navButtons = ["create", "logout"];
-  res.render("poll", {polls: userPolls, navButtons: navButtons});
+  let data = await dbfunctions.getChoicesArrS(userPolls.map(elm => elm.id));
+  res.render("poll", {polls: userPolls, data: data, navButtons: navButtons});
 });
 
-app.get("/poll/new", (req, res) => {
-  if (!req.session.user_id) {
-    res.redirect("/")
+app.get("/poll/create", async (req, res) => {
+  if (await authenticate(req.session.user_id) !== "logged-in") {
+    let navButtons = ["login", "register"];
+    res.render('not-logged-in', {navButtons});
   }
   let navButtons = ["myPolls", "logout"];
   res.render("poll-new", {navButtons});
@@ -128,7 +137,7 @@ app.get("/poll/new", (req, res) => {
 // Take Poll page
 app.get("/p/:friend_link", async (req, res) => {
   let navButtons;
-  if (!req.session.user_id) {
+  if (await authenticate(req.session.user_id) !== "logged-in") {
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"]
@@ -162,9 +171,16 @@ app.get("/p/:friend_link", async (req, res) => {
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
+  if (await authenticate(req.session.user_id) !== "logged-in") {
+    let navButtons = ["login", "register"];
+    res.render('not-logged-in', {navButtons});
+  }
   let navButtons = ["home", "create", "logout"];
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  if (req.session.user_id !== poll.user_id) {
+    res.render('not-yours', {navButtons});
+  }
   let choices = await dbfunctions.getChoicesArr(poll.id);
   res.render('poll-pollid', {poll, choices, navButtons});
 });
@@ -177,16 +193,6 @@ app.post("/poll/:adminLink", async (req, res) => {
   res.redirect('/poll');
 });
 
-app.get("/poll/:adminLink", (req, res) => {
-  let currentUserID = req.session.user_id;
-  if (authenticateUser()) {
-  res.render("poll-pollid");
-  } else {
-    res.status(400);
-    return
-  }
-
-});
 
 // Login page
 app.post("/login", async (req, res) => {
@@ -225,7 +231,7 @@ app.post("/register", (req, res) => {
 });
 
 // Create Poll page
-app.post("/poll/new", async (req, res) => {
+app.post("/poll/create", async (req, res) => {
   let choiceNum = "";
   const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
     try {
@@ -287,7 +293,11 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
+<<<<<<< HEAD
 });
+=======
+})
+>>>>>>> 48daf03ed30a40d56a8e17b6f66fef06e152031f
 
 
 //logout

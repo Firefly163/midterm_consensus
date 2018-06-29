@@ -7,6 +7,16 @@ module.exports = knex => ({
       .then(result => result.id);
   },
 
+  getAllUserIds: () => {
+    return knex.select("id")
+    .from("users")
+    .then(result => {
+      let ids = [];
+      result.forEach(el => ids.push(el.id));
+      return ids;
+    });
+  },
+
   getPollId: (pollName) => {
     return knex.first("id")
     .from("polls")
@@ -128,6 +138,18 @@ module.exports = knex => ({
     .first("email")
     .where("polls.id", "=", poll_id)
     .then(result => result.email)
+<<<<<<< HEAD
 }
+=======
+  },
+
+  getChoicesArrS: (pollsIds) => {
+    return knex.select("*")
+      .from("choices")
+      .whereIn('poll_id', pollsIds)
+      .then(result => result);
+  },
+
+>>>>>>> 48daf03ed30a40d56a8e17b6f66fef06e152031f
 });
 
