@@ -138,7 +138,6 @@ module.exports = knex => ({
     .first("email")
     .where("polls.id", "=", poll_id)
     .then(result => result.email)
-
   },
 
   getChoicesArrS: (pollsIds) => {

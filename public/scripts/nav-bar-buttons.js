@@ -7,7 +7,7 @@ $(document).ready(function() {
     window.location.href = "http://localhost:8080/register";
   })
   $("header .create-btn").on("click", function(event) {
-    window.location.href = "http://localhost:8080/poll/new";
+    window.location.href = "http://localhost:8080/poll/create";
   })
   $("header .logout-btn").on("click", function(event) {
     window.location.href = "http://localhost:8080/logout";
