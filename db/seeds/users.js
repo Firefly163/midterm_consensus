@@ -1,3 +1,18 @@
+exports.up = function(knex, Promise) {
+  return knex.schema.table('choices', function (table) {
+    table.string('description');
+  })
+};
+
+exports.down = function(knex, Promise) {
+  return knex.schema.table('choices', function (table) {
+   table.dropColumn('description');
+  })
+
+};
+
+
+
 exports.seed = function(knex, Promise) {
   function deleteChoices() {
     return knex('choices').del()
@@ -29,14 +44,14 @@ exports.seed = function(knex, Promise) {
 
   function insertChoices(polls) {
     return knex('choices').insert([
-      {poll_id: polls[0].id, choice: 'Sushi', points: 10},
-      {poll_id: polls[0].id, choice: 'Pizza', points: 8},
-      {poll_id: polls[1].id, choice: 'Water', points: 4},
-      {poll_id: polls[1].id, choice: 'Juice', points: 3},
-      {poll_id: polls[2].id, choice: 'Tag', points: 12},
-      {poll_id: polls[2].id, choice: 'Board games', points: 5},
-      {poll_id: polls[3].id, choice: 'Movie', points: 7},
-      {poll_id: polls[3].id, choice: 'Musical', points: 10},
+      {poll_id: polls[0].id, choice: 'Sushi', points: 10, description: 'I like sushi'},
+      {poll_id: polls[0].id, choice: 'Pizza', points: 8, description: 'Pizza will be Ok'},
+      {poll_id: polls[1].id, choice: 'Water', points: 4, description: 'I prefer beer'},
+      {poll_id: polls[1].id, choice: 'Juice', points: 3, description: 'I like apple juice'},
+      {poll_id: polls[2].id, choice: 'Tag', points: 12, description: 'Lets play Tag'},
+      {poll_id: polls[2].id, choice: 'Board games', points: 5, description: 'Lets play chess'},
+      {poll_id: polls[3].id, choice: 'Movie', points: 7, description: 'Lock, Stock and Two Smoking Barrels'},
+      {poll_id: polls[3].id, choice: 'Musical', points: 10, description: 'Folk fest'},
     ]);
   }
 

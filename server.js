@@ -183,7 +183,6 @@ app.get("/poll/:adminLink", async (req, res) => {
   res.render('poll-pollid', {poll, choices, navButtons});
 });
 
-<<<<<<< HEAD
 // Delete Poll
 app.post("/poll/:adminLink/delete", async (req, res) => {
   let adminLink = req.params.adminLink;
@@ -191,9 +190,6 @@ app.post("/poll/:adminLink/delete", async (req, res) => {
   await dbfunctions.deletePoll(poll.id);
   res.json({});
 });
-=======
-
->>>>>>> create-new-poll
 
 
 // Login page
@@ -298,10 +294,7 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
 });
-<<<<<<< HEAD
 
-=======
->>>>>>> create-new-poll
 
 //Delete Poll
 app.post("/poll/:adminLink", async (req, res) => {
