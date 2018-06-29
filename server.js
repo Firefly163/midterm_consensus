@@ -193,21 +193,33 @@ app.post("/poll/:adminLink", async (req, res) => {
 
 // Login page
 app.post("/login", async (req, res) => {
-  if (req.body.email === "" || req.body.password === "") {
-    res.status(400);
-    return
-  }
-  let hashedPassword = await dbfunctions.getUserPassword(req.body.email);
-  if (bcrypt.compareSync(req.body.password, hashedPassword)) {
-    res.status(200);
-    let user_id = await dbfunctions.getUserId(req.body.email);
-    req.session.user_id = user_id;
+  let allUsers = await dbfunctions.getUsers();
 
-    console.log("logged in");
-    res.redirect("/poll")
+  let allEmails = [];
+  allUsers.forEach(user => allEmails.push(user.email));
+  let result = {};
+
+  if (!allEmails.includes(req.body.email)) {
+    result.error = "email";
+  } else if (!bcrypt.compareSync(req.body.password, await dbfunctions.getUserPassword(req.body.email))) {
+    result.error = "password"
   } else {
-    res.status(400);
+    req.session.user_id = await dbfunctions.getUserId(req.body.email);
+    result.error = "none"
   }
+
+  res.json(result)
+
+  // if (bcrypt.compareSync(req.body.password, hashedPassword)) {
+  //   res.status(200);
+  //   let user_id = await dbfunctions.getUserId(req.body.email);
+  //   req.session.user_id = user_id;
+
+  //   console.log("logged in");
+  //   res.redirect("/poll")
+  // } else {
+  //   res.status(400);
+  // }
 });
 
 // Registration page
@@ -275,6 +287,8 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
 })
+
+
 
 
 //logout

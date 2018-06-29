@@ -137,5 +137,12 @@ module.exports = knex => ({
       .then(result => result);
   },
 
+  getUsers: () => {
+    return knex.select('*')
+    .from("users")
+    .then(result => result)
+  },
+
+
 });
 
