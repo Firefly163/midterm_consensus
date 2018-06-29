@@ -134,10 +134,13 @@ app.get("/p/:friend_link", async (req, res) => {
     navButtons = ["myPolls", "create", "logout"]
   }
   let friend_link = req.params.friend_link;
+  let friend_link_full = `http://localhost:8080/${friend_link}`
+  let admin_link = await dbfunctions.getAdminLink(friend_link);
+  let admin_link_full = `http://localhost:8080/poll/${admin_link}`
   let poll_id = await dbfunctions.getPollId(friend_link);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
-  let choicesArr = await dbfunctions.getChoicesArr(poll_id);
+  let choicesArr = await dbfunctions.getChoicesArr(poll_id)
   let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons}
   res.render("p-pollid", templateVars);
  //Send email to creator when someone answers the poll
@@ -146,13 +149,13 @@ app.get("/p/:friend_link", async (req, res) => {
     from: 'consensus.poll.app@gmail.com',
     to: creatorEmail,
     subject: "Someone took your poll!",
-    html: "A user has taken your poll. Log in to <a href='http://localhost:8080/'>Consensus</a> to see the results!"
+    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${admin_link_full}'>here</a> to see the results!`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
    if(err)
      console.log(err)
    else
-     console.log("Sent an email", info);
+     console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
   });
 });
 
@@ -226,8 +229,10 @@ app.post("/poll/new", async (req, res) => {
   let choiceNum = "";
   const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
     try {
-    const adminLink = makeRandomString();
-    const friendLink =  makeRandomString();
+    const adminLink = await makeRandomString();
+    const admin_link_full = `http://localhost:8080/p/${admin_link}`
+    const friendLink =  await makeRandomString();
+    const friend_link_full = `http://localhost:8080/${friend_link}`
     const pollInsertResult = await knex("polls").insert({
       user_id: req.session.user_id,
       poll_name: req.body.title,
@@ -235,8 +240,9 @@ app.post("/poll/new", async (req, res) => {
       admin_link: adminLink,
       friend_link: friendLink
     });
+    await console.log("poll insert", pollInsertResult)
     const pollId = await dbfunctions.getPollId(req.body.title);
-    await Promise.all(choiceArray.map( currentChoice => {
+    await Promise.all(choiceArray.map(currentChoice => {
       if (currentChoice) {
         const choiceData = {
           poll_id: pollId,
@@ -247,6 +253,20 @@ app.post("/poll/new", async (req, res) => {
       }
         return Promise.resolve()
     }));
+    // Send email to creator with admin and friend links --------------------------------------------
+   const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
+   const mailOptions = {
+    from: 'consensus.poll.app@gmail.com',
+    to: creatorEmail,
+    subject: "You have created a poll!",
+    html: `Congratulations on creating a poll. Click <a href='${admin_link_full}'>here</a> to manage your poll and see results (when  you get some). Here is a link you can send to your friends: <br> ${friend_link_full}`
+  };
+  await transporter.sendMail(mailOptions, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log("Sent an email", info, "message", gmail.newPollMsg);
+  });
     res.render("poll-new");
     } catch (err) {
       console.error(err)
@@ -255,7 +275,6 @@ app.post("/poll/new", async (req, res) => {
 });
 
 // Take Poll page
-
 app.post("/poll/:poll_id/answers", async (req, res) => {
   let newPointsObj = req.body;
   let poll_id = req.params.poll_id;
@@ -268,13 +287,7 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
-})
-
-
-
-
-
-
+});
 
 
 //logout

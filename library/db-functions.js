@@ -14,6 +14,13 @@ module.exports = knex => ({
       .then(result => result.id);
   },
 
+   getAdminLink: (friendLink) => {
+    return knex.first("admin_link")
+    .from("polls")
+    .where("friend_link", "=", friendLink)
+      .then(result => result.admin_link);
+  },
+
   getUserPassword: (email) => {
     return knex.first("password")
     .from("users")
@@ -53,6 +60,7 @@ module.exports = knex => ({
     .where('friend_link', '=', friend_link)
       .then(result => result.id);
   },
+
   getPollDescription: (pollid) => {
     return knex.first("description")
     .from("polls")
@@ -67,6 +75,7 @@ module.exports = knex => ({
       .where('user_id','=', userId)
       .then(result => result)
   },
+
   getPollByAdmLink: (adminLink) => {
     return knex()
       .select('*')
@@ -74,6 +83,7 @@ module.exports = knex => ({
       .where('admin_link', '=', adminLink)
       .then(result => result[0])
   },
+
   deletePoll: (pollId) => {
     knex('choices')
       .where('poll_id','=', pollId)
@@ -118,7 +128,6 @@ module.exports = knex => ({
     .first("email")
     .where("polls.id", "=", poll_id)
     .then(result => result.email)
-  }
-
+}
 });
 
