@@ -28,9 +28,10 @@
         <p class="choice1"><%= elm.choice %></p>
       <% } %>
     </section>
-    <form method="POST" action="/poll/<%= poll.admin_link%>">
+    <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
+    <!-- <form method="POST" action="/poll/<%= poll.admin_link%>">
       <input id="delete_poll" type="submit" name="" value="Delete">
-    </form>
+    </form> -->
 
 
     <!-- Replace this with the actual results  -->
