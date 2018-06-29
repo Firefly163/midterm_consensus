@@ -48,6 +48,14 @@ function authenticateUser() { //--------------------on all logged in pgs--------
   return randomString;
 }
 
+const function getCreatorEmail (userid) {
+  return knex.first("email")
+  .from("users")
+  .where("user_id", "=", userid)
+  .then(result => result.email);
+  console.log("email", result.email)
+};
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -120,12 +128,16 @@ app.get("/p/:poll_id", async (req, res) => {
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id);
-
   console.log(poll_description);
-
   let templateVars = {poll_name, poll_description, choicesArr}
-
   res.render("p-pollid", templateVars);
+ //Send email when someone answers the poll
+  await transporter.sendMail(gmail.gmailData, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+  });
 });
 
 
@@ -214,6 +226,18 @@ app.post("/poll/:id", (req, res) => {
 
 // Admin Poll page ------------------this path will come from the friend_link in db
 app.post("/poll/:id", (req, res) => {
+
+
+
+function getCreator async (pollId) {
+  return knex.first("user_id")
+  .from("polls")
+  .where("poll_id", "=", pollId)
+  .then(result => result.user_id);
+  console.log("user id", result.user_id)
+  await getCreatorEmail(result.user_id)
+};
+
   res.render("p-poll");
 });
 
@@ -224,13 +248,6 @@ app.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-//---------------------------------------Send email when someone answers the poll
-transporter.sendMail(gmail.gmailData, function (err, info) {
-   if(err)
-     console.log(err)
-   else
-     console.log(info);
-});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
