@@ -16,7 +16,6 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
 const secrets     = require("./secrets.js");
-const gmail       = require("./library/gmail.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
 const nodemailer  = require('nodemailer');
 
@@ -47,15 +46,6 @@ function authenticateUser() { //--------------------on all logged in pgs--------
   let randomString = randomArray.join("");
   return randomString;
 }
-
-function getCreator async (pollId) {
-  return knex.first("user_id")
-  .from("polls")
-  .where("poll_id", "=", pollId)
-  .then(result => result.user_id);
-  console.log("user id", result.user_id)
-  await getCreatorEmail(result.user_id)
-};
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -128,7 +118,7 @@ app.get("/poll", async (req, res) => {
 });
 
 app.get("/poll/new", (req, res) => {
-  if (!req.session.userid) {
+  if (!req.session.user_id) {
     res.redirect("/")
   }
   let navButtons = ["myPolls", "logout"];
@@ -150,20 +140,19 @@ app.get("/p/:friend_link", async (req, res) => {
   let choicesArr = await dbfunctions.getChoicesArr(poll_id);
   let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons}
   res.render("p-pollid", templateVars);
- //Send email when someone answers the poll
- const creatorEmail = "";
-const mailOptions = {
-  from: 'consensus.poll.app@gmail.com',
-  to: creatorEmail,
-  subject: "Someone took your poll!",
-  html: "A user has taken your poll. Log in to <a href='http://localhost:8080/'>Consensus</a> to see the results!"
-};
-
-  await transporter.sendMail(gmailData, function (err, info) {
+ //Send email to creator when someone answers the poll
+   const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
+   const mailOptions = {
+    from: 'consensus.poll.app@gmail.com',
+    to: creatorEmail,
+    subject: "Someone took your poll!",
+    html: "A user has taken your poll. Log in to <a href='http://localhost:8080/'>Consensus</a> to see the results!"
+  };
+  await transporter.sendMail(mailOptions, function (err, info) {
    if(err)
      console.log(err)
    else
-     console.log(info);
+     console.log("Sent an email", info);
   });
 });
 

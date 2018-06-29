@@ -110,6 +110,14 @@ module.exports = knex => ({
     .where('id', '=', poll_id)
     .update({responses: newRes})
     .then();
+  },
+
+  getCreatorEmail: (poll_id) => {
+    return knex('polls')
+    .join('users', 'polls.user_id', '=', 'users.id'  )
+    .first("email")
+    .where("polls.id", "=", poll_id)
+    .then(result => result.email)
   }
 
 });
