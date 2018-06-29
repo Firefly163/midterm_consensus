@@ -16,18 +16,17 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
 const secrets     = require("./secrets.js");
-//const gmail       = require("./library/gmail.js");
+const gmail       = require("./library/gmail.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
-// const nodemailer  = require('nodemailer');
+const nodemailer  = require('nodemailer');
 
-
-// const transporter = nodemailer.createTransport({
-//  service: 'gmail',
-//  auth: {
-//         user: 'consensus.poll.app@gmail.com',
-//         pass: secrets.emailPassword
-//     }
-// });
+const transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'consensus.poll.app@gmail.com',
+        pass: secrets.emailPassword
+    }
+});
 
 const currentUserID = "";
 const userAuthenticated = false;
@@ -48,6 +47,15 @@ function authenticateUser() { //--------------------on all logged in pgs--------
   let randomString = randomArray.join("");
   return randomString;
 }
+
+function getCreator async (pollId) {
+  return knex.first("user_id")
+  .from("polls")
+  .where("poll_id", "=", pollId)
+  .then(result => result.user_id);
+  console.log("user id", result.user_id)
+  await getCreatorEmail(result.user_id)
+};
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -140,10 +148,23 @@ app.get("/p/:friend_link", async (req, res) => {
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id);
-
   let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons}
-
   res.render("p-pollid", templateVars);
+ //Send email when someone answers the poll
+ const creatorEmail = "";
+const mailOptions = {
+  from: 'consensus.poll.app@gmail.com',
+  to: creatorEmail,
+  subject: "Someone took your poll!",
+  html: "A user has taken your poll. Log in to <a href='http://localhost:8080/'>Consensus</a> to see the results!"
+};
+
+  await transporter.sendMail(gmailData, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+  });
 });
 
 
@@ -245,6 +266,7 @@ app.post("/poll/new", async (req, res) => {
 });
 
 // Take Poll page
+
 app.post("/poll/:poll_id/answers", async (req, res) => {
   let newPointsObj = req.body;
   let poll_id = req.params.poll_id;
@@ -257,7 +279,13 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
-});
+})
+
+
+
+
+
+
 
 
 //logout
@@ -265,7 +293,6 @@ app.get("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
-
 
 
 app.listen(PORT, () => {

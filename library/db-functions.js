@@ -110,7 +110,7 @@ module.exports = knex => ({
     .where('id', '=', poll_id)
     .update({responses: newRes})
     .then();
-  },
+  }
 
 });
 
