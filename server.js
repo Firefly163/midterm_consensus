@@ -2,7 +2,6 @@
 
 require('dotenv').config();
 
-
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
@@ -142,11 +141,11 @@ app.get("/p/:friend_link", async (req, res) => {
   } else {
     navButtons = ["myPolls", "create", "logout"]
   }
-  let friend_link = req.params.friend_link;
-  let friend_link_full = `http://localhost:8080/${friend_link}`
-  let admin_link = await dbfunctions.getAdminLink(friend_link);
-  let admin_link_full = `http://localhost:8080/poll/${admin_link}`
-  let poll_id = await dbfunctions.getPollId(friend_link);
+  let friendLink = req.params.friend_link;
+  let friendLinkFull = `http://localhost:8080/${friendLink}`
+  let adminLink = await dbfunctions.getAdminLink(friendLink);
+  let adminLinkFull = `http://localhost:8080/poll/${adminLink}`
+  let poll_id = await dbfunctions.getPollId(friendLink);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id)
@@ -158,7 +157,7 @@ app.get("/p/:friend_link", async (req, res) => {
     from: 'consensus.poll.app@gmail.com',
     to: creatorEmail,
     subject: "Someone took your poll!",
-    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${admin_link_full}'>here</a> to see the results!`
+    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${adminLinkFull}'>here</a> to see the results!`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
    if(err)
@@ -167,7 +166,6 @@ app.get("/p/:friend_link", async (req, res) => {
      console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
   });
 });
-
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
@@ -185,13 +183,7 @@ app.get("/poll/:adminLink", async (req, res) => {
   res.render('poll-pollid', {poll, choices, navButtons});
 });
 
-//Delete Poll
-app.post("/poll/:adminLink", async (req, res) => {
-  let adminLink = req.params.adminLink;
-  let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  await dbfunctions.deletePoll(poll.id);
-  res.redirect('/poll');
-});
+
 
 
 // Login page
@@ -235,10 +227,10 @@ app.post("/poll/create", async (req, res) => {
   let choiceNum = "";
   const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
     try {
-    const adminLink = await makeRandomString();
-    const admin_link_full = `http://localhost:8080/p/${admin_link}`
-    const friendLink =  await makeRandomString();
-    const friend_link_full = `http://localhost:8080/${friend_link}`
+    const adminLink = makeRandomString();
+    const adminLinkFull = `http://localhost:8080/poll/${adminLink}`
+    const friendLink = makeRandomString();
+    const friendLinkFull = `http://localhost:8080/${friendLink}`
     const pollInsertResult = await knex("polls").insert({
       user_id: req.session.user_id,
       poll_name: req.body.title,
@@ -246,42 +238,44 @@ app.post("/poll/create", async (req, res) => {
       admin_link: adminLink,
       friend_link: friendLink
     });
-    await console.log("poll insert", pollInsertResult)
-    const pollId = await dbfunctions.getPollId(req.body.title);
+    const pollId = await dbfunctions.getPollId(friendLink);
     await Promise.all(choiceArray.map(currentChoice => {
       if (currentChoice) {
         const choiceData = {
           poll_id: pollId,
           choice: currentChoice,
-          rank: 0
+          points: 0
         }
         return knex("choices").insert(choiceData);
       }
         return Promise.resolve()
     }));
     // Send email to creator with admin and friend links --------------------------------------------
-   const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
+   const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
+   console.log("about to send email", pollId)
    const mailOptions = {
     from: 'consensus.poll.app@gmail.com',
     to: creatorEmail,
     subject: "You have created a poll!",
-    html: `Congratulations on creating a poll. Click <a href='${admin_link_full}'>here</a> to manage your poll and see results (when  you get some). Here is a link you can send to your friends: <br> ${friend_link_full}`
+    html: `Congratulations on creating a poll. Click <a href='${adminLinkFull}'>here</a> to manage your poll and see results (when  you get some). Here is a link you can send to your friends: <br> ${friendLinkFull}`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
+    console.log("sent email", mailOptions)
    if(err)
      console.log(err)
    else
      console.log("Sent an email", info, "message", gmail.newPollMsg);
   });
-    res.render("poll-new");
+    res.redirect("/poll");
     } catch (err) {
-      console.error(err)
+      console.log(err)
       res.status(404);
     }
 });
 
 // Take Poll page
 app.post("/poll/:poll_id/answers", async (req, res) => {
+  console.log("updatedPoints")
   let newPointsObj = req.body;
   let poll_id = req.params.poll_id;
   let previousPointsObj = await dbfunctions.getCurrentPoints(poll_id);
@@ -293,12 +287,15 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
-<<<<<<< HEAD
 });
-=======
-})
->>>>>>> 48daf03ed30a40d56a8e17b6f66fef06e152031f
 
+//Delete Poll
+app.post("/poll/:adminLink", async (req, res) => {
+  let adminLink = req.params.adminLink;
+  let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  await dbfunctions.deletePoll(poll.id);
+  res.redirect('/poll');
+});
 
 //logout
 app.get("/logout", (req, res) => {
