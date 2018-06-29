@@ -53,7 +53,6 @@ async function authenticate (useridCookie) {
 }
 
 
-
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -207,34 +206,28 @@ app.post("/login", async (req, res) => {
   }
 
   res.json(result)
-
-  // if (bcrypt.compareSync(req.body.password, hashedPassword)) {
-  //   res.status(200);
-  //   let user_id = await dbfunctions.getUserId(req.body.email);
-  //   req.session.user_id = user_id;
-
-  //   console.log("logged in");
-  //   res.redirect("/poll")
-  // } else {
-  //   res.status(400);
-  // }
 });
 
 // Registration page
-app.post("/register", (req, res) => {
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  if (req.body.email === "" || req.body.password === "") {
-    res.redirect("/poll");
-    return
+app.post("/register", async (req, res) => {
+  let allUsers = await dbfunctions.getUsers();
+  let allEmails = [];
+  allUsers.forEach(user => allEmails.push(user.email));
+  let result = {};
+
+  if (allEmails.includes(req.body.email)) {
+    result.error = "email";
   } else {
-//check if user already exists  -----------------------------async/await
-  dbfunctions.insertNewUser (req.body.name, req.body.email, hashedPassword, function()
-    {dbfunctions.getUserId(req.body.email).then(userid => {
-      req.session.user_id = userid;
-      console.log("session.userid", req.session.user_id);
-      res.redirect("poll");
-    })});
-}
+    let hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    await dbfunctions.insertNewUser(req.body.name, req.body.email, hashedPassword);
+    let userID = await dbfunctions.getUserId(req.body.email);
+    req.session.user_id = userID;
+    result.error = "none";
+  }
+
+  res.json(result);
+
+
 });
 
 // Create Poll page

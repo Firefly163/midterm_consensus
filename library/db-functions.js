@@ -52,16 +52,14 @@ module.exports = knex => ({
       .then(result => result.password);
   },
 
-  insertNewUser: (userName, userEmail, userPassword, callback) => {
+  insertNewUser: (userName, userEmail, userPassword) => {
     return knex("users")
     .insert({
       name: userName,
       email: userEmail,
       password: userPassword
       })
-      .then(rows => {
-          callback();
-      })
+      .then()
   },
 
   getChoicesArr: (pollid) => {
