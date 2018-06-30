@@ -1,7 +1,6 @@
 .your-polls-title {
   margin-top: 3rem;
   margin-bottom: 0px;
-  //border-bottom: 1px solid $lightGrey;
   width: 100%;
   font-family: $bigFont, cursive;
   display: none;
@@ -58,7 +57,7 @@ body.your-polls {
   background-color: $lightPinky;
 }
 
-header.your-polls-header {
+header.admin-page-header {
   h1 {
     display: none;
   }

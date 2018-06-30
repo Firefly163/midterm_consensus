@@ -1,0 +1,54 @@
+main.create-page {
+  .row {
+    padding-top: 4rem;
+    .inputs-and-buttons {
+      .buttons {
+        width: 80%;
+        margin-bottom: 1rem;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        button {
+          width: 50%;
+          padding: 1rem;
+          border: 2px solid $pinky;
+          overflow: hidden;
+          &:hover {
+            background-color: $pinky;
+            color: white;
+          }
+        }
+      }
+      .create-input {
+        width: 80%;
+        padding: 1rem;
+        border: 2px solid black;
+        font-size: 12px;
+        &:hover {
+          border: 2px solid $tealish;
+        }
+      }
+      ul {
+        list-style-type: none;
+        padding:0px;
+        padding-bottom: 1rem;
+        margin: 0px;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        li {
+          input {
+            font-size: 12px;
+            border: 2px solid black;
+            padding: 1rem;
+
+
+          }
+        }
+      }
+    }
+    .title-and-text {
+      font-family: $bigFont, cursive;
+    }
+  }
+}

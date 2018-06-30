@@ -4,8 +4,6 @@ $(document).ready(function() {
     let $form = $(this);
     let $errors = $(".create-errors");
     $errors.empty();
-    console.log($("#poll_title").val());
-    console.log($("#poll_description").val());
     if (!$("#poll_title").val()) {
       $errors.append("<p>Title fields is empty</p>");
       return;
