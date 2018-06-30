@@ -22,10 +22,11 @@
 
         <!-- MAKE CHOICES 3-6 HIDDEN UNLESS THE ADD BUTTON IS PRESSED -->
       <ul id="ul_choices">
-        <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]" value=" " class="create-form"> Description: <input type="text " name="desc[]" class="create-form" ></li>
+        <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]" class="create-form choice_err"> Description: <input type="text " name="desc[]" value=" " class="create-form" ></li>
       </ul>
-
+      <div class = "create-errors"></div>
       <button type="submit" class="create-button">CREATE</button>
+
     </form>
 
     <button class="add-choice-button">Add another choice</button>
