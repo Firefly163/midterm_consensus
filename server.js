@@ -220,7 +220,7 @@ app.get("/poll/:adminLink", async (req, res) => {
   }
 
   let choices = await dbfunctions.getChoicesArr(poll.id);
-  let links = {friendLink: `http://localhost:8080/poll/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
+  let links = {friendLink: `http://localhost:8080/p/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
   res.render('poll-pollid', {poll, choices, navButtons, links, user});
 });
 
@@ -299,10 +299,8 @@ app.post("/poll/create", async (req, res) => {
     }
       return Promise.resolve()
   }));
-    // Send email to creator with admin and friend links --------------------------------------------
-
+    // Send email to creator with admin and friend links
    const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
-   console.log("about to send email", pollId)
    const mailOptions = {
     from: 'consensus.poll.app@gmail.com',
     to: creatorEmail,
@@ -310,11 +308,10 @@ app.post("/poll/create", async (req, res) => {
     html: `Congratulations on creating a poll. Click <a href='${adminLinkFull}'>here</a> to manage your poll and see results (when  you get some). Here is a link you can send to your friends: <br> ${friendLinkFull}`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
-    console.log("sent email", mailOptions)
    if(err)
      console.log(err)
    else
-     console.log("Sent an email", info, "message", gmail.newPollMsg);
+     console.log("Sent confirmation email to creator");
   });
     res.redirect("/poll");
     } catch (err) {
@@ -325,7 +322,6 @@ app.post("/poll/create", async (req, res) => {
 
 // Take Poll page
 app.post("/poll/:poll_id/answers", async (req, res) => {
-  console.log("updatedPoints")
   let newPointsObj = req.body;
   let poll_id = req.params.poll_id;
   let previousPointsObj = await dbfunctions.getCurrentPoints(poll_id);
@@ -340,6 +336,8 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
 
  //Send email to creator when someone answers the poll
    const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
+   const adminLink =  await dbfunctions.getAdminLinkFromId(poll_id);
+   const adminLinkFull = `http://localhost:8080/poll/${adminLink}`
    const mailOptions = {
     from: 'consensus.poll.app@gmail.com',
     to: creatorEmail,
@@ -350,10 +348,8 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
    if(err)
      console.log(err)
    else
-     console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
+     console.log("Confirmation  email sent to creator");
   });
-
-
 });
 
 
@@ -361,7 +357,6 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
 app.post("/poll/:adminLink/delete", async (req, res) => {
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  console.log("Deleting")
   await dbfunctions.deletePoll(poll.id);
   res.json({});
 });

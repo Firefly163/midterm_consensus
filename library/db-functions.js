@@ -38,6 +38,13 @@ module.exports = knex => ({
       .then(result => result.admin_link);
   },
 
+  getAdminLinkFromId: (pollId) => {
+    return knex.first("admin_link")
+    .from("polls")
+    .where("id", "=", pollId)
+      .then(result => result.admin_link);
+  },
+
   getFriendLink: (adminLink) => {
     return knex.first("friend_link")
     .from("polls")
