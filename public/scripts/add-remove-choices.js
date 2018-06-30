@@ -19,5 +19,3 @@ $(document).ready(function() {
 
 });
 
-
-const idNum=2
