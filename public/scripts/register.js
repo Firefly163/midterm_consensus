@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  $("#register-name").focus().select();
+
   $(".register-form").on("submit", function (event) {
     event.preventDefault();
     let $form = $(this);

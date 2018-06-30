@@ -208,11 +208,9 @@ app.get("/poll/:adminLink", async (req, res) => {
   let adminLink = req.params.adminLink;
   let allAdminLinks = await dbfunctions.getAllAdminLinks();
 
-
   if (!allAdminLinks.includes(adminLink)) {
     res.render('does-not-exist', {navButtons, user});
   }
-
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
   let friendLink = await dbfunctions.getFriendLink(adminLink);
   if (req.session.user_id !== poll.user_id) {
@@ -251,7 +249,6 @@ app.post("/register", async (req, res) => {
   let allEmails = [];
   allUsers.forEach(user => allEmails.push(user.email));
   let result = {};
-
   if (allEmails.includes(req.body.email)) {
     result.error = "email";
   } else {
@@ -261,10 +258,7 @@ app.post("/register", async (req, res) => {
     req.session.user_id = userID;
     result.error = "none";
   }
-
   res.json(result);
-
-
 });
 
 // Create Poll page
@@ -313,7 +307,7 @@ app.post("/poll/create", async (req, res) => {
    else
      console.log("Sent confirmation email to creator");
   });
-    res.redirect("/poll");
+    res.redirect(`/poll/${adminLink}`);
     } catch (err) {
       console.log(err)
       res.status(404);
