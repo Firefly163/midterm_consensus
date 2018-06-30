@@ -1,29 +1,30 @@
 $(document).ready(function() {
-  $(".login-form").on("submit", function (event) {
+  $(".register-form").on("submit", function (event) {
     event.preventDefault();
     let $form = $(this);
-    let $errors = $(".login-errors");
+    let $errors = $(".register-errors");
     $errors.empty();
-    if ($("#login-email").val().trim() === "") {
+    if ($("#register-name").val().trim() === "") {
+      $errors.append("<p>Please enter an name!</p>");
+    }
+    if ($("#register-email").val().trim() === "") {
       $errors.append("<p>Please enter an email!</p>");
     }
-    if ($("#login-password").val().trim() === "") {
+    if ($("#register-password").val().trim() === "") {
       $errors.append("<p>Please enter an password!</p>");
     }
+
     if ($errors.contents().length === 0) {
       $.ajax({
-        url: '/login',
+        url: '/register',
         method: 'POST',
         data: $form.serialize()
       }).done(function(result) {
         if (result.error === "email") {
-          $errors.append("<p>Email does not exist!</p>");
-        } else if (result.error === "password") {
-          $errors.append("<p>Password is incorrect!</p>");
+          $errors.append("<p>Email is Taken!</p>");
         } else {
           location.href = "/poll";
         }
-
       });
     }
   })

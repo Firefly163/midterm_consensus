@@ -53,7 +53,6 @@ async function authenticate (useridCookie) {
 }
 
 
-
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -87,23 +86,43 @@ app.use(cookieSession({
 // Home page
 app.get("/", async (req, res) => {
   let navButtons;
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let user;
+  let auth = await authenticate(req.session.user_id);
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
+    user = "";
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"];
+<<<<<<< HEAD
   }
   let templateVars = {navButtons};
   res.render("root", templateVars);
+=======
+    user = await dbfunctions.getUserName(req.session.user_id);
+  }
+
+  let templateVars = {navButtons, user};
+  res.render("root", templateVars);
+
+>>>>>>> a9273883e9d12d91444ce01688909c24e5a11e0b
 });
 
 // Registration page
 app.get("/register", async (req, res) => {
-  if (await authenticate(req.session.user_id) === "logged-in") {
+  let auth = await authenticate(req.session.user_id)
+  if (auth === "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     res.redirect("/");
     return;
   }
   let navButtons = ["login"];
-  let templateVars = {navButtons};
+  let user = "";
+  let templateVars = {navButtons, user};
   res.render("register", templateVars);
 });
 
@@ -114,75 +133,102 @@ app.get("/login", (req, res) => {
 
 // User home page
 app.get("/poll", async (req, res) => {
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let auth = await authenticate(req.session.user_id)
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
+    let user = "";
     let navButtons = ["login", "register"];
-    res.render('not-logged-in', {navButtons});
+    res.render('not-logged-in', {navButtons, user});
   }
+  let user = await dbfunctions.getUserName(req.session.user_id);
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
   let navButtons = ["create", "logout"];
   let data = await dbfunctions.getChoicesArrS(userPolls.map(elm => elm.id));
-  res.render("poll", {polls: userPolls, data: data, navButtons: navButtons});
+  res.render("poll", {polls: userPolls, data: data, navButtons: navButtons, user: user});
 });
 
 app.get("/poll/create", async (req, res) => {
+  let auth = await authenticate(req.session.user_id)
   if (await authenticate(req.session.user_id) !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
     let navButtons = ["login", "register"];
-    res.render('not-logged-in', {navButtons});
+    let user = "";
+    res.render('not-logged-in', {navButtons, user});
   }
+  let user = await dbfunctions.getUserName(req.session.user_id);
   let navButtons = ["myPolls", "logout"];
-  res.render("poll-new", {navButtons});
+  res.render("poll-new", {navButtons, user});
 });
 
 // Take Poll page
 app.get("/p/:friend_link", async (req, res) => {
   let navButtons;
-  if (await authenticate(req.session.user_id) !== "logged-in") {
+  let user;
+  let auth = await authenticate(req.session.user_id);
+  if (auth !== "logged-in") {
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
+    user = "";
     navButtons = ["login", "register"];
   } else {
-    navButtons = ["myPolls", "create", "logout"]
+    navButtons = ["myPolls", "create", "logout"];
+    user = await dbfunctions.getUserName(req.session.user_id);
   }
+  let allFriendLinks = await dbfunctions.getAllFriendLinks();
   let friendLink = req.params.friend_link;
+
+  if (!allFriendLinks.includes(friendLink)) {
+    res.render("does-not-exist", {navButtons, user})
+  }
+
   let friendLinkFull = `http://localhost:8080/${friendLink}`
   let adminLink = await dbfunctions.getAdminLink(friendLink);
   let adminLinkFull = `http://localhost:8080/poll/${adminLink}`
+
   let poll_id = await dbfunctions.getPollId(friendLink);
   let poll_name = await dbfunctions.getPollName(poll_id);
   let poll_description = await dbfunctions.getPollDescription(poll_id);
   let choicesArr = await dbfunctions.getChoicesArr(poll_id)
-  let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons}
+  let templateVars = {poll_id, poll_name, poll_description, choicesArr, navButtons, user}
   res.render("p-pollid", templateVars);
- //Send email to creator when someone answers the poll
-   const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
-   const mailOptions = {
-    from: 'consensus.poll.app@gmail.com',
-    to: creatorEmail,
-    subject: "Someone took your poll!",
-    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${adminLinkFull}'>here</a> to see the results!`
-  };
-  await transporter.sendMail(mailOptions, function (err, info) {
-   if(err)
-     console.log(err)
-   else
-     console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
-  });
+
 });
 
 // Admin Poll page
 app.get("/poll/:adminLink", async (req, res) => {
+  let auth = await authenticate(req.session.user_id);
   if (await authenticate(req.session.user_id) !== "logged-in") {
-    let navButtons = ["login", "register",];
-    res.render('not-logged-in', {navButtons});
+    if (auth === "user-doesnt-exist") {
+      req.session = null;
+    }
+    let user = "";
+    let navButtons = ["login", "register"];
+    res.render('not-logged-in', {navButtons, user});
   }
   let navButtons = ["myPolls", "create", "logout"];
+  let user = await dbfunctions.getUserName(req.session.user_id);
   let adminLink = req.params.adminLink;
-  let poll = await dbfunctions.getPollByAdmLink(adminLink);
-  let friendLink = await dbfunctions.getFriendLink(adminLink)
-  if (req.session.user_id !== poll.user_id) {
-    res.render('not-yours', {navButtons});
+  let allAdminLinks = await dbfunctions.getAllAdminLinks();
+
+
+  if (!allAdminLinks.includes(adminLink)) {
+    res.render('does-not-exist', {navButtons, user});
   }
+
+  let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  let friendLink = await dbfunctions.getFriendLink(adminLink);
+  if (req.session.user_id !== poll.user_id) {
+    res.render('not-yours', {navButtons, user});
+  }
+
   let choices = await dbfunctions.getChoicesArr(poll.id);
   let links = {friendLink: `http://localhost:8080/poll/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
-  res.render('poll-pollid', {poll, choices, navButtons, links});
+  res.render('poll-pollid', {poll, choices, navButtons, links, user});
 });
 
 
@@ -204,34 +250,28 @@ app.post("/login", async (req, res) => {
   }
 
   res.json(result)
-
-  // if (bcrypt.compareSync(req.body.password, hashedPassword)) {
-  //   res.status(200);
-  //   let user_id = await dbfunctions.getUserId(req.body.email);
-  //   req.session.user_id = user_id;
-
-  //   console.log("logged in");
-  //   res.redirect("/poll")
-  // } else {
-  //   res.status(400);
-  // }
 });
 
 // Registration page
-app.post("/register", (req, res) => {
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  if (req.body.email === "" || req.body.password === "") {
-    res.redirect("/poll");
-    return
+app.post("/register", async (req, res) => {
+  let allUsers = await dbfunctions.getUsers();
+  let allEmails = [];
+  allUsers.forEach(user => allEmails.push(user.email));
+  let result = {};
+
+  if (allEmails.includes(req.body.email)) {
+    result.error = "email";
   } else {
-//check if user already exists  -----------------------------async/await
-  dbfunctions.insertNewUser (req.body.name, req.body.email, hashedPassword, function()
-    {dbfunctions.getUserId(req.body.email).then(userid => {
-      req.session.user_id = userid;
-      console.log("session.userid", req.session.user_id);
-      res.redirect("poll");
-    })});
-}
+    let hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    await dbfunctions.insertNewUser(req.body.name, req.body.email, hashedPassword);
+    let userID = await dbfunctions.getUserId(req.body.email);
+    req.session.user_id = userID;
+    result.error = "none";
+  }
+
+  res.json(result);
+
+
 });
 
 // Create Poll page
@@ -299,6 +339,23 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
   let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
   let newResponses = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
+
+ //Send email to creator when someone answers the poll
+   const creatorEmail = await dbfunctions.getCreatorEmail(poll_id);
+   const mailOptions = {
+    from: 'consensus.poll.app@gmail.com',
+    to: creatorEmail,
+    subject: "Someone took your poll!",
+    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${adminLinkFull}'>here</a> to see the results!`
+  };
+  await transporter.sendMail(mailOptions, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
+  });
+
+
 });
 
 

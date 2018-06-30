@@ -52,16 +52,14 @@ module.exports = knex => ({
       .then(result => result.password);
   },
 
-  insertNewUser: (userName, userEmail, userPassword, callback) => {
+  insertNewUser: (userName, userEmail, userPassword) => {
     return knex("users")
     .insert({
       name: userName,
       email: userEmail,
       password: userPassword
       })
-      .then(rows => {
-          callback();
-      })
+      .then()
   },
 
   getChoicesArr: (pollid) => {
@@ -165,6 +163,26 @@ module.exports = knex => ({
     return knex.select('*')
     .from("users")
     .then(result => result)
+  },
+
+  getAllFriendLinks: () => {
+    return knex.select("friend_link")
+    .from("polls")
+    .then(result => {
+      let friendLinks = [];
+      result.forEach(el => friendLinks.push(el.friend_link));
+      return friendLinks;
+    });
+  },
+
+  getAllAdminLinks: () => {
+    return knex.select("admin_link")
+    .from("polls")
+    .then(result => {
+      let adminLinks = [];
+      result.forEach(el => adminLinks.push(el.admin_link));
+      return adminLinks;
+    });
   },
 
 
