@@ -272,6 +272,7 @@ app.post("/poll/create", async (req, res) => {
     friend_link: friendLink
   });
   const pollId = await dbfunctions.getPollId(friendLink);
+  console.log("pollID", id)
   await Promise.all(choiceArray.map(currentChoice => {
     if (currentChoice) {
       const choiceData = {
@@ -318,7 +319,7 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
     let updatedPoints = previousPointsObj[i].points + Number(newPointsObj[choice_id]);
     await dbfunctions.updatePoints(choice_id, updatedPoints);
   }
-  let previousResponses = await dbfunctions.getCurrentResponses(poll_id);
+  let previousResponses = await dbfunctions.getCurrentResponses(); selectFromPolls(response, id, poll_id)
   let newResponses      = previousResponses + 1;
   await dbfunctions.updateResponses(poll_id, newResponses);
  //Send email to creator when someone answers the poll
