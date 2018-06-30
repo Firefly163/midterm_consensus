@@ -14,9 +14,9 @@ $(document).ready(function() {
     }
     if ($errors.contents().length === 0) {
       $.ajax({
-        url: '/login',
-        method: 'POST',
-        data: $form.serialize()
+        url:    "/login",
+        method: "POST",
+        data:   $form.serialize()
       }).done(function(result) {
         if (result.error === "email") {
           $errors.append("<p>Email does not exist!</p>");
@@ -25,9 +25,8 @@ $(document).ready(function() {
         } else {
           location.href = "/poll";
         }
-
-      });
+      })
     }
-  })
+  });
 
 });

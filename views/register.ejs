@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Home Page</title>
-  <% include partials/_head.ejs %>
-</head>
+  <head>
+    <title>Home Page</title>
+    <% include partials/_head.ejs %>
+  </head>
 
-<body>
-  <header>
-    <% include partials/_header.ejs %>
-  </header>
-  <main class="register-page">
-    <% include partials/_login-form.ejs %>
-    <div class="text-and-form row">
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+    </header>
+    <main class="register-page">
+      <% include partials/_login-form.ejs %>
+      <div class="text-and-form row">
 
-      <form class="register-form col-md-8" action="/register" method="POST">
-        <div class="form-group">
-          <input class="register-input" id="register-name" placeholder="NAME" type ="text" name="name">
+        <form class="register-form col-md-8" action="/register" method="POST">
+          <div class="form-group">
+            <input class="register-input" id="register-name" placeholder="NAME" type ="text" name="name">
+          </div>
+          <div class="form-group">
+            <input class="register-input" id="register-email" placeholder="EMAIL" type ="email" name="email">
+          </div>
+          <div class="form-group">
+            <input class="register-input" id="register-password" placeholder="PASSWORD" type ="password" name="password">
+          </div>
+          <button type="submit">REGISTER</button>
+          <div class="register-errors"></div>
+        </form>
+
+        <div class="text col-md-4">
+          <h1>register!</h1>
+          <p>Already a user? <a id="login-on-register-pg" href="/">login here</a></p>
         </div>
-        <div class="form-group">
-          <input class="register-input" id="register-email" placeholder="EMAIL" type ="email" name="email">
-        </div>
-        <div class="form-group">
-          <input class="register-input" id="register-password" placeholder="PASSWORD" type ="password" name="password">
-        </div>
-        <button type="submit">REGISTER</button>
-        <div class="register-errors"></div>
-      </form>
-      <div class="text col-md-4">
-        <h1>register!</h1>
-        <p>Already a user? <a id="login-on-register-pg" href="/">login here</a></p>
+
       </div>
-    </div>
-  </main>
-  <footer>
-    <% include partials/_footer.ejs %>
-  </footer>
-</body>
+    </main>
+
+    <footer>
+      <% include partials/_footer.ejs %>
+    </footer>
+
+  </body>
 </html>

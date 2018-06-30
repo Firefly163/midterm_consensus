@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Consensus</title>
-  <% include partials/_head.ejs %>
-</head>
+  <head>
+    <title>Consensus</title>
+    <% include partials/_head.ejs %>
+  </head>
 
-<body>
-  <header>
-    <% include partials/_header.ejs %>
-  </header>
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+    </header>
 
-  <main class="friend-poll-page">
-    <% include partials/_login-form.ejs %>
-    <div class="thank-you"></div>
-    <div class="text-container">
-      <div class="title-and-description ">
-        <h1 class="poll-title" poll_id=<%= poll_id %>><%= poll_name %></h1>
-        <p class="poll-description"><%= poll_description%></p>
-        <p class="instructions">
-          Drag your choices into the box in the order of your preference. Then, click the SUBMIT button.
-        </p>
-        <div class="errors"></div>
-      </div>
-    </div>
-    <div class="choices-container row">
-      <section class="choice-container full">
-        <p class="full-title">Choices</p>
-        <% for(let i = 0; i < choicesArr.length; i++) { %>
-        <div class="choice" draggable="true" choice_id=<%= choicesArr[i].id %>>
-          <p><%= choicesArr[i].choice %></p>
-          <p><%= choicesArr[i].description %></p>
+    <main class="friend-poll-page">
+      <% include partials/_login-form.ejs %>
+      <div class="thank-you"></div>
+      <div class="text-container">
+        <div class="title-and-description">
+          <h1 class="poll-title" poll_id=<%= poll_id %>><%= poll_name %></h1>
+          <p class="poll-description"><%= poll_description%></p>
+          <p class="instructions">
+            Drag your choices into the box in the order of your preference. Then, click the SUBMIT button.
+          </p>
+          <div class="errors"></div>
         </div>
-        <%}%>
-      </section>
-      <section class="choice-container empty">
-        <p class="empty-title">My ranking</p>
-      </section>
-    </div>
-  </main>
-  <div class="btn-and-errors">
+      </div>
+
+      <div class="choices-container row">
+        <section class="choice-container full">
+          <p class="full-title">Choices</p>
+          <% for(let i = 0; i < choicesArr.length; i++) { %>
+          <div class="choice" draggable="true" choice_id=<%= choicesArr[i].id %>>
+            <p><%= choicesArr[i].choice %></p>
+            <p><%= choicesArr[i].description %></p>
+          </div>
+          <%}%>
+        </section>
+        <section class="choice-container empty">
+          <p class="empty-title">My ranking</p>
+        </section>
+      </div>
+
+    </main>
+    <div class="btn-and-errors">
       <button class="btn submit-ranks-btn" type="submit">SUBMIT</button>
     </div>
 
-  <footer>
-    <% include partials/_footer.ejs %>
-  </footer>
-</body>
+    <footer>
+      <% include partials/_footer.ejs %>
+    </footer>
+
+  </body>
 </html>

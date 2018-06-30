@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home Page</title>
+  <title>Create a poll</title>
   <% include partials/_head.ejs %>
 </head>
 
@@ -15,26 +15,24 @@
     <button class="add-choice-button">Add another choice</button>
     <button class="remove-choice-button">Remove choice</button>
     <form class="create-form" action="/poll/create" method="POST">
-      <label for="title">Title:</label><input type="text" name="title" class="create-form title-field">
-      <label for="description">Description:</label><input type="text" name="description" class="create-form" placeholder="Write a brief explanation of what this poll is about.">
+      <label for="title">Title:</label><input id="poll_title" type="text" name="title" class="create-form title-field">
+      <label for="description">Description:</label><input id="poll_description" type="text" name="description" class="create-form" placeholder="Write a brief explanation of what this poll is about.">
 
-        <!-- MAKE CHOICES 3-6 HIDDEN UNLESS THE ADD BUTTON IS PRESSED -->
       <ul id="ul_choices">
-        <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]" value=" " class="create-form"> Description: <input type="text " name="desc[]" class="create-form" ></li>
+        <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]"  class="create-form"> Description: <input type="text " name="desc[]" value=" " class="create-form" ></li>
       </ul>
-
+      <div class = "create-errors"></div>
       <button type="submit" class="create-button">CREATE</button>
+
     </form>
-    <a href="/logout" class="nav-button">Logout</a>
-
-
-  <!-- Use ejs to add the poll id here and add as many sections as necessary -->
     <div>
       <a href="/poll/:pollid" <section class="poll-preview"><section></section></a>
     </div>
   </main>
+
   <footer>
     <% include partials/_footer.ejs %>
   </footer>
+
 </body>
 </html>

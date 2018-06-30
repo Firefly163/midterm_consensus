@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Consensus</title>
-  <% include partials/_head.ejs %>
-</head>
+  <head>
+    <title>Consensus</title>
+    <% include partials/_head.ejs %>
+  </head>
 
 <body class="admin-page">
   <header>
     <% include partials/_header.ejs %>
   </header>
   <main>
+      <form class="login-form" action="/login" method="POST">
+        email: <input type ="email" name="email">
+        <br>
+        password: <input type ="password" name="password">
+        <br>
+        <button type="submit">Login</button>
+      </form>
+      <h1 class="poll-title"><%=poll.poll_name%></h1>
+      <p class="poll-description"><%=poll.description%></p>
+      <p class="num-responses">Responses: <%=poll.responses%></p>
+      <section class="choice-ranking">
+        <%for (let elm of choices) { %>
+          <p class="choice1">Choice: <%= elm.choice %></p>
+          <span>Description: <%= elm.description%></span>
+        <% } %>
+      </section>
+      <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
 
-    <form class="login-form" action="/login" method="POST">
-      email: <input type ="email" name="email">
-      <br>
-      password: <input type ="password" name="password">
-      <br>
-      <button type="submit">Login</button>
-    </form>
-
-    <h1 class="poll-title"><%=poll.poll_name%></h1>
-    <p class="poll-description"><%=poll.description%></p>
-    <p class="num-responses">Responses: <%=poll.responses%></p>
-    <section class="choice-ranking">
-      <%for (let elm of choices) { %>
-        <p class="choice1">Choice: <%= elm.choice %></p>
-        <span>Description: <%= elm.description%></span>
-      <% } %>
-    </section>
-    <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
-
-    <section class="link-section">
-      <h3>Your admin link: </h3>
-      <p id="admin-link"><%= links.adminLink %></p>
-      <h3>Your shareable link: </h3>
-      <p id="friend-link"><%= links.friendLink %></p>
-    </section>
+      <section class="link-section">
+        <h3>Your admin link: </h3>
+        <a href=`<%- links.adminLink %>` class="poll-links"><p id="admin-link"><%= links.adminLink %></p></a>
+        <h3>Your shareable link: </h3>
+        <a href=`<%- links.friendLink %>` class="poll-links"><p id="friend-link"><%= links.friendLink %></p></a>
+      </section>
 
     <div id="piechart" style="width: 900px; height: 500px;"></div>
-  <script>
-    var data = <%- JSON.stringify(choices) %>
-    renderChart(data, 'piechart');
-  </script>
+    <script>
+      var data = <%- JSON.stringify(choices) %>
+      renderChart(data, 'piechart');
+    </script>
+    </main>
+    <footer>
+      <% include partials/_footer.ejs %>
+    </footer>
 
-  </main>
-  <footer>
-    <% include partials/_footer.ejs %>
-  </footer>
-</body>
+  </body>
 </html>
