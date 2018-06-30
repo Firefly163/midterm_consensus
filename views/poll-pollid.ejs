@@ -24,7 +24,8 @@
     <p class="num-responses">Responses: <%=poll.responses%></p>
     <section class="choice-ranking">
       <%for (let elm of choices) { %>
-        <p class="choice1"><%= elm.choice %></p>
+        <p class="choice1">Choice: <%= elm.choice %></p>
+        <span>Description: <%= elm.description%></span>
       <% } %>
     </section>
     <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
