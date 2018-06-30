@@ -6,7 +6,7 @@ article {
     list-style: none;
     display: flex;
 
-    flex-flow: row wrap;
+    flex-flow: row-reverse  wrap;
     justify-content: flex-start;
 
     li.item {
