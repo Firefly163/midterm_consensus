@@ -9,19 +9,28 @@
   <header>
     <% include partials/_header.ejs %>
   </header>
-  <main>
+  <main class="register-page">
     <% include partials/_login-form.ejs %>
-    <h1>REGISTER</h1>
-    <form class="register-form" action="/register" method="POST">
-      name: <input id="register-name" type ="text" name="name">
-      email: <input id="register-email" type ="email" name="email">
-      <br>
-      password: <input id="register-password" type ="password" name="password">
-      <br>
-      <button type="submit">Register</button>
-    </form>
-    <div class="register-errors"></div>
-    <p>Already a user? <a href="/">LOG IN HERE</a>.</p>
+    <div class="text-and-form row">
+
+      <form class="register-form col-md-8" action="/register" method="POST">
+        <div class="form-group">
+          <input class="register-input" id="register-name" placeholder="NAME" type ="text" name="name">
+        </div>
+        <div class="form-group">
+          <input class="register-input" id="register-email" placeholder="EMAIL" type ="email" name="email">
+        </div>
+        <div class="form-group">
+          <input class="register-input" id="register-password" placeholder="PASSWORD" type ="password" name="password">
+        </div>
+        <button type="submit">REGISTER</button>
+        <div class="register-errors"></div>
+      </form>
+      <div class="text col-md-4">
+        <h1>register!</h1>
+        <p>Already a user? <a href="/">login here</a></p>
+      </div>
+    </div>
   </main>
   <footer>
     <% include partials/_footer.ejs %>
