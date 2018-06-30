@@ -14,7 +14,9 @@ $(document).ready(function() {
 
   $(".remove-choice-button").on("click", function(event) {
     event.stopPropagation();
-    $("li").last().remove();
+    if($('#ul_choices').children('.choice').length > 2) {
+      $("li").last().remove();
+    }
   });
 
 });
