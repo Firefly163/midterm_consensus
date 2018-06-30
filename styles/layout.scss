@@ -1,5 +1,7 @@
 $pinky: #FF8D85;
 $tealish: #49c5b6;
+$lightPinky: #ffc6c2;
+$bigFont: 'Abril Fatface';
 
 @import 'navbar';
 @import 'login-form';
@@ -8,6 +10,7 @@ $tealish: #49c5b6;
 @import 'show_polls';
 @import 'create-poll';
 @import 'root';
+@import 'register';
 
 
 html {
@@ -17,9 +20,10 @@ html {
 body {
   height: 100%;
   main {
+    width: 100%;
     height: 100%;
     padding: 4rem;
-    padding-top: 8rem;
+    padding-top: 6rem;
     font-family: 'Quicksand', sans-serif;
   }
 

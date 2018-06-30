@@ -1,0 +1,36 @@
+main.register-page {
+  padding-top: 8rem;
+  .register-form {
+    padding-top: 2rem;
+    .register-input {
+      width: 80%;
+      padding: 1rem;
+      padding-left: 1rem;
+      border: 2px solid black;
+      font-size: 12px;
+      &:hover {
+        border: 2px solid $pinky;
+      }
+    }
+    button {
+      font-size: 12px;
+      padding: 1rem;
+      border: 2px solid $pinky;
+      color: gray;
+
+      &:hover {
+        color: white;
+        background-color: $pinky;
+
+      }
+    }
+  }
+  .text {
+    h1 {
+      font-family: $bigFont, cursive;
+    }
+    a {
+      color: $tealish;
+    }
+  }
+}

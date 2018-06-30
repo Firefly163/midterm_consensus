@@ -1,5 +1,5 @@
 header {
-  background-color: white;
+  //background-color: $pinky;
   height: 5rem;
   position: fixed;
   padding-left: 2rem;
@@ -7,9 +7,10 @@ header {
   width: 100%;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid grey;
+  //border-bottom: 1px solid grey;
 
   .logo-and-header {
+    padding-top: 1rem;
     h1 {
       font-family: 'Nunito', sans-serif;
       line-height: 5rem;
@@ -17,19 +18,22 @@ header {
     }
   }
   .buttons {
+    padding-top: 2rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 5rem;
     button {
-      color: #edeeef;
-      background-color: $tealish;
+      color: $tealish;
+      background-color: white;
+      border-radius: 0px;
+      border: 3px solid $tealish;
       height: 4rem;
       margin: 0.5rem;
       width: 6rem;
       &:hover {
-        background-color: #abb7d0;
-        color: #1d1e1e;
+        background-color: $tealish;
+        color: white;
       }
     }
 
