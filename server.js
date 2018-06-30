@@ -212,7 +212,7 @@ app.get("/poll/:adminLink", async (req, res) => {
     res.render("not-yours", {navButtons, user});
   }
   let choices = await dbfunctions.getChoicesArr(poll.id);
-  let links   = {friendLink: `/p/${friendLink}`, adminLink: `/poll/${adminLink}`}
+  let links   = {friendLink: friendLink, adminLink: adminLink};
   res.render("poll-pollid", {poll, choices, navButtons, links, user});
 });
 

@@ -15,12 +15,12 @@ $(document).ready(function() {
       return;
     };
     $('#ul_choices').children('.choice').each(function() {
-      if(!$(this).find('.create-form').val()) {
+      if(!$(this).find('.create-form').val() && !$errors.contents().length) {
         $errors.append("<p>Choice field is empty</p>");
         return;
       }
     });
-    if($errors.contents().length === 0) {
+    if(!$errors.contents().length) {
       $.ajax({
         url: '/poll/create',
         method: 'POST',
