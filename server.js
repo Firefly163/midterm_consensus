@@ -352,8 +352,6 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
    else
      console.log("Sent an email", info, "message", gmail.friendTookPollMsg);
   });
-
-
 });
 
 
