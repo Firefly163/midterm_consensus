@@ -2,17 +2,18 @@ $pinky: #FF8D85;
 $tealish: #49c5b6;
 $lightPinky: #ffc6c2;
 $lightGrey: #eeeeee;
-$bigFont: 'Abril Fatface';
+$bigFont: "Abril Fatface";
 
-@import 'navbar';
-@import 'login-form';
-@import 'footer';
-@import 'friendpoll';
-@import 'show_polls';
-@import 'create-poll';
-@import 'root';
-@import 'register';
-@import 'adminpoll';
+@import "navbar";
+@import "login-form";
+@import "footer";
+@import "friendpoll";
+@import "show_polls";
+@import "create-poll";
+@import "root";
+@import "register";
+@import "adminpoll";
+@import "logos";
 
 
 html {
@@ -26,7 +27,7 @@ body {
     height: 100%;
     padding: 4rem;
     padding-top: 6rem;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
   }
 
 }
