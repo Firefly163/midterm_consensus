@@ -6,4 +6,9 @@ $(document).ready(function() {
      };
   })
 
+  $(".remove-choice-button").on('click', function(event) {
+    event.stopPropagation();
+    $("li").last().remove();
+  })
+
 });
