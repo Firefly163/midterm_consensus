@@ -10,12 +10,10 @@
     <% include partials/_header.ejs %>
   </header>
   <main>
-    <form action="/logout" method="POST">
-      <a href="/" class="nav-button">Home</a>
-      <a href="/logout" class="nav-button">Logout</a>
-    </form>
 
     <h1>CREATE A POLL</h1>
+    <button class="add-choice-button">Add another choice</button>
+    <button class="remove-choice-button">Remove choice</button>
     <form class="create-form" action="/poll/create" method="POST">
       <label for="title">Title:</label><input type="text" name="title" class="create-form title-field">
       <label for="description">Description:</label><input type="text" name="description" class="create-form" placeholder="Write a brief explanation of what this poll is about.">
@@ -27,15 +25,8 @@
 
       <button type="submit" class="create-button">CREATE</button>
     </form>
-
-    <button class="add-choice-button">Add another choice</button>
-    <button class="remove-choice-button">Remove choice</button>
-
-
     <a href="/logout" class="nav-button">Logout</a>
 
-    <h1>Your Polls</h1>
-    <h3>Create a new poll</h3>
 
   <!-- Use ejs to add the poll id here and add as many sections as necessary -->
     <div>

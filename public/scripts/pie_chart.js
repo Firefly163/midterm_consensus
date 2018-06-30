@@ -19,6 +19,9 @@ function renderChart (data, elmID){
       var options = {
         title: "",
         colors: tealArray,
+        backgroundColor: '#ffc6c2',
+        pieSliceBorderColor: '#ffc6c2',
+        chartArea:{width:'75%',height:'75%'},
         fontName: 'Quicksand',
         legend: {position: "bottom"}
       };

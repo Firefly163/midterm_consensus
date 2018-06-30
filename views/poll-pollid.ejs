@@ -5,7 +5,7 @@
   <% include partials/_head.ejs %>
 </head>
 
-<body>
+<body class="admin-page">
   <header>
     <% include partials/_header.ejs %>
   </header>
@@ -29,9 +29,6 @@
       <% } %>
     </section>
     <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
-    <!-- <form method="POST" action="/poll/<%= poll.admin_link%>">
-      <input id="delete_poll" type="submit" name="" value="Delete">
-    </form> -->
 
     <section class="link-section">
       <h3>Your admin link: </h3>
@@ -40,9 +37,7 @@
       <p id="friend-link"><%= links.friendLink %></p>
     </section>
 
-    <!-- Replace this with the actual results  -->
     <div id="piechart" style="width: 900px; height: 500px;"></div>
-    <!-- <img src="/images/logo.png"> -->
   <script>
     var data = <%- JSON.stringify(choices) %>
     renderChart(data, 'piechart');
