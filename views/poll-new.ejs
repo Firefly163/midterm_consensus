@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Create a poll</title>
-  <% include partials/_head.ejs %>
-</head>
 
-<body>
-  <header>
-    <% include partials/_header.ejs %>
-  </header>
-  <main>
+  <head>
+    <title>Create a poll</title>
+    <% include partials/_head.ejs %>
+  </head>
 
-    <h1>CREATE A POLL</h1>
-    <button class="add-choice-button">Add another choice</button>
-    <button class="remove-choice-button">Remove choice</button>
-    <form class="create-form" action="/poll/create" method="POST">
-      <label for="title">Title:</label><input id="poll_title" type="text" name="title" class="create-form title-field">
-      <label for="description">Description:</label><input id="poll_description" type="text" name="description" class="create-form" placeholder="Write a brief explanation of what this poll is about.">
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+    </header>
+    <main>
+      <form action="/logout" method="POST">
+        <a href="/" class="nav-button">Home</a>
+        <a href="/logout" class="nav-button">Logout</a>
+      </form>
 
-      <ul id="ul_choices">
-        <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]"  class="create-form"> Description: <input type="text " name="desc[]" value=" " class="create-form" ></li>
-      </ul>
-      <div class = "create-errors"></div>
-      <button type="submit" class="create-button">CREATE</button>
+      <h1>CREATE A POLL</h1>
+      <form class="create-form" action="/poll/create" method="POST">
+        <label for="title">Title:</label><input id="poll_title" type="text" name="title" class="create-form title-field">
+        <label for="description">Description:</label><input id="poll_description" type="text" name="description" class="create-form" placeholder="Write a brief explanation of what this poll is about.">
 
-    </form>
-    <div>
-      <a href="/poll/:pollid" <section class="poll-preview"><section></section></a>
-    </div>
-  </main>
+        <ul id="ul_choices">
+          <li class="choice"><label for="choice"> Choice : </label><input type="  text" name="choice[]"  class="create-form"> Description: <input type="text " name="desc[]" value=" " class="create-form" ></li>
+        </ul>
+        <div class = "create-errors"></div>
+        <button type="submit" class="create-button">CREATE</button>
 
-  <footer>
-    <% include partials/_footer.ejs %>
-  </footer>
+      </form>
 
-</body>
+      <button class="add-choice-button">Add another choice</button>
+      <button class="remove-choice-button">Remove choice</button>
+
+        <h1>Your Polls</h1>
+        <h3>Create a new poll</h3>
+
+        <div>
+          <a href="/poll/:pollid" <section class="poll-preview"><section></section></a>
+        </div>
+      </main>
+
+      <footer>
+        <% include partials/_footer.ejs %>
+      </footer>
+
+    </body>
+
 </html>
