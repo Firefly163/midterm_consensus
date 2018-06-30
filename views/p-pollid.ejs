@@ -28,7 +28,8 @@
         <p class="full-title">Choices</p>
         <% for(let i = 0; i < choicesArr.length; i++) { %>
         <div class="choice" draggable="true" choice_id=<%= choicesArr[i].id %>>
-          <%= choicesArr[i].choice %>
+          <p><%= choicesArr[i].choice %></p>
+          <p><%= choicesArr[i].description %></p>
         </div>
         <%}%>
       </section>
