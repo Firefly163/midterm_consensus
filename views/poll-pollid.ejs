@@ -6,36 +6,39 @@
   </head>
 
 <body class="admin-page">
-  <header>
+  <header class="admin-page-header">
     <% include partials/_header.ejs %>
   </header>
-  <main>
-      <form class="login-form" action="/login" method="POST">
-        email: <input type ="email" name="email">
-        <br>
-        password: <input type ="password" name="password">
-        <br>
-        <button type="submit">Login</button>
-      </form>
+  <main class="row">
+    <div class="admin-text col-md-4">
       <h1 class="poll-title"><%=poll.poll_name%></h1>
       <p class="poll-description"><%=poll.description%></p>
       <p class="num-responses">Responses: <%=poll.responses%></p>
-      <section class="choice-ranking">
+      <table class="choice-ranking">
+        <thead>
+          <tr>
+            <th class="table-title">CHOICE</th>
+            <th class="table-title">DESCRIPTION</th>
+          </tr>
+        </thead>
+        <tbody>
         <%for (let elm of choices) { %>
-          <p class="choice1">Choice: <%= elm.choice %></p>
-          <span>Description: <%= elm.description%></span>
+          <tr>
+            <td class="choice-name"><%= elm.choice %></td>
+            <td class="choice-description"><%= elm.description%></td>
+          </tr>
         <% } %>
-      </section>
+        </tbody>
+      </table>
       <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
 
       <section class="link-section">
-        <h3>Your admin link: </h3>
+        <h1 class="links-title">Links</h1>
         <a href="poll/<%= links.adminLink %>" class="poll-links"><p id="admin-link">localhost:8080/poll/<%= links.adminLink %></p></a>
-        <h3>Your shareable link: </h3>
         <a href="p/<%= links.friendLink %>" class="poll-links"><p id="friend-link">localhost:8080/poll/<%= links.friendLink %></p></a>
       </section>
-
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    </div>
+    <div id="piechart" class="col-md-8"></div>
     <script>
       var data = <%- JSON.stringify(choices) %>
       renderChart(data, 'piechart');
