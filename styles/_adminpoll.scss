@@ -1,3 +1,54 @@
 body.admin-page {
   background-color: $lightPinky;
+  .admin-text {
+    padding-top: 3rem;
+    .poll-title {
+      font-family: $bigFont, cursive;
+      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 #cc706a;
+      color: white;
+    }
+    .poll-description {
+      font-style: italic;
+    }
+    .links-title {
+      font-family: $bigFont, cursive;
+      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 #cc706a;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    a {
+      color: $tealish;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    button {
+      color: white;
+      background-color: $lightPinky;
+      border: 3px solid white;
+      height: 4rem;
+      width: 6rem;
+      margin-bottom: 1rem;
+      &:hover {
+        background-color: $tealish;
+      }
+
+    }
+  }
+
+}
+
+header.your-polls-header {
+  h1 {
+    display: none;
+  }
+  button {
+    color: white;
+    background-color: $lightPinky;
+    border: 3px solid white;
+    height: 4rem;
+    margin: 0.5rem;
+    width: 6rem;
+  }
 }

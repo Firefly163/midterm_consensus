@@ -4,8 +4,6 @@ $(document).ready(function() {
     let $form = $(this);
     let $errors = $(".create-errors");
     $errors.empty();
-    console.log($("#poll_title").val());
-    console.log($("#poll_description").val());
     if (!$("#poll_title").val()) {
       $errors.append("<p>Title fields is empty</p>");
       return;
@@ -15,7 +13,7 @@ $(document).ready(function() {
       return;
     };
     $('#ul_choices').children('.choice').each(function() {
-      if(!$(this).find('.create-form').val() && !$errors.contents().length) {
+      if(!$(this).find('.choice-input').val() && !$errors.contents().length) {
         $errors.append("<p>Choice field is empty</p>");
         return;
       }
