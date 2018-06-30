@@ -299,7 +299,8 @@ app.post("/poll/create", async (req, res) => {
     }
       return Promise.resolve()
   }));
-    // Send email to creator with admin and friend links --------------------------------------------
+
+      // Send email to creator with admin and friend links --------------------------------------------
 
    const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
    console.log("about to send email", pollId)
@@ -316,7 +317,7 @@ app.post("/poll/create", async (req, res) => {
    else
      console.log("Sent an email", info, "message", gmail.newPollMsg);
   });
-    res.redirect("/poll");
+    res.json({adminLink: adminLink});
     } catch (err) {
       console.log(err)
       res.status(404);
