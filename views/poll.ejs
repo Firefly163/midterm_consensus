@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>My polls</title>
-  <% include partials/_head.ejs %>
-</head>
+  <head>
+    <title>My polls</title>
+    <% include partials/_head.ejs %>
+  </head>
 
-<body>
-  <header>
-    <% include partials/_header.ejs %>
-  </header>
-  <main>
-    <h1 class="your-polls-title">Your Polls</h1>
-    <article>
-      <ul class="container">
-        <% for(let poll of polls) { %>
-          <a href=<%="http://localhost:8080/poll/" + poll.admin_link%> >
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+    </header>
+    <main>
+      <h1 class="your-polls-title">Your Polls</h1>
+
+      <article>
+        <ul class="container">
+          <% for(let poll of polls) { %>
+            <a href=<%="http://localhost:8080/poll/" + poll.admin_link%> >
             <li class="item">
-              <h1 class="poll-name-h1"><%= poll.poll_name%></h1>
-              <div id="chart_<%= poll.id %>" class='poll_chart'>
-              </div>
+            <h1 class="poll-name-h1"><%= poll.poll_name%></h1>
+            <div id="chart_<%= poll.id %>" class="poll_chart">
+            </div>
             </li>
-          </a>
+            </a>
           <% } %>
-      </ul>
+        </ul>
+      </article>
 
-    </article>
+    </main>
 
-  </main>
-  <footer>
-    <% include partials/_footer.ejs %>
-  </footer>
-  <script type="text/javascript">
-    var data = <%- JSON.stringify(data) %>
-    $('.poll_chart').each(function(index) {
-      const elmId = $(this).attr('id');
-      const pollId = elmId.replace('chart_', '');
-      renderChart(data.filter(elm => elm.poll_id == pollId), elmId);
-    })
-  </script>
-</body>
+    <footer>
+      <% include partials/_footer.ejs %>
+    </footer>
+
+    <script type="text/javascript">
+      var data = <%- JSON.stringify(data) %>
+      $(".poll_chart").each(function(index) {
+        const elmId = $(this).attr("id");
+        const pollId = elmId.replace("chart_", "");
+        renderChart(data.filter(elm => elm.poll_id == pollId), elmId);
+      })
+    </script>
+
+  </body>
 </html>

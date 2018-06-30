@@ -4,21 +4,21 @@ const tealArray = ["#49c5b6", "#2b766d", "#153b36", "#41b1a3", "#7fd6cb", "#a4e2
 function renderChart (data, elmID){
   console.log(data);
   if (data.filter(elm => elm.points > 0).length === 0) {
-    document.getElementById(elmID).innerHTML = 'No Data';
+    document.getElementById(elmID).innerHTML = "No Data";
     return;
   }
   const dataTable = [
-    ['Task', 'Hours per Day']
+    ["Task", "Hours per Day"]
     ]
     .concat(data.map(elm => [elm.choice, elm.points]))
-    google.charts.load('current', {'packages':['corechart']});
+    google.charts.load("current", {"packages":["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var chartData = google.visualization.arrayToDataTable(dataTable);
       var options   = {
         title:    "",
         colors:   tealArray,
-        fontName: 'Quicksand',
+        fontName: "Quicksand",
         legend:   {position: "bottom"
         }
       };

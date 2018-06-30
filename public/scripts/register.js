@@ -18,8 +18,8 @@ $(document).ready(function() {
     }
     if ($errors.contents().length === 0) {
       $.ajax({
-        url:    '/register',
-        method: 'POST',
+        url:    "/register",
+        method: "POST",
         data:   $form.serialize()
       }).done(function(result) {
         if (result.error === "email") {

@@ -55,7 +55,7 @@ $(document).ready(function() {
       });
       $.ajax({
         url:    `/poll/${poll_id}/answers`,
-        method: 'POST',
+        method: "POST",
         data:   choicePointsObj,
         type:   "json"
       })

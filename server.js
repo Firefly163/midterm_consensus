@@ -1,6 +1,6 @@
 "use strict";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
@@ -17,11 +17,11 @@ const morgan      = require("morgan");
 const knexLogger  = require("knex-logger");
 const secrets     = require("./secrets.js");
 const dbfunctions = require("./library/db-functions.js")(knex);
-const nodemailer  = require('nodemailer');
+const nodemailer  = require("nodemailer");
 
 
 const transporter = nodemailer.createTransport({
- service: 'gmail',
+ service: "gmail",
  auth: {
         user: secrets.userEmail,
         pass: secrets.emailPassword
@@ -56,7 +56,7 @@ async function authenticate (useridCookie) {
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
@@ -67,7 +67,7 @@ app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
-  outputStyle: 'expanded'
+  outputStyle: "expanded"
 }));
 app.use(express.static("public"));
 
@@ -131,7 +131,7 @@ app.get("/poll", async (req, res) => {
     }
     let user = "";
     let navButtons = ["login", "register"];
-    res.render('not-logged-in', {navButtons, user});
+    res.render("not-logged-in", {navButtons, user});
   }
   let user      = await dbfunctions.getUserName(req.session.user_id);
   let userPolls = await dbfunctions.getUserPolls(req.session.user_id);
@@ -149,7 +149,7 @@ app.get("/poll/create", async (req, res) => {
     }
     let navButtons = ["login", "register"];
     let user = "";
-    res.render('not-logged-in', {navButtons, user});
+    res.render("not-logged-in", {navButtons, user});
   }
   let user = await dbfunctions.getUserName(req.session.user_id);
   let navButtons = ["myPolls", "logout"];
@@ -196,7 +196,7 @@ app.get("/poll/:adminLink", async (req, res) => {
     }
     let user = "";
     let navButtons = ["login", "register"];
-    res.render('not-logged-in', {navButtons, user});
+    res.render("not-logged-in", {navButtons, user});
   }
   let navButtons = ["myPolls", "create", "logout"];
   let user       = await dbfunctions.getUserName(req.session.user_id);
@@ -204,16 +204,16 @@ app.get("/poll/:adminLink", async (req, res) => {
   let allAdminLinks = await dbfunctions.getAllAdminLinks();
 
   if (!allAdminLinks.includes(adminLink)) {
-    res.render('does-not-exist', {navButtons, user});
+    res.render("does-not-exist", {navButtons, user});
   }
   let poll       = await dbfunctions.getPollByAdmLink(adminLink);
   let friendLink = await dbfunctions.getFriendLink(adminLink);
   if (req.session.user_id !== poll.user_id) {
-    res.render('not-yours', {navButtons, user});
+    res.render("not-yours", {navButtons, user});
   }
   let choices = await dbfunctions.getChoicesArr(poll.id);
   let links   = {friendLink: `http://localhost:8080/p/${friendLink}`, adminLink: `http://localhost:8080/poll/${adminLink}`}
-  res.render('poll-pollid', {poll, choices, navButtons, links, user});
+  res.render("poll-pollid", {poll, choices, navButtons, links, user});
 });
 
 //--POST ROUTES--
@@ -255,7 +255,6 @@ app.post("/register", async (req, res) => {
 
 // Create Poll page
 app.post("/poll/create", async (req, res) => {
-  let choiceNum = "";
   const choiceArray = req.body.choice.map(elm => [elm]);
   for(let i = 0; i < choiceArray.length; i++) {
     choiceArray[i].push(req.body.desc[i]);
@@ -291,7 +290,9 @@ app.post("/poll/create", async (req, res) => {
     from:    secrets.userEmail,
     to:      creatorEmail,
     subject: "You have created a poll!",
-    html:    `Congratulations on creating a poll. Click <a href='${adminLinkFull}'>here</a> to manage your poll and see results (when  you get some). Here is a link you can send to your friends: <br> ${friendLinkFull}`
+    html:    `Congratulations on creating a poll. Click
+              <a href="${adminLinkFull}">here</a> to manage your poll and see results (when  you get some).
+              Here is a link you can send to your friends: <br> ${friendLinkFull}`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
    if(err)
@@ -324,10 +325,11 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
    const adminLink     =  await dbfunctions.getAdminLinkFromId(poll_id);
    const adminLinkFull = `http://localhost:8080/poll/${adminLink}`;
    const mailOptions   = {
-    from: secrets.userEmail,
-    to: creatorEmail,
+    from:    secrets.userEmail,
+    to:      creatorEmail,
     subject: "Someone took your poll!",
-    html: `One of your friends answered your poll. Log in to Consensus or click <a href='${adminLinkFull}'>here</a> to see the results!`
+    html:    `One of your friends answered your poll. Log in to Consensus or click
+             <a href="${adminLinkFull}">here</a> to see the results!`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
    if(err)

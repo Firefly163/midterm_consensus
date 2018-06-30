@@ -14,8 +14,8 @@ $(document).ready(function() {
     }
     if ($errors.contents().length === 0) {
       $.ajax({
-        url:    '/login',
-        method: 'POST',
+        url:    "/login",
+        method: "POST",
         data:   $form.serialize()
       }).done(function(result) {
         if (result.error === "email") {
