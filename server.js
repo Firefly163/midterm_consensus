@@ -91,12 +91,9 @@ app.get("/", async (req, res) => {
     navButtons = ["login", "register"];
   } else {
     navButtons = ["myPolls", "create", "logout"];
-
-  let user = await dbfunctions.getUserName(req.session.user_id)
-  console.log("user", user)
-  let templateVars = {navButtons, user};
+  }
+  let templateVars = {navButtons};
   res.render("root", templateVars);
-}
 });
 
 // Registration page

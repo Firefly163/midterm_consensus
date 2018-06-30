@@ -1,5 +1,5 @@
 header {
-  background-color: #EEEEEE;
+  background-color: white;
   height: 5rem;
   position: fixed;
   padding-left: 2rem;
@@ -7,9 +7,13 @@ header {
   width: 100%;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid grey;
+
   .logo-and-header {
     h1 {
+      font-family: 'Nunito', sans-serif;
       line-height: 5rem;
+      font-weight: bold;
     }
   }
   .buttons {
@@ -18,11 +22,14 @@ header {
     align-items: center;
     height: 5rem;
     button {
+      color: #edeeef;
+      background-color: $tealish;
       height: 4rem;
       margin: 0.5rem;
       width: 6rem;
       &:hover {
-        background-color: lightblue;
+        background-color: #abb7d0;
+        color: #1d1e1e;
       }
     }
 

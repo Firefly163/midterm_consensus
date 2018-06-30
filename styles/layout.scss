@@ -1,18 +1,24 @@
+$pinky: #FF8D85;
+$tealish: #49c5b6;
+
 @import 'navbar';
 @import 'login-form';
 @import 'footer';
 @import 'friendpoll';
 @import 'show_polls';
 @import 'create-poll';
+@import 'root';
 
+
+html {
+  height: 100%;
+}
 
 body {
-  background-color: white;
   main {
     padding: 4rem;
     padding-top: 8rem;
-
-
+    font-family: 'Quicksand', sans-serif;
   }
 
 }
