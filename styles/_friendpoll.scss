@@ -1,5 +1,10 @@
 .friend-poll-page {
+
   .text-container {
+    margin-top: 3rem;
+    .poll-title {
+      font-family: $bigFont, cursive;
+    }
     .poll-description {
       font-style: italic;
     }

@@ -1,4 +1,5 @@
-
+const pinkArray = ["#e57e77", "#b2625d", "#ff9891", "#7f4642", "#331c1a", "#ffbab5"];
+const tealArray = ["#49c5b6", "#2b766d", "#153b36", "#41b1a3", "#7fd6cb", "#a4e2da"];
 
 function renderChart (data, elmID){
   console.log(data);
@@ -10,14 +11,18 @@ function renderChart (data, elmID){
     ['Task', 'Hours per Day']
     ]
     .concat(data.map(elm => [elm.choice, elm.points]))
-  google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var chartData = google.visualization.arrayToDataTable(dataTable);
-      var options = {
-        title: 'My choices'
+      var options   = {
+        title:    "",
+        colors:   tealArray,
+        fontName: 'Quicksand',
+        legend:   {position: "bottom"
+        }
       };
       var chart = new google.visualization.PieChart(document.getElementById(elmID));
       chart.draw(chartData, options);
-    }
-}
+    };
+};

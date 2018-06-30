@@ -1,31 +1,49 @@
+.your-polls-title {
+  margin-top: 3rem;
+  margin-bottom: 0px;
+  //border-bottom: 1px solid $lightGrey;
+  width: 100%;
+  font-family: $bigFont, cursive;
+  display: none;
+
+}
 article {
   ul.container {
-
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    padding-top: 3rem;
+    margin: 0px;
     list-style: none;
     display: flex;
 
     flex-flow: row wrap;
     justify-content: flex-start;
-
-    li.item {
-      background: #687793;
-      padding: 5px;
-      border: 1px solid #abb7d0;
-      border-radius: 10px;
-      width: 300px;
-      height: 250px;
-      margin: 20px;
-      line-height: 150px;
-      color: white;
-      font-weight: bold;
-      font-size: 2em;
-      text-align: justify;
-      &:hover {
-        border: 5px solid #42485d;
+    a {
+      width: 33%;
+      //border: 1px solid $lightGrey;
+      text-decoration: none;
+      li.item {
+        h1 {
+          text-align: center;
+          font-family: $bigFont, cursive;
+          color: black;
+        }
+        .poll_chart {
+          text-align: center;
+        }
+        padding: 5px;
+        line-height: 150px;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: justify;
+        &:hover {
+          border: 2px solid $pinky;
+          h1 {
+            color: $pinky;
+          }
+        }
       }
+
     }
   }
-
 }
+

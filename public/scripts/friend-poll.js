@@ -1,13 +1,9 @@
 $(document).ready(function() {
 
-  // $(".choice").on("dragend", function (event) {
-  //   console.log("STOPPED!!!");
-  // });
   let $dragged;
-  let choicesMade = 0;
+  let choicesMade     = 0;
   let numberOfChoices = $(".choice-container.full .choice").length;
-  let poll_id = $(".poll-title").attr("poll_id");
-
+  let poll_id         = $(".poll-title").attr("poll_id");
 
   $(".choice").on("dragstart", function (event) {
     $dragged = $(this);
@@ -36,7 +32,6 @@ $(document).ready(function() {
     $(this).append($dragged);
     let undoRank = Number($dragged.attr("ranking"));
     $dragged.attr("ranking", 0);
-
     $(this).siblings(".choice-container.empty").children(".choice").each(function () {
       let oldRank = Number($(this).attr("ranking"));
       if (oldRank > undoRank) {
@@ -57,12 +52,12 @@ $(document).ready(function() {
         let ranking = $(this).attr("ranking");
         let points = (numberOfChoices - (ranking - 1));
         choicePointsObj[id] = points;
-      })
+      });
       $.ajax({
-        url: `/poll/${poll_id}/answers`,
+        url:    `/poll/${poll_id}/answers`,
         method: 'POST',
-        data: choicePointsObj,
-        type: "json"
+        data:   choicePointsObj,
+        type:   "json"
       })
       $(".text-container").empty();
       $(".choices-container").empty();
@@ -72,7 +67,7 @@ $(document).ready(function() {
         <p>Login or Register to make your own polls!</p>
         `)
     }
-  })
+  });
 
 });
 
