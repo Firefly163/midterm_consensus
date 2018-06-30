@@ -3,4 +3,13 @@
   height: 100%;
   padding-bottom: 10%;
   display: flex;
+  .about-text {
+    h1 {
+      font-family: 'Abril Fatface', cursive;
+      color: white;
+      letter-spacing: 3px;
+      font-size: 5rem;
+
+    }
+  }
 }
