@@ -270,32 +270,37 @@ app.post("/register", async (req, res) => {
 // Create Poll page
 app.post("/poll/create", async (req, res) => {
   let choiceNum = "";
-  const choiceArray = [req.body.choice1, req.body.choice2, req.body.choice3, req.body.choice4, req.body.choice5, req.body.choice6]
-    try {
-    const adminLink = makeRandomString();
-    const adminLinkFull = `http://localhost:8080/poll/${adminLink}`
-    const friendLink = makeRandomString();
-    const friendLinkFull = `http://localhost:8080/${friendLink}`
-    const pollInsertResult = await knex("polls").insert({
-      user_id: req.session.user_id,
-      poll_name: req.body.title,
-      description: req.body.description,
-      admin_link: adminLink,
-      friend_link: friendLink
-    });
-    const pollId = await dbfunctions.getPollId(friendLink);
-    await Promise.all(choiceArray.map(currentChoice => {
-      if (currentChoice) {
-        const choiceData = {
-          poll_id: pollId,
-          choice: currentChoice,
-          points: 0
-        }
-        return knex("choices").insert(choiceData);
+  const choiceArray = req.body.choice.map(elm => [elm]);
+  for(let i = 0; i < choiceArray.length; i++) {
+    choiceArray[i].push(req.body.desc[i])
+  };
+  try {
+  const adminLink = makeRandomString();
+  const adminLinkFull = `http://localhost:8080/poll/${adminLink}`
+  const friendLink = makeRandomString();
+  const friendLinkFull = `http://localhost:8080/${friendLink}`
+  const pollInsertResult = await knex("polls").insert({
+    user_id: req.session.user_id,
+    poll_name: req.body.title,
+    description: req.body.description,
+    admin_link: adminLink,
+    friend_link: friendLink
+  });
+  const pollId = await dbfunctions.getPollId(friendLink);
+  await Promise.all(choiceArray.map(currentChoice => {
+    if (currentChoice) {
+      const choiceData = {
+        poll_id: pollId,
+        choice: currentChoice[0],
+        description: currentChoice[1],
+        points: 0
       }
-        return Promise.resolve()
-    }));
-    // Send email to creator with admin and friend links
+      return knex("choices").insert(choiceData);
+    }
+      return Promise.resolve()
+  }));
+    // Send email to creator with admin and friend links --------------------------------------------
+
    const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
    console.log("about to send email", pollId)
    const mailOptions = {
@@ -353,11 +358,12 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
 
 
 //Delete Poll
-app.post("/poll/:adminLink", async (req, res) => {
+app.post("/poll/:adminLink/delete", async (req, res) => {
   let adminLink = req.params.adminLink;
   let poll = await dbfunctions.getPollByAdmLink(adminLink);
+  console.log("Deleting")
   await dbfunctions.deletePoll(poll.id);
-  res.redirect('/poll');
+  res.json({});
 });
 
 //logout
