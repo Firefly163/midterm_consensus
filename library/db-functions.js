@@ -25,7 +25,6 @@ module.exports = knex => ({
     });
   },
 
-
   getUserPassword: (email) => {
     return knex.first("password")
     .from("users")
@@ -174,7 +173,6 @@ module.exports = knex => ({
     .where('poll_id', '=', poll_id)
     .then(result => result);
   },
-
 
   getChoicesArrS: (pollsIds) => {
     return knex.select("*")

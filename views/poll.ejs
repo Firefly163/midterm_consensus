@@ -4,7 +4,6 @@
     <title>My polls</title>
     <% include partials/_head.ejs %>
   </head>
-
 <body class="your-polls">
   <header class="your-polls-header">
     <% include partials/_header.ejs %>
@@ -12,42 +11,26 @@
   <main>
     <article>
       <ul class="container">
-        <% polls.reverse().forEach(elm => { %>
-          <a href=<%="/poll/" + elm.admin_link%> >
+        <% polls.reverse().forEach(poll => { %>
+          <a href=<%="/poll/" + poll.admin_link%> >
             <li class="item">
-            <h1 class="poll-name-h1"><%= elm.poll_name%></h1>
-            <div id="chart_<%= elm.id %>" class="poll_chart">
+            <h1 class="poll-name-h1"><%= poll.poll_name%></h1>
+            <div id="chart_<%= poll.id %>" class="poll_chart">
             </div>
             </li>
           </a>
         <% }) %>
       </ul>
     </article>
-
-    </main>
-
-    <footer>
-      <% include partials/_footer.ejs %>
-    </footer>
-
-    <script type="text/javascript">
-      var data = <%- JSON.stringify(data) %>
-      $(".poll_chart").each(function(index) {
-        const elmId = $(this).attr("id");
-        const pollId = elmId.replace("chart_", "");
-        renderChart(data.filter(elm => elm.poll_id == pollId), elmId);
-      })
-    </script>
-
   </main>
-  <footer class="your-polls-footer">
+  <footer>
     <% include partials/_footer.ejs %>
   </footer>
   <script type="text/javascript">
     var data = <%- JSON.stringify(data) %>
-    $('.poll_chart').each(function(index) {
-      const elmId = $(this).attr('id');
-      const pollId = elmId.replace('chart_', '');
+    $(".poll_chart").each(function(index) {
+      const elmId = $(this).attr("id");
+      const pollId = elmId.replace("chart_", "");
       renderChart(data.filter(elm => elm.poll_id == pollId), elmId);
     })
   </script>
