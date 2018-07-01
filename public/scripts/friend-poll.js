@@ -7,9 +7,11 @@ $(document).ready(function() {
 
   $(".choice").on("dragstart", function (event) {
     $dragged = $(this);
+    $dragged.addClass("on-drag");
   });
 
   $(".choice").on("dragend", function (event) {
+    $(this).removeClass("on-drag");
     $dragged = null;
   });
 
@@ -44,7 +46,7 @@ $(document).ready(function() {
     $errors = $(".errors")
     $errors.empty();
     if (choicesMade != numberOfChoices) {
-      $errors.append("<p>you need to rank ALL your choices!</p>");
+      $errors.append("<span class='error1'> you need to rank ALL your choices! </p>");
     } else {
       let choicePointsObj = {};
       $(".choice-container.empty").children(".choice").each(function () {

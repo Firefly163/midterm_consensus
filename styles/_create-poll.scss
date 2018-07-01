@@ -48,6 +48,9 @@ main.create-page {
             font-size: 12px;
             border: 2px solid black;
             padding: 1rem;
+            &:hover {
+              border-color: $tealish;
+            }
           }
         }
       }
@@ -65,7 +68,9 @@ main.create-page {
       }
     }
     .title-and-text {
-      font-family: $bigFont, cursive;
+      h1 {
+        font-family: $bigFont, cursive;
+      }
     }
   }
 }

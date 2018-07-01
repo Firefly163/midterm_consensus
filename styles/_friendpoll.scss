@@ -1,6 +1,8 @@
 .friend-poll-page {
 
   .text-container {
+    padding-top: 1rem;
+    padding-left: 2rem;
     .poll-title {
       font-family: $bigFont, cursive;
       color: white;
@@ -12,8 +14,16 @@
       padding-left: 1rem;
       color: $darkPinky;
     }
+    .instructions {
+      font-style: italic;
+      color: $darkPinky;
+      margin: 0px;
+    }
     .errors {
-      color: red;
+      color: white;
+      .error1 {
+        background-color: $darkPinky;
+      }
     }
   }
   .choices-container {
@@ -32,10 +42,13 @@
       }
       .choice {
         border: 3px solid white;
-        background-color: $lightPinky;
+        background-color: $pinky;
         margin-bottom: 0.5rem;
         text-align: center;
         padding: 1rem;
+        &.on-drag {
+          background-color: $tealish;
+        }
         .choice-name {
           color: white;
           text-transform: uppercase;
@@ -51,10 +64,9 @@
     }
     .div-for-btn {
       display: flex;
-      justify-content: flex-end;
-      width: 94%;
+      justify-content: center;
       .submit-ranks-btn {
-        background-color: $lightPinky;
+        background-color: $pinky;
         color: white;
         font-size: 12px;
         border: 3px solid white;
@@ -66,8 +78,6 @@
       }
     }
   }
-
-
 
 }
 
