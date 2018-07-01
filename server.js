@@ -284,7 +284,6 @@ app.post("/poll/create", async (req, res) => {
     }
       return Promise.resolve();
   }));
-
     // Send email to creator with admin and friend links
    const creatorEmail = await dbfunctions.getCreatorEmail(pollId);
    const mailOptions = {
@@ -333,10 +332,11 @@ app.post("/poll/:poll_id/answers", async (req, res) => {
              <a href="${adminLinkFull}">here</a> to see the results!`
   };
   await transporter.sendMail(mailOptions, function (err, info) {
-   if(err)
+   if(err) {
      console.log(err);
-   else
+   } else {
      console.log("Confirmation  email sent to creator");
+   }
   })
 });
 

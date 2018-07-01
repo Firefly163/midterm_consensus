@@ -5,8 +5,8 @@
     <% include partials/_head.ejs %>
   </head>
 
-  <body>
-    <header>
+  <body class="friend-poll-body">
+    <header class="friend-poll-header">
       <% include partials/_header.ejs %>
     </header>
 
@@ -16,7 +16,7 @@
       <div class="text-container">
         <div class="title-and-description">
           <h1 class="poll-title" poll_id=<%= poll_id %>><%= poll_name %></h1>
-          <p class="poll-description"><%= poll_description%></p>
+          <p class="poll-description">- <%=poll_description.toUpperCase() %></p>
           <p class="instructions">
             Drag your choices into the box in the order of your preference. Then, click the SUBMIT button.
           </p>
@@ -26,23 +26,24 @@
 
       <div class="choices-container row">
         <section class="choice-container full">
-          <p class="full-title">Choices</p>
+          <p class="container-title full-title">Choices</p>
           <% for(let i = 0; i < choicesArr.length; i++) { %>
           <div class="choice" draggable="true" choice_id=<%= choicesArr[i].id %>>
-            <p><%= choicesArr[i].choice %></p>
-            <p><%= choicesArr[i].description %></p>
+            <p class="choice-name"><%= choicesArr[i].choice %></p>
+            <p class="choice-description"><%= choicesArr[i].description %></p>
           </div>
           <%}%>
         </section>
         <section class="choice-container empty">
-          <p class="empty-title">My ranking</p>
+          <p class="container-title empty-title">My ranking</p>
         </section>
+        <div class="div-for-btn">
+          <button class="submit-ranks-btn" type="submit">SUBMIT</button>
+        </div>
       </div>
 
+
     </main>
-    <div class="btn-and-errors">
-      <button class="btn submit-ranks-btn" type="submit">SUBMIT</button>
-    </div>
 
     <footer>
       <% include partials/_footer.ejs %>

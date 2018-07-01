@@ -1,5 +1,6 @@
 module.exports = knex => ({
 
+// Users table functions
   getUserId: (email) => {
     return knex.first("id")
     .from("users")
@@ -21,6 +22,40 @@ module.exports = knex => ({
       let ids = [];
       result.forEach(el => ids.push(el.id));
       return ids;
+    });
+  },
+
+    getUserPassword: (email) => {
+    return knex.first("password")
+    .from("users")
+    .where("email", "=", email)
+    .then(result => result.password);
+  },
+
+  insertNewUser: (userName, userEmail, userPassword) => {
+    return knex("users")
+    .insert({
+      name:     userName,
+      email:    userEmail,
+      password: userPassword
+      })
+      .then();
+  },
+
+    getUsers: () => {
+    return knex.select('*')
+    .from("users")
+    .then(result => result)
+  },
+
+//Polls table functions
+  getAllFriendLinks: () => {
+    return knex.select("friend_link")
+    .from("polls")
+    .then(result => {
+      let friendLinks = [];
+      result.forEach(el => friendLinks.push(el.friend_link));
+      return friendLinks;
     });
   },
 
@@ -52,35 +87,21 @@ module.exports = knex => ({
     .then(result => result.friend_link);
   },
 
-  getUserPassword: (email) => {
-    return knex.first("password")
-    .from("users")
-    .where("email", "=", email)
-    .then(result => result.password);
-  },
-
-  insertNewUser: (userName, userEmail, userPassword) => {
-    return knex("users")
-    .insert({
-      name:     userName,
-      email:    userEmail,
-      password: userPassword
-      })
-      .then();
-  },
-
-  getChoicesArr: (pollid) => {
-    return knex.select("*")
-    .from("choices")
-    .where('poll_id', '=', pollid)
-    .then(result => result);
-  },
-
   getPollName: (pollid) => {
     return knex.first("poll_name")
     .from("polls")
     .where('id', '=', pollid)
     .then(result => result.poll_name);
+  },
+
+    getAllAdminLinks: () => {
+    return knex.select("admin_link")
+    .from("polls")
+    .then(result => {
+      let adminLinks = [];
+      result.forEach(el => adminLinks.push(el.admin_link));
+      return adminLinks;
+    });
   },
 
   getPollId: (friend_link) => {
@@ -105,6 +126,28 @@ module.exports = knex => ({
     .then(result => result);
   },
 
+  getCurrentResponses: (poll_id) => {
+    return knex.first("responses")
+    .from("polls")
+    .where("id", "=", poll_id)
+    .then(result => result.responses);
+  },
+
+  getCreatorEmail: (poll_id) => {
+    return knex('polls')
+    .join('users', 'polls.user_id', '=', 'users.id'  )
+    .first("email")
+    .where("polls.id", "=", poll_id)
+    .then(result => result.email)
+  },
+
+  updateResponses: (poll_id, newRes) => {
+    knex("polls")
+    .where('id', '=', poll_id)
+    .update({responses: newRes})
+    .then();
+  },
+
   getPollByAdmLink: (adminLink) => {
     return knex()
     .select('*')
@@ -113,6 +156,7 @@ module.exports = knex => ({
     .then(result => result[0]);
   },
 
+  //Choices table functions
   deletePoll: (pollId) => {
     knex('choices')
       .where('poll_id','=', pollId)
@@ -130,6 +174,13 @@ module.exports = knex => ({
     .then(result => result);
   },
 
+    getChoicesArrS: (pollsIds) => {
+    return knex.select("*")
+    .from("choices")
+    .whereIn('poll_id', pollsIds)
+    .then(result => result);
+  },
+
   updatePoints: (choice_id, newPoints) => {
     knex("choices")
     .where('id', '=', choice_id)
@@ -137,60 +188,12 @@ module.exports = knex => ({
     .then();
   },
 
-  getCurrentResponses: (poll_id) => {
-    return knex.first("responses")
-    .from("polls")
-    .where("id", "=", poll_id)
-    .then(result => result.responses);
-  },
-
-  updateResponses: (poll_id, newRes) => {
-    knex("polls")
-    .where('id', '=', poll_id)
-    .update({responses: newRes})
-    .then();
-  },
-
-  getCreatorEmail: (poll_id) => {
-    return knex('polls')
-    .join('users', 'polls.user_id', '=', 'users.id'  )
-    .first("email")
-    .where("polls.id", "=", poll_id)
-    .then(result => result.email)
-  },
-
-  getChoicesArrS: (pollsIds) => {
+    getChoicesArr: (pollid) => {
     return knex.select("*")
     .from("choices")
-    .whereIn('poll_id', pollsIds)
+    .where('poll_id', '=', pollid)
     .then(result => result);
   },
-
-  getUsers: () => {
-    return knex.select('*')
-    .from("users")
-    .then(result => result)
-  },
-
-  getAllFriendLinks: () => {
-    return knex.select("friend_link")
-    .from("polls")
-    .then(result => {
-      let friendLinks = [];
-      result.forEach(el => friendLinks.push(el.friend_link));
-      return friendLinks;
-    });
-  },
-
-  getAllAdminLinks: () => {
-    return knex.select("admin_link")
-    .from("polls")
-    .then(result => {
-      let adminLinks = [];
-      result.forEach(el => adminLinks.push(el.admin_link));
-      return adminLinks;
-    });
-  }
 
 });
 
