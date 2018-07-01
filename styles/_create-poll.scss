@@ -12,7 +12,9 @@ main.create-page {
           width: 50%;
           padding: 1rem;
           border: 2px solid $pinky;
-          overflow: hidden;
+          background-color: white;
+          text-align: left;
+          color: gray;
           &:hover {
             background-color: $pinky;
             color: white;
@@ -31,19 +33,34 @@ main.create-page {
       ul {
         list-style-type: none;
         padding:0px;
-        padding-bottom: 1rem;
         margin: 0px;
         width: 80%;
-        display: flex;
-        justify-content: center;
+        width: 100%;
+
         li {
+          width: 80%;
+          margin-bottom: 1rem;
+          display: flex;
+          justify-content: center;
           input {
+            width: 50%;
+            overflow: hidden;
             font-size: 12px;
             border: 2px solid black;
             padding: 1rem;
-
-
           }
+        }
+      }
+      .create-button {
+        font-size: 12px;
+        padding: 1rem;
+        border: 2px solid white;
+        background-color: $pinky;
+        color: white;
+        width: 80%;
+
+        &:hover {
+          background-color: $tealish;
         }
       }
     }
