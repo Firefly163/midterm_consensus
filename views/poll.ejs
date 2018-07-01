@@ -13,17 +13,17 @@
     <h1 class="your-polls-title">Your Polls</h1>
     <article>
       <ul class="container">
-        <% for(let poll of polls) { %>
-          <a href=<%="http://localhost:8080/poll/" + poll.admin_link%> >
+        <% polls.reverse().forEach(elm => { %>
+          <a href=<%="/poll/" + elm.admin_link%> >
             <li class="item">
-            <h1 class="poll-name-h1"><%= poll.poll_name%></h1>
-            <div id="chart_<%= poll.id %>" class="poll_chart">
+            <h1 class="poll-name-h1"><%= elm.poll_name%></h1>
+            <div id="chart_<%= elm.id %>" class="poll_chart">
             </div>
             </li>
-            </a>
-          <% } %>
-        </ul>
-      </article>
+          </a>
+        <% }) %>
+      </ul>
+    </article>
 
     </main>
 
