@@ -272,7 +272,6 @@ app.post("/poll/create", async (req, res) => {
     friend_link: friendLink
   });
   const pollId = await dbfunctions.getPollId(friendLink);
-  console.log("pollID", id)
   await Promise.all(choiceArray.map(currentChoice => {
     if (currentChoice) {
       const choiceData = {

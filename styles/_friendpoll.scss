@@ -1,12 +1,16 @@
 .friend-poll-page {
 
   .text-container {
-    margin-top: 3rem;
     .poll-title {
       font-family: $bigFont, cursive;
+      color: white;
+      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 $darkPinky;
     }
     .poll-description {
-      font-style: italic;
+      font-size: 10px;
+      font-weight: 900;
+      padding-left: 1rem;
+      color: $darkPinky;
     }
     .errors {
       color: red;
@@ -17,31 +21,71 @@
     justify-content: center;
     text-align: center;
     .choice-container {
-      border: 1px solid gray;
-      border-radius: 0.5rem;
+      border: 3px solid white;
       padding: 1rem;
-      background-color: #EEEEEE;
       width: 45%;
       margin: 1rem;
+      .container-title {
+        font-family: $bigFont, cursive;
+        color: $darkPinky;
+        font-size: 20px;
+      }
       .choice {
-        background-color: white;
-        border: 1px solid gray;
-        border-radius: 0.5rem;
+        border: 3px solid white;
+        background-color: $lightPinky;
         margin-bottom: 0.5rem;
         text-align: center;
         padding: 1rem;
+        .choice-name {
+          color: white;
+          text-transform: uppercase;
+          margin: 0px;
+        }
+        .choice-description {
+          color: white;
+          margin: 0px;
+          //font-style: italic;
+
+        }
+      }
+    }
+    .div-for-btn {
+      display: flex;
+      justify-content: flex-end;
+      width: 94%;
+      .submit-ranks-btn {
+        background-color: $lightPinky;
+        color: white;
+        font-size: 12px;
+        border: 3px solid white;
+        padding: 1rem;
+        width: 6rem;
+        &:hover {
+          background-color: $tealish;
+        }
       }
     }
   }
-  .btn-and-errors {
-    display: flex;
-    justify-content: center;
-    .submit-ranks-btn {
-      margin: 1rem;
-      width: 20%;
-      background-color: lightblue;
-      border-color: gray;
-    }
+
+
+
+}
+
+body.friend-poll-body {
+  background-color: $lightPinky;
+}
+
+header.friend-poll-header {
+  h1 {
+    display: none;
+  }
+  button {
+    color: white;
+    background-color: $lightPinky;
+    border: 3px solid white;
+    height: 4rem;
+    margin: 0.5rem;
+    width: 6rem;
   }
 }
 

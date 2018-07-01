@@ -4,7 +4,7 @@ body.admin-page {
     padding-top: 3rem;
     .poll-title {
       font-family: $bigFont, cursive;
-      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 #cc706a;
+      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 $darkPinky;
       color: white;
     }
     .poll-description {
@@ -12,7 +12,7 @@ body.admin-page {
     }
     .links-title {
       font-family: $bigFont, cursive;
-      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 #cc706a;
+      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 $darkPinky;
       color: white;
       margin-bottom: 1rem;
     }
