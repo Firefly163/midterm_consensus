@@ -28,15 +28,15 @@ module.exports = {
 
 Register and log in to use the app. Your polls will be displayed on the "My Polls" page. 
 
-![My Polls page](midterm_consensus/public/images/my-polls-pg.png)
+![My Polls page](https://github.com/emilyhfdong/midterm_consensus/public/images/my-polls-pg.png)
 
 Each poll is a link to an admin page where you can get details such as the number of responses and the curret results. 
 
-![Poll admin page](midterm_consensus/public/images/poll-admin-pg.png)
+![Poll admin page](https://github.com/emilyhfdong/midterm_consensus/public/images/poll-admin-pg.png)
 
 Create a poll by filling in the fields on the Create page. You will receive an email once it has been created. You'll also get an email notifying you every time someone takes your poll. Friends drag and drop their choices to rank them. Their answers are anonymous. 
 
-![Taking a poll](midterm_consensus/public/images/drag-and-drop.png)
+![Taking a poll](https://github.com/emilyhfdong/midterm_consensus/public/images/drag-and-drop.png)
 
 
 ## Dependencies
