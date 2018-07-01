@@ -1,15 +1,9 @@
-.your-polls-title {
-  margin-top: 3rem;
-  margin-bottom: 0px;
-  width: 100%;
-  font-family: $bigFont, cursive;
-  display: none;
 
-}
 article {
   ul.container {
     padding: 0px;
-    padding-top: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
     margin: 0px;
     list-style: none;
     display: flex;
@@ -25,6 +19,7 @@ article {
       text-decoration: none;
       li.item {
         h1 {
+          text-transform: lowercase;
           text-align: center;
           font-family: $bigFont, cursive;
           color: white;
@@ -57,10 +52,9 @@ body.your-polls {
   background-color: $lightPinky;
 }
 
-header.admin-page-header {
-  h1 {
-    display: none;
-  }
+header.your-polls-header {
+  background-color: $lightPinky;
+
   button {
     color: white;
     background-color: $lightPinky;

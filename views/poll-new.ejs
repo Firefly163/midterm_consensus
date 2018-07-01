@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="create-header">
     <% include partials/_header.ejs %>
   </header>
   <main class="create-page">
@@ -18,27 +18,28 @@
         </div>
         <form class="create-form" action="/poll/create" method="POST">
           <div class="form-group">
-            <input id="poll_title" type="text" name="title" class="create-input" placeholder="POLL TITLE">
+            <input id="poll_title" type="text" name="title" class="create-input" placeholder="POLL TITLE *">
           </div>
           <div class="form-group">
-            <input id="poll_description" type="text" name="description" class="create-input" placeholder="POLL DESCRIPTION">
+            <input id="poll_description" type="text" name="description" class="create-input" placeholder="POLL DESCRIPTION *">
           </div>
           <ul id="ul_choices">
             <li class="choice">
-              <input type="text" name="choice[]" class="choice-input" placeholder="CHOICE">
+              <input type="text" name="choice[]" class="choice-input" placeholder="CHOICE *">
               <input type="text " name="desc[]" placeholder="CHOICE DESCRIPTION">
             </li>
             <li class="choice">
-              <input type="text" name="choice[]" class="choice-input" placeholder="CHOICE">
+              <input type="text" name="choice[]" class="choice-input" placeholder="CHOICE *">
               <input type="text " name="desc[]" placeholder="CHOICE DESCRIPTION" >
             </li>
           </ul>
-          <div class = "create-errors"></div>
           <button type="submit" class="create-button">CREATE</button>
         </form>
       </div>
       <div class="title-and-text col-md-4">
         <h1>create a poll</h1>
+        <p>* fields are mandatory</p>
+        <div class = "create-errors"></div>
       </div>
     </div>
   </main>

@@ -25,7 +25,7 @@ module.exports = knex => ({
     });
   },
 
-    getUserPassword: (email) => {
+  getUserPassword: (email) => {
     return knex.first("password")
     .from("users")
     .where("email", "=", email)
@@ -42,7 +42,7 @@ module.exports = knex => ({
       .then();
   },
 
-    getUsers: () => {
+  getUsers: () => {
     return knex.select('*')
     .from("users")
     .then(result => result)
@@ -66,7 +66,7 @@ module.exports = knex => ({
     .then(result => result.id);
   },
 
-   getAdminLink: (friendLink) => {
+  getAdminLink: (friendLink) => {
     return knex.first("admin_link")
     .from("polls")
     .where("friend_link", "=", friendLink)
@@ -94,7 +94,7 @@ module.exports = knex => ({
     .then(result => result.poll_name);
   },
 
-    getAllAdminLinks: () => {
+  getAllAdminLinks: () => {
     return knex.select("admin_link")
     .from("polls")
     .then(result => {
@@ -174,7 +174,7 @@ module.exports = knex => ({
     .then(result => result);
   },
 
-    getChoicesArrS: (pollsIds) => {
+  getChoicesArrS: (pollsIds) => {
     return knex.select("*")
     .from("choices")
     .whereIn('poll_id', pollsIds)
@@ -188,7 +188,7 @@ module.exports = knex => ({
     .then();
   },
 
-    getChoicesArr: (pollid) => {
+  getChoicesArr: (pollid) => {
     return knex.select("*")
     .from("choices")
     .where('poll_id', '=', pollid)

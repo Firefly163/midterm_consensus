@@ -12,19 +12,24 @@ $(document).ready(function() {
   });
 
   $("header .register-btn").on("click", function(event) {
-    window.location.href = "http://localhost:8080/register";
+    window.location.href = "/register";
   });
 
   $("header .create-btn").on("click", function(event) {
-    window.location.href = "http://localhost:8080/poll/create";
+    window.location.href = "/poll/create";
   });
 
   $("header .logout-btn").on("click", function(event) {
-    window.location.href = "http://localhost:8080/logout";
+    window.location.href = "/logout";
   });
 
   $("header .myPolls-btn").on("click", function(event) {
-    window.location.href = "http://localhost:8080/poll";
+    window.location.href = "/poll";
   });
+
+  $("header .header-logo").on("click", function(event) {
+    window.location.href = "/";
+  });
+
 
 });
