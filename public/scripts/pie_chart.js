@@ -2,9 +2,8 @@ const pinkArray = ["#e57e77", "#b2625d", "#ff9891", "#7f4642", "#331c1a", "#ffba
 const tealArray = ["#49c5b6", "#2b766d", "#153b36", "#41b1a3", "#7fd6cb", "#a4e2da"];
 
 function renderChart (data, elmID){
-  console.log(data);
   if (data.filter(elm => elm.points > 0).length === 0) {
-    document.getElementById(elmID).innerHTML = "No Data";
+    document.getElementById(elmID).innerHTML = "";
     return;
   }
   const dataTable = [
