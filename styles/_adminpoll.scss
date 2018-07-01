@@ -1,37 +1,73 @@
 body.admin-page {
   background-color: $lightPinky;
   .admin-text {
-    padding-top: 3rem;
+    padding-top: 1rem;
+    padding-left: 3rem;
     .poll-title {
       font-family: $bigFont, cursive;
       text-shadow: -4px 3px 0 $pinky, -10px 7px 0 $darkPinky;
       color: white;
     }
     .poll-description {
-      font-style: italic;
+      font-size: 10px;
+      font-weight: 900;
+      padding-left: 1rem;
+      color: $darkPinky;
+      text-transform: uppercase;
     }
-    .links-title {
-      font-family: $bigFont, cursive;
-      text-shadow: -4px 3px 0 $pinky, -10px 7px 0 $darkPinky;
-      color: white;
-      margin-bottom: 1rem;
+    .num-responses {
+      color: $darkPinky;
+      margin-bottom: 0.5rem;
     }
-    a {
-      color: $tealish;
+    .friend-link {
+      color: $darkPinky;
+      a {
+        color: $tealish;
+        &:hover {
+          color: white;
+        }
+      }
     }
-    table {
+    .choices-div {
+      border: 3px solid white;
+      padding: 1rem;
       width: 100%;
+      text-align: center;
       margin-bottom: 1rem;
+      .container-title {
+        font-family: $bigFont, cursive;
+        color: $darkPinky;
+        font-size: 20px;
+      }
+      .choice {
+        border: 3px solid white;
+        background-color: $pinky;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+
+        .choice-name {
+          color: white;
+          text-transform: uppercase;
+          margin: 0px;
+        }
+        .choice-description {
+          color: white;
+          margin: 0px;
+        }
+      }
     }
     button {
-      color: white;
-      background-color: $lightPinky;
-      border: 3px solid white;
-      height: 4rem;
-      width: 6rem;
+      color: $pinky;
+      background-color: white;
+      border: 3px solid $pinky;
+      height: 3rem;
+      width: 100%;
       margin-bottom: 1rem;
       &:hover {
         background-color: $tealish;
+        color: white;
+        border-color: white;
       }
 
     }
@@ -39,10 +75,8 @@ body.admin-page {
 
 }
 
-header.your-polls-header {
-  h1 {
-    display: none;
-  }
+header.admin-page-header {
+  background-color: $lightPinky;
   button {
     color: white;
     background-color: $lightPinky;

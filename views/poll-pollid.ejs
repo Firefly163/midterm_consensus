@@ -10,34 +10,23 @@
     <% include partials/_header.ejs %>
   </header>
   <main class="row">
-    <div class="admin-text col-md-4">
+    <div class="admin-text col-md-6">
       <h1 class="poll-title"><%=poll.poll_name%></h1>
-      <p class="poll-description"><%=poll.description%></p>
+      <p class="poll-description">- <%=poll.description%></p>
       <p class="num-responses">Responses: <%=poll.responses%></p>
-      <table class="choice-ranking">
-        <thead>
-          <tr>
-            <th class="table-title">CHOICE</th>
-            <th class="table-title">DESCRIPTION</th>
-          </tr>
-        </thead>
-        <tbody>
+      <p class="friend-link">Share this poll using: <a href="p/<%= links.friendLink %>" class="poll-links">localhost:8080/p/<%= links.friendLink %></a></p>
+      <div class="choices-div">
+        <p class="container-title full-title">Choices</p>
         <%for (let elm of choices) { %>
-          <tr>
-            <td class="choice-name"><%= elm.choice %></td>
-            <td class="choice-description"><%= elm.description%></td>
-          </tr>
+          <div class="choice">
+            <p class="choice-name"><%= elm.choice %></p>
+            <p class="choice-description"><%= elm.description%></p>
+          </div>
         <% } %>
-        </tbody>
-      </table>
-      <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">Delete</button>
-
-      <section class="link-section">
-        <h1 class="links-title">Share</h1>
-        <a href="p/<%= links.friendLink %>" class="poll-links"><p id="friend-link">localhost:8080/p/<%= links.friendLink %></p></a>
-      </section>
+      </div>
+      <button data-poll-id="<%= poll.admin_link %>" id="delete_poll" data-confirm="Are you sure to delete this poll?" type="submit">DELETE</button>
     </div>
-    <div id="piechart" class="col-md-8"></div>
+    <div id="piechart" class="col-md-6"></div>
     <script>
       var data = <%- JSON.stringify(choices) %>
       renderChart(data, 'piechart');

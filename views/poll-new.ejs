@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="create-header">
     <% include partials/_header.ejs %>
   </header>
   <main class="create-page">
@@ -33,13 +33,13 @@
               <input type="text " name="desc[]" placeholder="CHOICE DESCRIPTION" >
             </li>
           </ul>
-          <div class = "create-errors"></div>
           <button type="submit" class="create-button">CREATE</button>
         </form>
       </div>
       <div class="title-and-text col-md-4">
         <h1>create a poll</h1>
         <p>* fields are mandatory</p>
+        <div class = "create-errors"></div>
       </div>
     </div>
   </main>

@@ -71,6 +71,12 @@ main.create-page {
       h1 {
         font-family: $bigFont, cursive;
       }
+      .create-error {
+        color: $pinky;
+      }
     }
   }
+}
+header.create-header {
+  background-color: white;
 }
