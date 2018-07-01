@@ -111,13 +111,6 @@ module.exports = knex => ({
     .then(result => result.id);
   },
 
-  selectFromPolls: (unknown, param, known) => {
-    return knex.first(unknown)
-    .from("polls")
-    .where(param, "=", known)
-    .then(result => result.unknown);
-  },
-
   getPollDescription: (pollid) => {
     return knex.first("description")
     .from("polls")
