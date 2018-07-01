@@ -7,7 +7,7 @@ $(document).ready(function() {
     if ($( "li" ).length <= 6) {
       $( "#ul_choices" ).append(`
         <li class="choice">
-          <input type="text" name="choice" class="choice-input" placeholder="CHOICE">
+          <input type="text" name="choice" class="choice-input" placeholder="CHOICE *">
           <input type="text" name="desc" placeholder="CHOICE DESCRIPTION">
         </li>`);
       $("li.choice").focus().select();

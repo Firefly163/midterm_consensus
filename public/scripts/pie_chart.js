@@ -3,7 +3,7 @@ const tealArray = ["#49c5b6", "#2b766d", "#153b36", "#41b1a3", "#7fd6cb", "#a4e2
 
 function renderChart (data, elmID){
   if (data.filter(elm => elm.points > 0).length === 0) {
-    document.getElementById(elmID).innerHTML = "No Data";
+    document.getElementById(elmID).innerHTML = "";
     return;
   }
   const dataTable = [

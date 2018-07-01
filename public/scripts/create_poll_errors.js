@@ -5,17 +5,14 @@ $(document).ready(function() {
     let $errors = $(".create-errors");
     $errors.empty();
     if (!$("#poll_title").val()) {
-      $errors.append("<p>Title fields is empty</p>");
-      return;
+      $errors.append("<p class='create-error'>Title field is empty</p>");
     };
     if (!$("#poll_description").val()) {
-      $errors.append("<p>Description fields is empty</p>");
-      return;
+      $errors.append("<p class='create-error'>Description field is empty</p>");
     };
     $('#ul_choices').children('.choice').each(function() {
       if(!$(this).find('.choice-input').val() && !$errors.contents().length) {
-        $errors.append("<p>Choice field is empty</p>");
-        return;
+        $errors.append("<p class='create-error'>Choice field is empty</p>");
       }
     });
     if(!$errors.contents().length) {

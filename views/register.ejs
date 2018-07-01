@@ -6,7 +6,7 @@
   </head>
 
   <body>
-    <header>
+    <header class="register-header">
       <% include partials/_header.ejs %>
     </header>
     <main class="register-page">
@@ -24,12 +24,12 @@
             <input class="register-input" id="register-password" placeholder="PASSWORD" type ="password" name="password">
           </div>
           <button type="submit">REGISTER</button>
-          <div class="register-errors"></div>
         </form>
 
         <div class="text col-md-4">
           <h1>register!</h1>
           <p>Already a user? <a id="login-on-register-pg" href="/">login here</a></p>
+          <div class="register-errors"></div>
         </div>
 
       </div>
