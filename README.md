@@ -1,14 +1,17 @@
 # Node Skeleton
 
-## Project Setup
+##Consensus 
+Making decisions is hard. Why not step back and let someone else do it? Consensus lets you create polls on any subject, and send links to whoever you want. Friends anonymously rank their choices, and you get to see the aggregate results. Easy as pie!
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+## File Setup
+1. This app uses Nodemailer to send emails via Gmail. You will need to create a `secrets.js` file with the following setup:
+
+`const emailPassword = "<YOUR EMAIL PASSWORD>";
+const userEmail     = "<THE GMAIL ADDRESS YOU WILL SEND FROM>";
+module.exports = {
+  emailPassword,
+  userEmail
+}`
 
 ## Getting Started
 
@@ -23,7 +26,28 @@
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
+##Using Consensus
+
+Register and log in to use the app. Your polls will be displayed on the "My Polls" page. 
+
+
+
+Each poll is a link to an admin page where you can get details such as the number of responses and the curret results. 
+
 ## Dependencies
 
 - Node 5.10.x or above
 - NPM 3.8.x or above
+- bcrypt 2.0.0
+- body-parser 1.15.2 or above
+- cookie-session 1.3.2 or above
+- dotenv 2.0.0 or above
+- ejs 2.4.1 or above
+- express 4.13.4 or above
+- knex 0.11.7 or above
+- knex-logger 0.1.0 or above
+- mailgun-js 0.19.0 or above
+- morgan1.7.0 or above
+- node-sass-middleware 0.9.8 or above
+- nodemailer 4.6.7 or above
+- pg 6.0.2 or above
