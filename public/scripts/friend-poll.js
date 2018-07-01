@@ -65,6 +65,7 @@ $(document).ready(function() {
       $(".choices-container").empty();
       $(".btn-and-errors").empty();
       $(".thank-you").append(`
+        <h1></h1>
         <h1>Thanks for your input!</h1>
         <p>Login or Register to make your own polls!</p>
         `)

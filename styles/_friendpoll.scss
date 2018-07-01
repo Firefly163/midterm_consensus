@@ -1,4 +1,12 @@
-.friend-poll-page {
+main.friend-poll-page {
+  .thank-you {
+    a {
+      color: white;
+      &:hover {
+        color: $tealish;
+      }
+    }
+  }
 
   .text-container {
     padding-top: 1rem;
