@@ -30,5 +30,12 @@ body {
     padding-top: 6rem;
     font-family: "Quicksand", sans-serif;
   }
+}
 
+footer {
+  p {
+    color: $darkPinky;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
 }

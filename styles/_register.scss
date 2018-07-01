@@ -32,5 +32,12 @@ main.register-page {
     a {
       color: $tealish;
     }
+    .register-error {
+      color: $pinky;
+    }
   }
+}
+
+header.register-header {
+  background-color: white;
 }
