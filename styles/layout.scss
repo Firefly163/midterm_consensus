@@ -33,6 +33,10 @@ body {
 }
 
 footer {
+  padding-top: 0.5rem;
+  z-index: 1;
+  height: 2rem;
+  text-align: right;
   p {
     color: $darkPinky;
     text-transform: uppercase;

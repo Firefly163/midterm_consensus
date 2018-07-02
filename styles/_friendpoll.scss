@@ -80,6 +80,7 @@ main.friend-poll-page {
         border: 3px solid white;
         padding: 1rem;
         width: 6rem;
+        margin-bottom: 4rem;
         &:hover {
           background-color: $tealish;
         }
@@ -95,9 +96,6 @@ body.friend-poll-body {
 
 header.friend-poll-header {
   background-color: $lightPinky;
-  h1 {
-    display: none;
-  }
   button {
     color: white;
     background-color: $lightPinky;
@@ -106,5 +104,9 @@ header.friend-poll-header {
     margin: 0.5rem;
     width: 6rem;
   }
+}
+
+footer.friend-poll-footer {
+  background-color: $lightPinky;
 }
 

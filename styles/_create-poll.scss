@@ -61,7 +61,7 @@ main.create-page {
         background-color: $pinky;
         color: white;
         width: 80%;
-
+        margin-bottom: 4rem;
         &:hover {
           background-color: $tealish;
         }
@@ -80,3 +80,4 @@ main.create-page {
 header.create-header {
   background-color: white;
 }
+
