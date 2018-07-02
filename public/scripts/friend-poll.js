@@ -7,12 +7,14 @@ $(document).ready(function() {
 
   $(".choice").on("dragstart", function (event) {
     $dragged = $(this);
+    $parentDiv = $(this).parent();
     $dragged.addClass("on-drag");
   });
 
   $(".choice").on("dragend", function (event) {
     $(this).removeClass("on-drag");
     $dragged = null;
+    $parentDiv = null;
   });
 
   $(".choice-container").on("dragover", function (event) {
@@ -21,25 +23,30 @@ $(document).ready(function() {
 
   // making choices
   $(".choice-container.empty").on("drop", function (event) {
-    choicesMade += 1;
-    event.preventDefault();
-    $(this).append($dragged);
-    $dragged.attr("ranking", choicesMade);
+    if ($parentDiv.hasClass("full")) {
+      choicesMade += 1;
+    }
+      event.preventDefault();
+      $(this).append($dragged);
+      $dragged.attr("ranking", choicesMade);
+
   });
 
   // undoing choices
   $(".choice-container.full").on("drop", function (event) {
-    choicesMade -= 1;
-    event.preventDefault();
-    $(this).append($dragged);
-    let undoRank = Number($dragged.attr("ranking"));
-    $dragged.attr("ranking", 0);
-    $(this).siblings(".choice-container.empty").children(".choice").each(function () {
-      let oldRank = Number($(this).attr("ranking"));
-      if (oldRank > undoRank) {
-        $(this).attr("ranking", oldRank-1);
-      }
-    });
+    if ($parentDiv.hasClass("empty")) {
+      choicesMade -= 1;
+    }
+      event.preventDefault();
+      $(this).append($dragged);
+      let undoRank = Number($dragged.attr("ranking"));
+      $dragged.attr("ranking", 0);
+      $(this).siblings(".choice-container.empty").children(".choice").each(function () {
+        let oldRank = Number($(this).attr("ranking"));
+        if (oldRank > undoRank) {
+          $(this).attr("ranking", oldRank-1);
+        }
+      });
   });
 
   $(".submit-ranks-btn").on("click", function (event) {
