@@ -14,16 +14,27 @@ module.exports = {
 
 ## Getting Started
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-6. Run the seed: `npm run knex seed:run`
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+1. Create an `.env` with the following information:
+
+`DB_HOST=
+DB_USER=
+DB_PASS=
+DB_NAME=
+DB_SSL=false
+DB_PORT=5432`
+
+2. Install dependencies: `npm i`
+3. Fix to binaries for sass: `npm rebuild node-sass`
+4. Run migrations: `npm run knex migrate:latest`
+5. Run the seed: `npm run knex seed:run`
+6. Run the server: `npm run local`
+7. Visit `http://localhost:8080/`
 
 ## Using Consensus
+
+Home page:
+
+![Home page](https://github.com/emilyhfdong/midterm_consensus/blob/master/public/images/home-page.png)
 
 Register and log in to use the app. Your polls will be displayed on the "My Polls" page. 
 
