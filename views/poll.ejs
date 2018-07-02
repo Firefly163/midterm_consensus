@@ -9,7 +9,8 @@
     <% include partials/_header.ejs %>
   </header>
   <main>
-    <article>
+    <div id="no-polls-message"><h1>click CREATE to make your first poll!</h1></div>
+    <article class="your-polls-article">
       <ul class="container">
         <% polls.reverse().forEach(poll => { %>
           <a href=<%="/poll/" + poll.admin_link%> >
